@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="theme-color" content="#0b0b0b" />
+<title>LHF 2500/9 – Besetzung</title>
+
+<style>
+:root{
+  --bg:#090909;
+  --panel:#151515;
+  --panel2:#191919;
+  --line:#665300;
+  --line2:#a88400;
+  --red:#ffd43b;
+  --red-soft:#c89d00;
+  --text:#f4f4f4;
+  --muted:#8f8f8f;
+  --green:#d6aa00;
+  --shadow:0 0 28px rgba(255,212,59,.18);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+button,input{font:inherit}
+button{-webkit-tap-highlight-color:transparent}
+
+.app{
+  width:min(100%,1000px);
+  margin:0 auto;
+  padding:18px;
+}
+
+.hero{
+  text-align:center;
+  padding:34px 14px 24px;
+}
+
+.badge{
+  width:130px;
+  height:130px;
+  margin:0 auto 20px;
+  border:3px solid var(--red);
+  border-radius:28px 28px 42px 42px;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,212,59,.16), transparent 60%),
+    linear-gradient(180deg,#1b1b1b,#0d0d0d);
+  box-shadow:0 0 40px rgba(255,212,59,.30);
+  transform:rotate(0.001deg);
+}
+.badge-inner{
+  width:86px;height:86px;border-radius:50%;
+  background:
+    linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
+    repeating-linear-gradient(135deg,#ffd43b 0 9px,#171717 9px 18px);
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #ffe36b;
+  box-shadow:0 0 22px rgba(255,212,59,.30);
+  font-weight:900;font-size:28px;letter-spacing:-1px;
+}
+.hero h1{
+  margin:0;
+  font-size:clamp(2.2rem,7vw,4.8rem);
+  line-height:.95;
+  letter-spacing:.03em;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.hero h1 span{color:var(--red)}
+.hero .ghost{
+  display:block;
+  margin-top:-8px;
+  font-size:clamp(3.6rem,12vw,8rem);
+  font-weight:950;
+  color:transparent;
+  -webkit-text-stroke:2px rgba(255,212,59,.18);
+  opacity:.8;
+  line-height:.9;
+}
+.hero p{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.28em;
+  font-size:.76rem;
+  margin-top:18px;
+}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid rgba(255,212,59,.55);
+  border-radius:999px;
+  padding:8px 14px;
+  color:#ffd43b;
+  background:rgba(255,212,59,.07);
+  font-weight:700;
+  font-size:.9rem;
+}
+.dot{
+  width:9px;height:9px;border-radius:50%;background:#ffd43b;
+  box-shadow:0 0 14px #ffd43b;
+}
+
+.section{
+  margin-top:20px;
+}
+.section-title{
+  text-align:center;
+  color:#6f6f6f;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  font-size:.8rem;
+  margin:0 0 16px;
+}
+
+.people-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.person-card{
+  border:2px solid var(--line);
+  border-radius:24px;
+  background:radial-gradient(circle at 50% 0%,rgba(255,212,59,.06),transparent 42%),linear-gradient(145deg,#171717,#111);
+  min-height:185px;
+  padding:18px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow:var(--shadow);
+}
+.avatar{
+  width:76px;height:76px;border-radius:50%;
+  background:
+    linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
+    repeating-linear-gradient(135deg,#ffd43b 0 9px,#171717 9px 18px);
+  display:grid;place-items:center;
+  border:2px solid #ffe36b;
+  box-shadow:0 0 20px rgba(255,212,59,.28);
+  font-size:24px;
+  font-weight:950;
+  margin-bottom:16px;
+}
+.person-name{
+  text-align:center;
+  font-weight:900;
+  font-size:1.05rem;
+  line-height:1.2;
+  color:#ffd43b;
+  text-shadow:0 0 14px rgba(255,212,59,.20);
+}
+.tag{
+  margin-top:10px;
+  border:1px solid var(--line2);
+  color:#ffd43b;
+  border-radius:7px;
+  padding:4px 8px;
+  font-size:.78rem;
+  background:rgba(255,212,59,.07);
+}
+
+.generate-wrap{
+  margin:24px 0 10px;
+}
+.generate{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:17px 18px;
+  background:linear-gradient(180deg,#ffe46a,#d7a900);
+  color:#141414;
+  font-weight:950;
+  font-size:1.12rem;
+  letter-spacing:.04em;
+  box-shadow:0 0 30px rgba(255,212,59,.30);
+}
+.generate:active{transform:scale(.99)}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+.role-card{
+  border:2px solid var(--line);
+  border-radius:22px;
+  background:radial-gradient(circle at 50% 0%,rgba(255,212,59,.06),transparent 42%),linear-gradient(145deg,#171717,#111);
+  padding:18px;
+  min-height:150px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.role-card.machine{
+  grid-column:1/-1;
+  border-color:#d8ad00;
+}
+.role{
+  color:#ffd43b;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:.78rem;
+  font-weight:900;
+}
+.assigned{
+  margin-top:8px;
+  font-size:1.25rem;
+  font-weight:900;
+  color:#ffd43b;
+  text-shadow:0 0 14px rgba(255,212,59,.22);
+}
+.initial-chip{
+  margin-top:14px;
+  width:52px;height:52px;border-radius:50%;
+  background:repeating-linear-gradient(135deg,#ffd43b 0 8px,#141414 8px 16px);
+  display:grid;place-items:center;
+  border:2px solid #ffe36b;
+  font-weight:950;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+.btn{
+  flex:1;
+  min-width:150px;
+  border-radius:14px;
+  padding:12px 14px;
+  font-weight:800;
+  border:1px solid #333;
+  color:#eee;
+  background:#181818;
+}
+.btn.danger{border-color:#661818;color:#e05555}
+
+.info{
+  margin-top:14px;
+  border:1px solid #2c2c2c;
+  background:#121212;
+  border-radius:14px;
+  padding:12px 14px;
+  color:#9d9d9d;
+  font-size:.9rem;
+  line-height:1.45;
+}
+.ok{
+  border-color:rgba(22,160,95,.45);
+  color:#6bd69e;
+}
+
+.history{
+  margin-top:26px;
+}
+.history-list{
+  display:grid;
+  gap:10px;
+}
+.history-item{
+  border:1px solid #292929;
+  background:#121212;
+  border-radius:16px;
+  padding:14px;
+}
+.history-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:#cfcfcf;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.history-body{
+  color:#888;
+  font-size:.86rem;
+  line-height:1.5;
+}
+
+.footer{
+  text-align:center;
+  color:#4f4f4f;
+  font-size:.78rem;
+  padding:28px 0 10px;
+}
+
+@media(min-width:760px){
+  .app{padding:28px}
+  .people-grid{grid-template-columns:repeat(3,1fr)}
+  .person-card{min-height:210px}
+  .result-grid{grid-template-columns:repeat(3,1fr)}
+  .role-card.machine{grid-column:auto}
+}
+
+@media(max-width:520px){
+  .app{padding:12px}
+  .hero{padding-top:26px}
+  .badge{width:112px;height:112px}
+  .badge-inner{width:74px;height:74px;font-size:24px}
+  .people-grid{gap:10px}
+  .person-card{min-height:165px;border-radius:20px;padding:14px 10px}
+  .avatar{width:66px;height:66px;font-size:21px}
+  .person-name{font-size:.98rem}
+  .result-grid{grid-template-columns:1fr}
+  .role-card.machine{grid-column:auto}
+}
+
+.vehicle-wrap{
+  margin-top:20px;
+  padding:18px;
+  border:2px solid var(--line);
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(255,212,59,.08),transparent 38%),
+    linear-gradient(180deg,#171717,#0d0d0d);
+  box-shadow:0 0 34px rgba(255,212,59,.14);
+}
+.vehicle-label{
+  text-align:center;
+  color:#ffd43b;
+  font-weight:950;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+.cab-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+  padding-bottom:16px;
+  border-bottom:1px solid #39320f;
+}
+.crew-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  padding-top:16px;
+}
+.seat{
+  min-height:132px;
+  border:1px solid #6b5900;
+  border-radius:18px;
+  background:
+    repeating-linear-gradient(135deg,rgba(255,212,59,.035) 0 8px,transparent 8px 16px),
+    #121212;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:12px;
+}
+.seat.fixed{
+  border-color:#9a7b00;
+  box-shadow:inset 0 0 22px rgba(255,212,59,.05);
+}
+.seat .seat-role{
+  color:#ffd43b;
+  text-transform:uppercase;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.07em;
+  line-height:1.25;
+}
+.seat .seat-name{
+  margin-top:8px;
+  font-weight:900;
+  font-size:1rem;
+  line-height:1.2;
+}
+.seat .seat-initials{
+  width:46px;height:46px;border-radius:50%;
+  margin-top:10px;
+  display:grid;place-items:center;
+  border:2px solid #ffe36b;
+  background:repeating-linear-gradient(135deg,#ffd43b 0 7px,#171717 7px 14px);
+  color:#111;
+  font-weight:950;
+}
+.vehicle-front{
+  text-align:center;
+  color:#5f5a3f;
+  margin-top:12px;
+  letter-spacing:.32em;
+  font-size:.7rem;
+  text-transform:uppercase;
+}
+@media(max-width:650px){
+  .cab-row{grid-template-columns:1fr 1fr 1fr;gap:7px}
+  .crew-row{grid-template-columns:repeat(2,1fr);gap:8px}
+  .seat{min-height:118px;padding:9px}
+  .seat .seat-role{font-size:.64rem}
+  .seat .seat-name{font-size:.88rem}
+  .vehicle-wrap{padding:12px}
+}
+
+
+.crew-cabin{
+  margin-top:16px;
+  border:1px solid #514500;
+  border-radius:20px;
+  padding:14px;
+  background:#0e0e0e;
+}
+.direction-label{
+  text-align:center;
+  color:#ffd43b;
+  font-size:.7rem;
+  font-weight:900;
+  letter-spacing:.18em;
+  margin-bottom:10px;
+}
+.rear-label{
+  margin:10px 0 0;
+  color:#756928;
+}
+.crew-facing-forward,
+.crew-facing-rear{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.cabin-center{
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  color:#5f5a3f;
+  font-size:.68rem;
+  letter-spacing:.18em;
+  font-weight:800;
+}
+.cabin-center:before,
+.cabin-center:after{
+  content:"";
+  height:1px;
+  background:#39320f;
+  flex:1;
+  margin:0 10px;
+}
+.rear-seat{
+  transform:rotate(0deg);
+  border-style:dashed;
+}
+@media(max-width:650px){
+  .crew-facing-forward,.crew-facing-rear{gap:7px}
+  .crew-cabin{padding:10px}
+}
+
+
+.lf-shell{
+  position:relative;
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 24px 24px;
+  border:3px solid #d8ad00;
+  border-radius:28px 28px 22px 22px;
+  background:
+    linear-gradient(180deg,rgba(255,212,59,.04),transparent 22%),
+    #0d0d0d;
+  box-shadow:
+    0 0 34px rgba(255,212,59,.18),
+    inset 0 0 28px rgba(255,212,59,.035);
+}
+.lf-shell:before,
+.lf-shell:after{
+  content:"";
+  position:absolute;
+  left:10%;
+  right:10%;
+  height:3px;
+  background:#5d4b00;
+  opacity:.65;
+}
+.lf-shell:before{top:8px}
+.lf-shell:after{bottom:8px}
+
+.lf-front{
+  border:1px solid #544500;
+  border-radius:22px 22px 12px 12px;
+  padding:14px;
+  background:linear-gradient(180deg,#141414,#0f0f0f);
+}
+.windscreen{
+  width:72%;
+  height:20px;
+  margin:0 auto 10px;
+  border:2px solid #8b7100;
+  border-radius:12px 12px 5px 5px;
+  background:
+    linear-gradient(180deg,rgba(255,212,59,.08),rgba(255,255,255,.01)),
+    #101318;
+  box-shadow:inset 0 0 15px rgba(255,212,59,.05);
+}
+.lf-front-label{
+  text-align:center;
+  color:#ffd43b;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  margin-bottom:10px;
+}
+.lf-divider{
+  height:10px;
+  margin:8px 4%;
+  border-top:2px solid #514200;
+  border-bottom:1px solid #292000;
+}
+.lf-body{
+  margin-top:10px;
+  border:1px solid #514500;
+  border-radius:12px 12px 18px 18px;
+  padding:12px;
+  background:#111;
+}
+.locker-row{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+}
+.locker-row span{
+  border:1px solid #4c410d;
+  border-radius:8px;
+  min-height:54px;
+  display:grid;
+  place-items:center;
+  color:#6f6532;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.rear-marker{
+  text-align:center;
+  color:#6a6029;
+  font-size:.68rem;
+  letter-spacing:.24em;
+  font-weight:900;
+  margin-top:8px;
+}
+.wheel{
+  position:absolute;
+  width:14px;
+  height:64px;
+  border-radius:8px;
+  background:#252525;
+  border:2px solid #404040;
+  box-shadow:inset 0 0 0 2px #111;
+}
+.wheel-fl{left:-9px;top:16%}
+.wheel-fr{right:-9px;top:16%}
+.wheel-rl{left:-9px;bottom:17%}
+.wheel-rr{right:-9px;bottom:17%}
+
+@media(max-width:650px){
+  .lf-shell{padding:14px 14px 18px}
+  .wheel{width:10px;height:52px}
+  .wheel-fl,.wheel-rl{left:-7px}
+  .wheel-fr,.wheel-rr{right:-7px}
+  .windscreen{width:84%}
+  .locker-row span{min-height:42px;font-size:.6rem}
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <section class="hero">
+    <div class="badge">
+      <div class="badge-inner">2500</div>
+    </div>
+    <h1>Feuerwache <span>2500</span></h1>
+    <span class="ghost">LHF</span>
+    <p>Besetzung auswählen</p>
+    <div class="status"><span class="dot"></span> LHF 2500/9 · Einsatzbereit</div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Staffelführer</h2>
+    <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
+      <div class="avatar">DT</div>
+      <div class="person-name">Dennis Treite</div>
+      <div class="tag">Fest gesetzt · keine Auslosung</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Maschinisten-Chef</h2>
+    <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
+      <div class="avatar">RS</div>
+      <div class="person-name">Raik Schindler</div>
+      <div class="tag">Fest gesetzt · keine Auslosung</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">LHF-Besatzung zur Auslosung</h2>
+    <div class="people-grid" id="peopleGrid"></div>
+  </section>
+
+  <section class="generate-wrap">
+    <button class="generate" id="generateBtn">🎲 BESATZUNG AUSLOSEN</button>
+    <div id="message"></div>
+  </section>
+
+  <section class="section" id="resultSection" style="display:none">
+    <h2 class="section-title">Aktuelle Besetzung</h2>
+    <div class="vehicle-wrap">
+      <div class="vehicle-label">LHF 2500/9 · Fahrzeugbesetzung</div>
+
+      <div class="lf-shell">
+        <div class="lf-front">
+          <div class="windscreen"></div>
+          <div class="lf-front-label">FAHRERKABINE · FAHRTRICHTUNG ↑</div>
+
+          <div class="cab-row">
+            <div class="seat" id="seatMaschinist"></div>
+            <div class="seat fixed" id="seatMaschChef"></div>
+            <div class="seat fixed" id="seatStaffel"></div>
+          </div>
+        </div>
+
+        <div class="lf-divider"></div>
+
+        <div class="crew-cabin">
+          <div class="direction-label">ANGRIFFSTRUPP · OBEN</div>
+
+          <div class="crew-facing-rear">
+            <div class="seat rear-seat" id="seatATF"></div>
+            <div class="seat rear-seat" id="seatATM"></div>
+          </div>
+
+          <div class="cabin-center">
+            <span>MANNSCHAFTSKABINE</span>
+          </div>
+
+          <div class="crew-facing-forward">
+            <div class="seat" id="seatWTF"></div>
+            <div class="seat" id="seatWTM"></div>
+          </div>
+
+          <div class="direction-label rear-label">WASSERTRUPP · UNTEN</div>
+        </div>
+
+
+        <div class="wheel wheel-fl"></div>
+        <div class="wheel wheel-fr"></div>
+        <div class="wheel wheel-rl"></div>
+        <div class="wheel wheel-rr"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="rerollBtn">Neu auslosen</button>
+      <button class="btn" id="saveBtn">Besetzung speichern</button>
+      <button class="btn danger" id="resetHistoryBtn">Historie löschen</button>
+    </div>
+  </section>
+
+  <section class="history" id="historySection">
+    <h2 class="section-title">Letzte Besetzungen</h2>
+    <div class="history-list" id="historyList"></div>
+  </section>
+
+  <div class="footer">
+    LHF 2500/9 · Dennis Treite & Raik Schindler fest gesetzt · Daten bleiben auf diesem Gerät
+  </div>
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY = "lhf25009_history_v4";
+
+  const people = [
+    "Maurice Klose",
+    "Marcel Birkenhauer",
+    "Joachim Neumann",
+    "Julian Ehrlich",
+    "Aleksander Stefanovic"
+  ];
+
+  const positions = [
+    "Maschinist",
+    "Angriffstruppführer",
+    "Angriffstruppmann",
+    "Wassertruppführer",
+    "Wassertruppmann"
+  ];
+
+  let current = [];
+  let history = loadHistory();
+
+  function initials(name){
+    return name.split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase();
+  }
+
+  function loadHistory(){
+    try{
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    }catch(e){
+      return [];
+    }
+  }
+
+  function saveHistory(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    }catch(e){}
+  }
+
+  function renderPeople(){
+    const grid = document.getElementById("peopleGrid");
+    grid.innerHTML = "";
+    people.forEach(name=>{
+      const card = document.createElement("div");
+      card.className = "person-card";
+      card.innerHTML = `
+        <div class="avatar">${initials(name)}</div>
+        <div class="person-name">${name}</div>
+        <div class="tag">Stamm Personal</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function fairnessPenalty(person, position){
+    let score = 0;
+
+    // Strong penalty for same position in recent assignments
+    history.slice(0,8).forEach((entry,index)=>{
+      const recencyWeight = 8-index;
+      const hit = entry.assignment.find(a=>a.person===person && a.position===position);
+      if(hit) score += recencyWeight * 4;
+    });
+
+    // Small penalty for leadership repetitions
+    const leadership = ["Angriffstruppführer","Wassertruppführer"];
+    if(leadership.includes(position)){
+      history.slice(0,5).forEach((entry,index)=>{
+        const hit = entry.assignment.find(a=>a.person===person && leadership.includes(a.position));
+        if(hit) score += (5-index) * 1.25;
+      });
+    }
+
+    return score;
+  }
+
+  function shuffled(arr){
+    const copy = arr.slice();
+    for(let i=copy.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [copy[i],copy[j]]=[copy[j],copy[i]];
+    }
+    return copy;
+  }
+
+  function generateAssignment(){
+    const available = shuffled(people);
+    const remaining = new Set(available);
+    const result = [];
+
+    // Assign each position using lowest fairness penalty + random tie breaker
+    positions.forEach(position=>{
+      const candidates = [...remaining].map(person=>({
+        person,
+        score: fairnessPenalty(person, position) + Math.random()*1.25
+      })).sort((a,b)=>a.score-b.score);
+
+      const chosen = candidates[0].person;
+      remaining.delete(chosen);
+      result.push({position, person:chosen});
+    });
+
+    current = result;
+    renderResult();
+
+    const msg = document.getElementById("message");
+    msg.innerHTML = '<div class="info ok">Besetzung ausgelost. Frühere Positionen wurden bei der Verteilung berücksichtigt.</div>';
+  }
+
+  function renderSeat(id, role, person, fixed=false){
+    const el = document.getElementById(id);
+    el.className = "seat" + (fixed ? " fixed" : "");
+    el.innerHTML = `
+      <div class="seat-role">${role}</div>
+      <div class="seat-name">${person}</div>
+      <div class="seat-initials">${initials(person)}</div>
+    `;
+  }
+
+  function renderResult(){
+    const section = document.getElementById("resultSection");
+    section.style.display = "block";
+
+    const byPos = {};
+    current.forEach(item => byPos[item.position] = item.person);
+
+    renderSeat("seatMaschinist", "Maschinist", byPos["Maschinist"]);
+    renderSeat("seatMaschChef", "Maschinisten-Chef", "Raik Schindler", true);
+    renderSeat("seatStaffel", "Staffelführer", "Dennis Treite", true);
+    renderSeat("seatATF", "Angriffstruppführer", byPos["Angriffstruppführer"]);
+    renderSeat("seatATM", "Angriffstruppmann", byPos["Angriffstruppmann"]);
+    renderSeat("seatWTF", "Wassertruppführer", byPos["Wassertruppführer"]);
+    renderSeat("seatWTM", "Wassertruppmann", byPos["Wassertruppmann"]);
+
+    section.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  function renderHistory(){
+    const list = document.getElementById("historyList");
+    list.innerHTML = "";
+
+    if(history.length===0){
+      list.innerHTML = '<div class="info">Noch keine gespeicherten Besetzungen.</div>';
+      return;
+    }
+
+    history.slice(0,10).forEach(entry=>{
+      const item = document.createElement("div");
+      item.className = "history-item";
+      const lines = entry.assignment.map(a=>`${a.position}: ${a.person}`).join("<br>");
+      item.innerHTML = `
+        <div class="history-head">
+          <span>LHF 2500/9</span>
+          <span>${entry.date}</span>
+        </div>
+        <div class="history-body">
+          Staffelführer: Dennis Treite<br>
+          Maschinisten-Chef: Raik Schindler<br>
+          ${lines}
+        </div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById("generateBtn").addEventListener("click",generateAssignment);
+  document.getElementById("rerollBtn").addEventListener("click",generateAssignment);
+
+  document.getElementById("saveBtn").addEventListener("click",()=>{
+    if(!current.length) return;
+    const now = new Date();
+    const date = now.toLocaleString("de-DE",{
+      day:"2-digit",month:"2-digit",year:"numeric",
+      hour:"2-digit",minute:"2-digit"
+    });
+
+    history.unshift({
+      date,
+      assignment:current.map(x=>({...x}))
+    });
+
+    history = history.slice(0,50);
+    saveHistory();
+    renderHistory();
+
+    document.getElementById("message").innerHTML =
+      '<div class="info ok">Besetzung gespeichert. Die Fairness-Logik berücksichtigt sie bei zukünftigen Auslosungen.</div>';
+  });
+
+  document.getElementById("resetHistoryBtn").addEventListener("click",()=>{
+    if(confirm("Gesamte Historie wirklich löschen?")){
+      history = [];
+      saveHistory();
+      renderHistory();
+      document.getElementById("message").innerHTML =
+        '<div class="info">Historie gelöscht. Die nächste Auslosung startet ohne vorherige Verteilungen.</div>';
+    }
+  });
+
+  renderPeople();
+  renderHistory();
+})();
+</script>
+</body>
+</html>
