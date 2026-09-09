@@ -909,6 +909,147 @@ body.role-user .admin-only{
   justify-content:center;
 }
 
+
+/* Kompakte Dienstauswahl */
+#planDay{
+  min-width:210px;
+}
+.selected-shift-card{
+  margin-top:10px;
+  border:1px solid #454545;
+  border-radius:14px;
+  background:#0e0e0e;
+  padding:12px 14px;
+}
+.selected-shift-empty{
+  color:#8f8f8f;
+  font-size:.88rem;
+}
+.selected-shift-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.selected-shift-date{
+  color:#fff;
+  font-weight:900;
+}
+.selected-shift-type{
+  color:#ffe45c;
+  font-weight:800;
+}
+.selected-shift-status{
+  color:#ffe45c;
+  font-size:.82rem;
+  font-weight:900;
+}
+.shift-grid{display:none !important;}
+@media(max-width:650px){
+  .planner-toolbar{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .planner-toolbar select,
+  .planner-toolbar .btn{
+    width:100%;
+  }
+}
+
+
+/* Nächster Dienst */
+.next-shift{
+  margin-top:14px;
+  border:1px solid #5d4d09;
+  border-radius:16px;
+  background:#0e0e0e;
+  padding:14px;
+}
+.next-shift-title{
+  color:#ffe45c;
+  font-weight:900;
+  margin-bottom:8px;
+}
+.next-shift-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.next-shift-date{
+  font-weight:900;
+  color:#fff;
+  font-size:1.02rem;
+}
+.next-shift-meta{
+  color:#aaa;
+  margin-top:3px;
+  font-size:.86rem;
+}
+.next-shift-status{
+  color:#ffe45c;
+  font-weight:900;
+  font-size:.84rem;
+}
+.next-shift-btn{
+  margin-top:10px;
+}
+
+/* Direkter Tausch im Fahrzeug */
+.seat.swap-enabled{
+  cursor:pointer;
+}
+.seat.swap-enabled:hover{
+  border-color:#ffe45c;
+  box-shadow:0 0 14px rgba(255,228,92,.16);
+}
+.seat.swap-selected{
+  outline:2px solid #ffe45c;
+  box-shadow:0 0 18px rgba(255,228,92,.22);
+}
+.swap-help{
+  margin-top:10px;
+  color:#aaa;
+  font-size:.8rem;
+}
+
+
+/* Heutiger Dienst */
+.today-status{
+  margin-top:14px;
+  border:1px solid #3e3e3e;
+  border-radius:16px;
+  background:#0e0e0e;
+  padding:14px;
+}
+.today-status-title{
+  color:#ffe45c;
+  font-weight:900;
+  margin-bottom:7px;
+}
+.today-status-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.today-status-date{
+  color:#fff;
+  font-weight:900;
+  font-size:1.03rem;
+}
+.today-status-shift{
+  color:#ffe45c;
+  font-weight:900;
+}
+.today-status-free{
+  color:#aaa;
+  font-weight:800;
+}
+
 </style>
 </head>
 <body>
@@ -934,6 +1075,18 @@ body.role-user .admin-only{
     <p>Besetzung auswählen</p>
     <div class="status"><span class="dot"></span> Lehrfeuerwehr 2500 · </div>
   </section>
+
+  
+  <section class="today-status" id="todayStatusBox">
+    <div class="today-status-title">Heute</div>
+    <div id="todayStatusContent"></div>
+  </section>
+
+<section class="next-shift" id="nextShiftBox">
+    <div class="next-shift-title">Nächster Dienst</div>
+    <div id="nextShiftContent"></div>
+  </section>
+
 
   <div class="role-bar">
     <span class="role-badge" id="roleBadge">Benutzer</span>
@@ -1000,11 +1153,20 @@ body.role-user .admin-only{
         <option value="2026-11">November 2026</option>
         <option value="2026-12">Dezember 2026</option>
       </select>
-      <button class="btn" id="planSelectedBtn">Ausgewählten Dienst auslosen</button>
+
+      <select id="planDay" aria-label="Dienst auswählen">
+        <option value="">Dienst auswählen</option>
+      </select>
+
+      <button class="btn" id="planSelectedBtn">Dienst auslosen</button>
       <button class="btn admin-only" id="overwritePlanBtn">Planung ändern / überschreiben</button>
     </div>
-    <div class="shift-grid" id="shiftGrid"></div>
-    <div class="plan-note">☀️ Tagdienst · 🌙 Nachtdienst · Dienst auswählen und anschließend auslosen. Krankmeldungen und Vertretungen werden dienstbezogen gespeichert.</div>
+
+    <div class="selected-shift-card" id="selectedShiftCard">
+      <div class="selected-shift-empty">Noch keinen Dienst ausgewählt.</div>
+    </div>
+
+    <div class="plan-note">Erst Monat wählen, dann den gewünschten Dienst. Krankmeldungen und Vertretungen werden nur für diesen Dienst gespeichert.</div>
   </section>
 
 
@@ -1032,7 +1194,7 @@ body.role-user .admin-only{
           <div class="lf-front-label">FAHRERKABINE · FAHRTRICHTUNG ↑</div>
 
           <div class="cab-row">
-            <div class="seat" id="seatMaschinist"></div>
+            <div class="seat" data-seat-position="Maschinist" id="seatMaschinist"></div>
             <div class="seat fixed" id="seatMaschChef"></div>
             <div class="seat fixed" id="seatStaffel"></div>
           </div>
@@ -1053,8 +1215,8 @@ body.role-user .admin-only{
           </div>
 
           <div class="crew-facing-forward">
-            <div class="seat" id="seatWTF"></div>
-            <div class="seat" id="seatWTM"></div>
+            <div class="seat" data-seat-position="Angriffstruppführer" id="seatWTF"></div>
+            <div class="seat" data-seat-position="Angriffstruppmann" id="seatWTM"></div>
           </div>
 
           <div class="direction-label rear-label">WASSERTRUPP</div>
@@ -1319,38 +1481,170 @@ body.role-user .admin-only{
     const [y,m,d]=iso.split("-");
     return `${d}.${m}.${y}`;
   }
+
+  function getTodayIso(){
+    const d=new Date();
+    const y=d.getFullYear();
+    const m=String(d.getMonth()+1).padStart(2,"0");
+    const day=String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${day}`;
+  }
+
+  function getNextShift(){
+    const today=getTodayIso();
+    return shifts.find(x=>x.date>=today) || null;
+  }
+
+
+  function renderTodayStatus(){
+    const box=document.getElementById("todayStatusContent");
+    if(!box) return;
+
+    const today=getTodayIso();
+    const d=new Date();
+    const weekdays=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+    const dateText=`${weekdays[d.getDay()]}, ${String(d.getDate()).padStart(2,"0")}.${String(d.getMonth()+1).padStart(2,"0")}.${d.getFullYear()}`;
+    const shift=shifts.find(x=>x.date===today);
+
+    if(shift){
+      box.innerHTML=`
+        <div class="today-status-row">
+          <div class="today-status-date">${dateText}</div>
+          <div class="today-status-shift">${shift.type==="day" ? "☀️ Tagdienst" : "🌙 Nachtdienst"}</div>
+        </div>`;
+    }else{
+      box.innerHTML=`
+        <div class="today-status-row">
+          <div class="today-status-date">${dateText}</div>
+          <div class="today-status-free">Heute kein hinterlegter Dienst</div>
+        </div>`;
+    }
+  }
+
+  function renderNextShift(){
+    const box=document.getElementById("nextShiftContent");
+    if(!box) return;
+    const next=getNextShift();
+    if(!next){
+      box.innerHTML='<div class="selected-shift-empty">Kein weiterer Dienst im hinterlegten Zeitraum.</div>';
+      return;
+    }
+    const saved=plans[next.date];
+    box.innerHTML=`
+      <div class="next-shift-main">
+        <div>
+          <div class="next-shift-date">${next.type==="day"?"☀️":"🌙"} ${formatShiftDate(next.date)}</div>
+          <div class="next-shift-meta">${next.type==="day"?"Tagdienst":"Nachtdienst"}</div>
+        </div>
+        <div class="next-shift-status">${saved && saved.assignment ? "✓ Besetzung geplant" : "Noch nicht geplant"}</div>
+      </div>
+      <button class="btn next-shift-btn" id="openNextShiftBtn">Dienst öffnen</button>`;
+    document.getElementById("openNextShiftBtn").onclick=()=>{
+      const [y,m]=next.date.split("-");
+      document.getElementById("planMonth").value=`${y}-${m}`;
+      selectedShift=next.date;
+      loadShiftPersonnelState();
+      initFixedCover();
+      updateFixedCards();
+      renderAvailability();
+      renderManual();
+      if(saved && saved.assignment){
+        current=saved.assignment.map(x=>({...x}));
+        renderResult();
+      }else{
+        current=[];
+        renderResult();
+      }
+      renderPlanner();
+      document.getElementById("plannerSection").scrollIntoView({behavior:"smooth",block:"start"});
+    };
+  }
+
+  let swapSourcePosition=null;
+
+  function refreshSeatSwapState(){
+    document.querySelectorAll("[data-seat-position]").forEach(el=>{
+      el.classList.add("swap-enabled");
+      el.classList.toggle("swap-selected", el.dataset.seatPosition===swapSourcePosition);
+    });
+  }
+
+  function enableSeatSwapping(){
+    document.querySelectorAll("[data-seat-position]").forEach(el=>{
+      el.onclick=()=>{
+        const pos=el.dataset.seatPosition;
+        const entry=current && current.find(x=>x.position===pos);
+        if(!entry) return;
+
+        if(!swapSourcePosition){
+          swapSourcePosition=pos;
+          refreshSeatSwapState();
+          const msg=document.getElementById("message");
+          if(msg) msg.innerHTML=`<div class="info">Zum Tauschen jetzt eine zweite besetzte Funktion im LHF antippen.</div>`;
+          return;
+        }
+
+        if(swapSourcePosition===pos){
+          swapSourcePosition=null;
+          refreshSeatSwapState();
+          return;
+        }
+
+        const a=current.find(x=>x.position===swapSourcePosition);
+        const b=current.find(x=>x.position===pos);
+        if(!a || !b){
+          swapSourcePosition=null;
+          refreshSeatSwapState();
+          return;
+        }
+
+        const tmp=a.person;
+        a.person=b.person;
+        b.person=tmp;
+        swapSourcePosition=null;
+
+        renderResult();
+        const msg=document.getElementById("message");
+        if(msg) msg.innerHTML='<div class="info ok">Besetzung im LHF getauscht. Zum dauerhaften Übernehmen anschließend speichern bzw. Planung überschreiben.</div>';
+      };
+    });
+    refreshSeatSwapState();
+  }
+
   function renderPlanner(){
     const month=document.getElementById("planMonth").value;
-    const grid=document.getElementById("shiftGrid");
-    grid.innerHTML="";
-    shifts.filter(x=>x.date.startsWith(month)).forEach(shift=>{
-      const card=document.createElement("div");
-      card.className=`shift-card ${shift.type}`+(selectedShift===shift.date?" selected":"");
-      const saved=plans[shift.date];
-      card.innerHTML=`<div class="shift-date">${shift.type==="day"?"☀️":"🌙"} ${formatShiftDate(shift.date)}</div>
-        <div class="shift-type">${shift.type==="day"?"Tagdienst":"Nachtdienst"}</div>
-        ${saved?'<div class="shift-saved">✓ Besetzung geplant</div>':""}`;
-      card.onclick=()=>{
-        selectedShift=shift.date;
-        loadShiftPersonnelState();
-        initFixedCover();
-        updateFixedCards();
-        renderAvailability();
-        renderManual();
+    const daySelect=document.getElementById("planDay");
+    const selectedCard=document.getElementById("selectedShiftCard");
 
-        if(saved && saved.assignment){
-          current=saved.assignment.map(x=>({...x}));
-          renderResult();
-          document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(shift.date)} geladen. Krankmeldungen und Gäste gelten nur für diesen Dienst.</div>`;
-        }else{
-          current=[];
-          renderResult();
-          document.getElementById("message").innerHTML=`<div class="info">Dienst ${formatShiftDate(shift.date)} ausgewählt. Krankmeldungen und Gäste werden nur für diesen Dienst gespeichert.</div>`;
-        }
-        renderPlanner();
-      };
-      grid.appendChild(card);
+    const monthShifts=shifts.filter(x=>x.date.startsWith(month));
+
+    const oldValue=selectedShift && selectedShift.startsWith(month) ? selectedShift : "";
+    daySelect.innerHTML='<option value="">Dienst auswählen</option>';
+
+    monthShifts.forEach(shift=>{
+      const opt=document.createElement("option");
+      opt.value=shift.date;
+      const saved=plans[shift.date];
+      opt.textContent=`${shift.type==="day"?"☀️":"🌙"} ${formatShiftDate(shift.date)}${saved && saved.assignment ? " · geplant" : ""}`;
+      daySelect.appendChild(opt);
     });
+
+    daySelect.value=oldValue;
+
+    if(selectedShift && selectedShift.startsWith(month)){
+      const shift=shifts.find(x=>x.date===selectedShift);
+      const saved=plans[selectedShift];
+      selectedCard.innerHTML=`
+        <div class="selected-shift-main">
+          <div>
+            <div class="selected-shift-date">${shift?.type==="day"?"☀️":"🌙"} ${formatShiftDate(selectedShift)}</div>
+            <div class="selected-shift-type">${shift?.type==="day"?"Tagdienst":"Nachtdienst"}</div>
+          </div>
+          <div class="selected-shift-status">${saved && saved.assignment ? "✓ Besetzung geplant" : "Noch nicht geplant"}</div>
+        </div>`;
+    }else{
+      selectedCard.innerHTML='<div class="selected-shift-empty">Noch keinen Dienst ausgewählt.</div>';
+    }
   }
 
 
@@ -1534,6 +1828,8 @@ body.role-user .admin-only{
     renderSeat("seatWTM", "Wassertruppmann", byPos["Wassertruppmann"]);
 
     section.scrollIntoView({behavior:"smooth",block:"start"});
+  
+    enableSeatSwapping();
   }
 
 
@@ -1710,6 +2006,7 @@ body.role-user .admin-only{
 
     try{localStorage.setItem(STORAGE_KEY,JSON.stringify(history))}catch(e){}
     renderPlanner();
+    renderNextShift();
     renderHistory();
     renderStats();
     document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(selectedShift)} wurde geändert und gespeichert.</div>`;
@@ -1724,6 +2021,29 @@ body.role-user .admin-only{
     updateFixedCards();
     renderAvailability();
     renderManual();
+    renderPlanner();
+  });
+
+  document.getElementById("planDay").addEventListener("change",(e)=>{
+    selectedShift=e.target.value || null;
+    loadShiftPersonnelState();
+    initFixedCover();
+    updateFixedCards();
+    renderAvailability();
+    renderManual();
+
+    if(selectedShift){
+      const saved=plans[selectedShift];
+      if(saved && saved.assignment){
+        current=saved.assignment.map(x=>({...x}));
+        renderResult();
+        document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(selectedShift)} geladen.</div>`;
+      }else{
+        current=[];
+        renderResult();
+        document.getElementById("message").innerHTML=`<div class="info">Dienst ${formatShiftDate(selectedShift)} ausgewählt.</div>`;
+      }
+    }
     renderPlanner();
   });
   document.getElementById("planSelectedBtn").addEventListener("click",()=>{
@@ -1765,6 +2085,8 @@ body.role-user .admin-only{
   renderAvailability();
   renderManual();
   renderPlanner();
+  renderTodayStatus();
+  renderNextShift();
   renderHistory();
   renderStats();
 })();
