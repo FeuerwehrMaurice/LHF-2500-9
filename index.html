@@ -58,7 +58,7 @@ button{-webkit-tap-highlight-color:transparent}
   width:86px;height:86px;border-radius:50%;
   background:
     linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
-    repeating-linear-gradient(135deg,#ffd43b 0 9px,#171717 9px 18px);
+    #ffd43b;
   display:flex;align-items:center;justify-content:center;
   border:2px solid #ffe36b;
   box-shadow:0 0 22px rgba(255,212,59,.30);
@@ -142,7 +142,7 @@ button{-webkit-tap-highlight-color:transparent}
   width:76px;height:76px;border-radius:50%;
   background:
     linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
-    repeating-linear-gradient(135deg,#ffd43b 0 9px,#171717 9px 18px);
+    #ffd43b;
   display:grid;place-items:center;
   border:2px solid #ffe36b;
   box-shadow:0 0 20px rgba(255,212,59,.28);
@@ -223,7 +223,7 @@ button{-webkit-tap-highlight-color:transparent}
 .initial-chip{
   margin-top:14px;
   width:52px;height:52px;border-radius:50%;
-  background:repeating-linear-gradient(135deg,#ffd43b 0 8px,#141414 8px 16px);
+  background:#ffd43b;
   display:grid;place-items:center;
   border:2px solid #ffe36b;
   font-weight:950;
@@ -389,7 +389,7 @@ button{-webkit-tap-highlight-color:transparent}
   margin-top:10px;
   display:grid;place-items:center;
   border:2px solid #ffe36b;
-  background:repeating-linear-gradient(135deg,#ffd43b 0 7px,#171717 7px 14px);
+  background:#ffd43b;
   color:#111;
   font-weight:950;
 }
@@ -637,6 +637,33 @@ button{-webkit-tap-highlight-color:transparent}
   background:none !important;
   background-image:none !important;
   text-shadow:0 2px 3px #000,0 0 5px rgba(0,0,0,.75) !important;
+}
+
+
+/* Einheitliches Gelb ohne Streifen */
+.badge-inner,
+.avatar,
+.initial-chip,
+.seat .seat-initials,
+.initials,
+.person-avatar,
+.seat-avatar,
+.badge-initials{
+  background:#ffd43b !important;
+  background-image:none !important;
+  color:#0a0a0a !important;
+  text-shadow:none !important;
+}
+
+/* Namen klar und ohne Muster */
+.seat .seat-name,
+.person-name,
+.assigned,
+.assigned-name{
+  color:#ffe45c !important;
+  background:transparent !important;
+  background-image:none !important;
+  text-shadow:0 2px 3px #000 !important;
 }
 
 </style>
