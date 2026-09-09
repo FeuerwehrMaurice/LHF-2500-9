@@ -666,6 +666,49 @@ button{-webkit-tap-highlight-color:transparent}
   text-shadow:0 2px 3px #000 !important;
 }
 
+
+/* Personalverfügbarkeit */
+.availability-box{
+  margin-top:16px;
+  padding:14px;
+  border:1px solid #5a4b08;
+  border-radius:16px;
+  background:#0d0d0d;
+}
+.availability-title{
+  font-weight:900;
+  color:#ffe45c;
+  margin-bottom:10px;
+}
+.availability-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.availability-person{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 11px;
+  border:1px solid #3b3b3b;
+  border-radius:12px;
+  background:#121212;
+  cursor:pointer;
+  user-select:none;
+}
+.availability-person input{accent-color:#ffd43b;transform:scale(1.15)}
+.availability-person.off{
+  opacity:.52;
+  border-color:#6f1d22;
+}
+.availability-person.off .availability-name{
+  text-decoration:line-through;
+  color:#d0d0d0;
+}
+.availability-name{font-weight:800;color:#fff}
+.availability-hint{margin-top:9px;font-size:.8rem;color:#aaa}
+@media(max-width:650px){.availability-list{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -686,7 +729,7 @@ button{-webkit-tap-highlight-color:transparent}
     <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
       <div class="avatar">DT</div>
       <div class="person-name">Dennis Treite</div>
-      <div class="tag">Fest gesetzt · keine Auslosung</div>
+      <div class="tag">Stammpersonal</div>
     </div>
   </section>
 
@@ -695,7 +738,7 @@ button{-webkit-tap-highlight-color:transparent}
     <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
       <div class="avatar">RS</div>
       <div class="person-name">Raik Schindler</div>
-      <div class="tag">Fest gesetzt · keine Auslosung</div>
+      <div class="tag">Stammpersonal</div>
     </div>
   </section>
 
@@ -718,6 +761,15 @@ button{-webkit-tap-highlight-color:transparent}
     </div>
     <div class="shift-grid" id="shiftGrid"></div>
     <div class="plan-note">☀️ Tagdienst · 🌙 Nachtdienst · Dienst auswählen und anschließend auslosen. Gespeicherte Vorplanungen bleiben auf diesem Gerät.</div>
+  </section>
+
+
+  <section class="availability-box" id="availabilityBox">
+    <div class="availability-title">Personal verfügbar</div>
+    <div class="availability-list" id="availabilityList"></div>
+    <div class="availability-hint">
+      Haken raus = krank / nicht verfügbar. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
+    </div>
   </section>
 
   <section class="generate-wrap">
@@ -810,6 +862,46 @@ button{-webkit-tap-highlight-color:transparent}
   ];
 
   let current = [];
+  const AVAIL_KEY = "lhf25009_availability_v1";
+  let availability = loadAvailability();
+
+  function loadAvailability(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(AVAIL_KEY)||"{}");
+      const out = {};
+      people.forEach(name => out[name] = saved[name] !== false);
+      return out;
+    }catch(e){
+      const out = {};
+      people.forEach(name => out[name] = true);
+      return out;
+    }
+  }
+
+  function saveAvailability(){
+    try{localStorage.setItem(AVAIL_KEY, JSON.stringify(availability))}catch(e){}
+  }
+
+  function renderAvailability(){
+    const box = document.getElementById("availabilityList");
+    if(!box) return;
+    box.innerHTML = "";
+    people.forEach(name=>{
+      const label = document.createElement("label");
+      const on = availability[name] !== false;
+      label.className = "availability-person" + (on ? "" : " off");
+      label.innerHTML = `<input type="checkbox" ${on ? "checked" : ""}>
+        <span class="availability-name">${name}</span>`;
+      const input = label.querySelector("input");
+      input.addEventListener("change", ()=>{
+        availability[name] = input.checked;
+        saveAvailability();
+        renderAvailability();
+      });
+      box.appendChild(label);
+    });
+  }
+
   let history = loadHistory();
   const PLAN_KEY = "lhf25009_plans_v1";
   let selectedShift = null;
@@ -935,27 +1027,57 @@ button{-webkit-tap-highlight-color:transparent}
   }
 
   function generateAssignment(){
-    const available = shuffled(people);
-    const remaining = new Set(available);
-    const result = [];
+    const availablePeople = people.filter(name => availability[name] !== false);
 
-    // Assign each position using lowest fairness penalty + random tie breaker
-    positions.forEach(position=>{
-      const candidates = [...remaining].map(person=>({
-        person,
-        score: fairnessPenalty(person, position) + Math.random()*1.25
-      })).sort((a,b)=>a.score-b.score);
+    // Pflichtbesetzung: Maschinist + kompletter Angriffstrupp.
+    if(availablePeople.length < 3){
+      current = null;
+      document.getElementById("message").innerHTML =
+        '<div class="info">Auslosung nicht möglich: Für Maschinist + vollständigen Angriffstrupp werden mindestens 3 verfügbare Mini Feuerwehrmänner benötigt.</div>';
+      return;
+    }
 
-      const chosen = candidates[0].person;
-      remaining.delete(chosen);
-      result.push({position, person:chosen});
+    const mandatory = ["Maschinist","Angriffstruppführer","Angriffstruppmann"];
+    const optional = ["Wassertruppführer","Wassertruppmann"];
+    const targetPositions = mandatory.concat(optional.slice(0, Math.max(0, availablePeople.length - 3)));
+
+    // Faire Zuordnung: bevorzuge Kombinationen, die in der Historie seltener vorkamen.
+    const counts = {};
+    availablePeople.forEach(person=>{
+      counts[person] = {};
+      positions.forEach(pos=>counts[person][pos]=0);
     });
 
-    current = result;
+    history.forEach(entry=>{
+      (entry.assignment||[]).forEach(a=>{
+        if(counts[a.person] && counts[a.person][a.position] !== undefined){
+          counts[a.person][a.position]++;
+        }
+      });
+    });
+
+    const remaining = [...availablePeople];
+    const assignment = [];
+
+    targetPositions.forEach(position=>{
+      let min = Infinity;
+      remaining.forEach(person=>{
+        min = Math.min(min, counts[person]?.[position] ?? 0);
+      });
+      const candidates = remaining.filter(person => (counts[person]?.[position] ?? 0) === min);
+      const chosen = candidates[Math.floor(Math.random()*candidates.length)];
+      assignment.push({position, person: chosen});
+      remaining.splice(remaining.indexOf(chosen),1);
+    });
+
+    // If somehow more people than positions exist, ignore extras. With current setup max is 5.
+    current = assignment;
     renderResult();
 
-    const msg = document.getElementById("message");
-    msg.innerHTML = '<div class="info ok">Besetzung ausgelost. Frühere Positionen wurden bei der Verteilung berücksichtigt.</div>';
+    const missing = optional.filter(pos => !assignment.some(a=>a.position===pos));
+    document.getElementById("message").innerHTML = missing.length
+      ? `<div class="info ok">Auslosung erstellt. Pflichtbesetzung vollständig. Nicht besetzt: ${missing.join(", ")}.</div>`
+      : '<div class="info ok">Auslosung erstellt. Alle Funktionen sind vollständig besetzt.</div>';
   }
 
   function renderSeat(id, role, person, fixed=false){
@@ -1069,6 +1191,7 @@ button{-webkit-tap-highlight-color:transparent}
   });
 
   renderPeople();
+  renderAvailability();
   renderPlanner();
   renderHistory();
 })();
