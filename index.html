@@ -709,6 +709,63 @@ button{-webkit-tap-highlight-color:transparent}
 .availability-hint{margin-top:9px;font-size:.8rem;color:#aaa}
 @media(max-width:650px){.availability-list{grid-template-columns:1fr}}
 
+
+/* Statistik */
+.stats{
+  margin-top:22px;
+}
+.stats-summary{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.stats-chip{
+  border:1px solid #6d5a00;
+  border-radius:12px;
+  padding:9px 12px;
+  background:#101010;
+  color:#ffe45c;
+  font-weight:900;
+}
+.stats-table-wrap{
+  overflow-x:auto;
+  border:1px solid #454545;
+  border-radius:16px;
+  background:#0d0d0d;
+}
+.stats-table{
+  width:100%;
+  min-width:700px;
+  border-collapse:collapse;
+}
+.stats-table th,
+.stats-table td{
+  padding:11px 10px;
+  border-bottom:1px solid #292929;
+  text-align:center;
+}
+.stats-table th{
+  color:#ffe45c;
+  font-size:.8rem;
+  background:#151515;
+}
+.stats-table th:first-child,
+.stats-table td:first-child{
+  text-align:left;
+}
+.stats-table td:first-child{
+  color:#fff;
+  font-weight:900;
+}
+.stats-table tbody tr:last-child td{
+  border-bottom:0;
+}
+.stats-empty{
+  padding:15px;
+  color:#aaa;
+}
+
 </style>
 </head>
 <body>
@@ -723,6 +780,17 @@ button{-webkit-tap-highlight-color:transparent}
     <p>Besetzung auswählen</p>
     <div class="status"><span class="dot"></span> LHF 2500/9 · Einsatzbereit</div>
   </section>
+
+
+
+  <section class="availability-box" id="availabilityBox">
+    <div class="availability-title">Personal verfügbar</div>
+    <div class="availability-list" id="availabilityList"></div>
+    <div class="availability-hint">
+      Haken raus = krank / nicht verfügbar. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
+    </div>
+  </section>
+
 
   <section class="section">
     <h2 class="section-title">Staffelführer</h2>
@@ -761,15 +829,6 @@ button{-webkit-tap-highlight-color:transparent}
     </div>
     <div class="shift-grid" id="shiftGrid"></div>
     <div class="plan-note">☀️ Tagdienst · 🌙 Nachtdienst · Dienst auswählen und anschließend auslosen. Gespeicherte Vorplanungen bleiben auf diesem Gerät.</div>
-  </section>
-
-
-  <section class="availability-box" id="availabilityBox">
-    <div class="availability-title">Personal verfügbar</div>
-    <div class="availability-list" id="availabilityList"></div>
-    <div class="availability-hint">
-      Haken raus = krank / nicht verfügbar. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
-    </div>
   </section>
 
   <section class="generate-wrap">
@@ -828,6 +887,15 @@ button{-webkit-tap-highlight-color:transparent}
       <button class="btn" id="rerollBtn">Neu auslosen</button>
       <button class="btn" id="saveBtn">Besetzung speichern</button>
       <button class="btn danger" id="resetHistoryBtn">Historie löschen</button>
+    </div>
+  </section>
+
+
+  <section class="section stats" id="statsSection">
+    <h2 class="section-title">Statistik</h2>
+    <div class="stats-summary" id="statsSummary"></div>
+    <div class="stats-table-wrap">
+      <div id="statsContent"></div>
     </div>
   </section>
 
@@ -1108,6 +1176,78 @@ button{-webkit-tap-highlight-color:transparent}
     section.scrollIntoView({behavior:"smooth",block:"start"});
   }
 
+
+  function renderStats(){
+    const summary = document.getElementById("statsSummary");
+    const content = document.getElementById("statsContent");
+    if(!summary || !content) return;
+
+    const counts = {};
+    people.forEach(person=>{
+      counts[person] = {
+        "Maschinist":0,
+        "Angriffstruppführer":0,
+        "Angriffstruppmann":0,
+        "Wassertruppführer":0,
+        "Wassertruppmann":0,
+        total:0
+      };
+    });
+
+    history.forEach(entry=>{
+      (entry.assignment || []).forEach(a=>{
+        if(counts[a.person] && counts[a.person][a.position] !== undefined){
+          counts[a.person][a.position]++;
+          counts[a.person].total++;
+        }
+      });
+    });
+
+    const savedAssignments = history.length;
+    const totalFunctions = Object.values(counts).reduce((sum,c)=>sum+c.total,0);
+
+    summary.innerHTML = `
+      <div class="stats-chip">Gespeicherte Dienste: ${savedAssignments}</div>
+      <div class="stats-chip">Verteilte Funktionen: ${totalFunctions}</div>
+    `;
+
+    if(history.length === 0){
+      content.innerHTML = '<div class="stats-empty">Noch keine Statistik vorhanden. Sie entsteht automatisch aus den gespeicherten Besetzungen.</div>';
+      return;
+    }
+
+    const rows = people.map(person=>{
+      const c = counts[person];
+      return `
+        <tr>
+          <td>${person}</td>
+          <td>${c["Maschinist"]}</td>
+          <td>${c["Angriffstruppführer"]}</td>
+          <td>${c["Angriffstruppmann"]}</td>
+          <td>${c["Wassertruppführer"]}</td>
+          <td>${c["Wassertruppmann"]}</td>
+          <td><strong>${c.total}</strong></td>
+        </tr>`;
+    }).join("");
+
+    content.innerHTML = `
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Mini Feuerwehrmann</th>
+            <th>Maschi</th>
+            <th>ATF</th>
+            <th>ATM</th>
+            <th>WTF</th>
+            <th>WTM</th>
+            <th>Gesamt</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
   function renderHistory(){
     const list = document.getElementById("historyList");
     list.innerHTML = "";
@@ -1161,6 +1301,7 @@ button{-webkit-tap-highlight-color:transparent}
     history = history.slice(0,50);
     saveHistory();
     renderHistory();
+    renderStats();
 
     document.getElementById("message").innerHTML =
       '<div class="info ok">Besetzung gespeichert. Die Fairness-Logik berücksichtigt sie bei zukünftigen Auslosungen.</div>';
@@ -1171,6 +1312,7 @@ button{-webkit-tap-highlight-color:transparent}
       history = [];
       saveHistory();
       renderHistory();
+      renderStats();
       document.getElementById("message").innerHTML =
         '<div class="info">Historie gelöscht. Die nächste Auslosung startet ohne vorherige Verteilungen.</div>';
     }
@@ -1194,6 +1336,7 @@ button{-webkit-tap-highlight-color:transparent}
   renderAvailability();
   renderPlanner();
   renderHistory();
+  renderStats();
 })();
 </script>
 </body>
