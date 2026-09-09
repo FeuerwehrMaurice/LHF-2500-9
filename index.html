@@ -896,8 +896,18 @@ body.role-user .admin-only{
 }
 
 
-/* Rolle nicht sichtbar anzeigen */
-.role-bar{display:none !important;}
+/* Rolle nicht sichtbar anzeigen, Abmelden aber sichtbar lassen */
+.role-bar{
+  display:flex !important;
+  justify-content:flex-end;
+  margin:10px 0 14px;
+}
+.role-badge{display:none !important;}
+.logout-btn{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+}
 
 </style>
 </head>
