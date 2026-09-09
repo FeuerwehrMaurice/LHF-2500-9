@@ -1447,6 +1447,27 @@ body.role-user .admin-only{
   }
 
   let history = loadHistory();
+
+  function normalizeHistory(){
+    const seen=new Set();
+    const cleaned=[];
+    for(const entry of history){
+      // Planned services use a date label such as "10.09.2026 · Nachtdienst".
+      // Keep only the newest saved version of the same service.
+      const key=(entry.date || "").trim();
+      if(key && /^\d{2}\.\d{2}\.\d{4}\s*·\s*(Tagdienst|Nachtdienst)$/i.test(key)){
+        if(seen.has(key)) continue;
+        seen.add(key);
+      }
+      cleaned.push(entry);
+    }
+    if(cleaned.length!==history.length){
+      history=cleaned.slice(0,50);
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    }
+  }
+
+
   const PLAN_KEY = "lhf25009_plans_v1";
   let selectedShift = null;
   let plans = loadPlans();
@@ -1543,7 +1564,8 @@ body.role-user .admin-only{
       const [y,m]=next.date.split("-");
       document.getElementById("planMonth").value=`${y}-${m}`;
       selectedShift=next.date;
-      loadShiftPersonnelState();
+      normalizeHistory();
+  loadShiftPersonnelState();
       initFixedCover();
       updateFixedCards();
       renderAvailability();
@@ -1943,12 +1965,18 @@ body.role-user .admin-only{
       hour:"2-digit",minute:"2-digit"
     });
 
-    history.unshift({
+    const historyEntry={
       date: selectedShift ? `${formatShiftDate(selectedShift)} · ${shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst"}` : date,
       assignment:current.map(x=>({...x})),
       staffelfuehrer: fixedName("Staffelführer"),
       maschinistenChef: fixedName("Maschinisten-Chef")
-    });
+    };
+
+    if(selectedShift){
+      // Exactly one statistics/history entry per planned service.
+      history = history.filter(e=>e.date!==historyEntry.date);
+    }
+    history.unshift(historyEntry);
 
     if(selectedShift){
       plans[selectedShift]={assignment:current.map(x=>({...x})), availability:{...availability}, fixedCover:{...fixedCover}};
