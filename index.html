@@ -944,15 +944,15 @@ body.role-user .admin-only{
 
 
   <section class="availability-box" id="availabilityBox">
-    <div class="availability-title">Personal verfügbar</div>
+    <div class="availability-title">Personal verfügbar <span id="availabilityScope" style="font-size:.75rem;color:#aaa;font-weight:700"></span></div>
     <div class="availability-list" id="availabilityList"></div>
     <div class="availability-hint">
-      Haken raus = krank / nicht verfügbar. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
+      Haken raus = krank / nicht verfügbar. Wenn ein Dienst ausgewählt ist, gilt die Auswahl nur für diesen Dienst. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
     </div>
   </section>
 
   <section class="fixed-cover-box" id="fixedCoverBox">
-    <div class="fixed-cover-title">Stammpersonal / Vertretung</div>
+    <div class="fixed-cover-title">Stammpersonal / Vertretung <span id="coverScope" style="font-size:.75rem;color:#aaa;font-weight:700"></span></div>
     <div class="fixed-cover-grid">
       <div class="fixed-cover-item">
         <label><input id="sfAbsent" type="checkbox"> Staffelführer nicht da</label>
@@ -1004,7 +1004,7 @@ body.role-user .admin-only{
       <button class="btn admin-only" id="overwritePlanBtn">Planung ändern / überschreiben</button>
     </div>
     <div class="shift-grid" id="shiftGrid"></div>
-    <div class="plan-note">☀️ Tagdienst · 🌙 Nachtdienst · Dienst auswählen und anschließend auslosen. Gespeicherte Vorplanungen bleiben auf diesem Gerät.</div>
+    <div class="plan-note">☀️ Tagdienst · 🌙 Nachtdienst · Dienst auswählen und anschließend auslosen. Krankmeldungen und Vertretungen werden dienstbezogen gespeichert.</div>
   </section>
 
 
@@ -1162,29 +1162,88 @@ body.role-user .admin-only{
   ];
 
   let current = [];
-  const COVER_KEY = "lhf25009_fixed_cover_v1";
-  let fixedCover = loadFixedCover();
+  const DEFAULT_COVER = {sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""};
+  function defaultAvailability(){
+    const out={};
+    people.forEach(name=>out[name]=true);
+    return out;
+  }
 
-  function loadFixedCover(){
-    try{
-      return Object.assign({sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""},
-        JSON.parse(localStorage.getItem(COVER_KEY)||"{}"));
-    }catch(e){return {sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""}}
+  let fixedCover = {...DEFAULT_COVER};
+  let availability = defaultAvailability();
+
+  function currentScopeLabel(){
+    return selectedShift ? `· ${formatShiftDate(selectedShift)}` : "· aktuell";
   }
-  function saveFixedCover(){
-    try{localStorage.setItem(COVER_KEY,JSON.stringify(fixedCover))}catch(e){}
+
+  function loadShiftPersonnelState(){
+    if(selectedShift && plans[selectedShift]){
+      const p = plans[selectedShift];
+      availability = defaultAvailability();
+      if(p.availability){
+        people.forEach(name=>{
+          if(p.availability[name] === false) availability[name] = false;
+        });
+      }
+      fixedCover = Object.assign({}, DEFAULT_COVER, p.fixedCover || {});
+    }else{
+      availability = defaultAvailability();
+      fixedCover = {...DEFAULT_COVER};
+    }
   }
+
+  function saveShiftPersonnelState(){
+    if(!selectedShift) return;
+    if(!plans[selectedShift]) plans[selectedShift] = {};
+    plans[selectedShift].availability = {...availability};
+    plans[selectedShift].fixedCover = {...fixedCover};
+    savePlans();
+    renderPlanner();
+  }
+
   function initFixedCover(){
     const sfAbsent=document.getElementById("sfAbsent");
     const sfGuest=document.getElementById("sfGuest");
     const mcAbsent=document.getElementById("mcAbsent");
     const mcGuest=document.getElementById("mcGuest");
-    sfAbsent.checked=!!fixedCover.sfAbsent; sfGuest.value=fixedCover.sfGuest||""; sfGuest.disabled=!sfAbsent.checked;
-    mcAbsent.checked=!!fixedCover.mcAbsent; mcGuest.value=fixedCover.mcGuest||""; mcGuest.disabled=!mcAbsent.checked;
-    sfAbsent.onchange=()=>{fixedCover.sfAbsent=sfAbsent.checked;sfGuest.disabled=!sfAbsent.checked;saveFixedCover();updateFixedCards();renderPeople();renderResult();};
-    mcAbsent.onchange=()=>{fixedCover.mcAbsent=mcAbsent.checked;mcGuest.disabled=!mcAbsent.checked;saveFixedCover();updateFixedCards();renderPeople();renderResult();};
-    sfGuest.oninput=()=>{fixedCover.sfGuest=sfGuest.value;saveFixedCover();updateFixedCards();renderPeople();renderResult();};
-    mcGuest.oninput=()=>{fixedCover.mcGuest=mcGuest.value;saveFixedCover();updateFixedCards();renderPeople();renderResult();};
+
+    sfAbsent.checked=!!fixedCover.sfAbsent;
+    sfGuest.value=fixedCover.sfGuest||"";
+    sfGuest.disabled=!sfAbsent.checked;
+    mcAbsent.checked=!!fixedCover.mcAbsent;
+    mcGuest.value=fixedCover.mcGuest||"";
+    mcGuest.disabled=!mcAbsent.checked;
+
+    sfAbsent.onchange=()=>{
+      fixedCover.sfAbsent=sfAbsent.checked;
+      sfGuest.disabled=!sfAbsent.checked;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
+    mcAbsent.onchange=()=>{
+      fixedCover.mcAbsent=mcAbsent.checked;
+      mcGuest.disabled=!mcAbsent.checked;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
+    sfGuest.oninput=()=>{
+      fixedCover.sfGuest=sfGuest.value;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
+    mcGuest.oninput=()=>{
+      fixedCover.mcGuest=mcGuest.value;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
   }
 
   function fixedName(role){
@@ -1198,31 +1257,15 @@ body.role-user .admin-only{
     const mc = document.getElementById("fixedMcName");
     if(sf) sf.textContent = fixedName("Staffelführer");
     if(mc) mc.textContent = fixedName("Maschinisten-Chef");
-  }
-
-  const AVAIL_KEY = "lhf25009_availability_v1";
-  let availability = loadAvailability();
-
-  function loadAvailability(){
-    try{
-      const saved = JSON.parse(localStorage.getItem(AVAIL_KEY)||"{}");
-      const out = {};
-      people.forEach(name => out[name] = saved[name] !== false);
-      return out;
-    }catch(e){
-      const out = {};
-      people.forEach(name => out[name] = true);
-      return out;
-    }
-  }
-
-  function saveAvailability(){
-    try{localStorage.setItem(AVAIL_KEY, JSON.stringify(availability))}catch(e){}
+    const coverScope=document.getElementById("coverScope");
+    if(coverScope) coverScope.textContent=currentScopeLabel();
   }
 
   function renderAvailability(){
     const box = document.getElementById("availabilityList");
     if(!box) return;
+    const scope=document.getElementById("availabilityScope");
+    if(scope) scope.textContent=currentScopeLabel();
     box.innerHTML = "";
     people.forEach(name=>{
       const label = document.createElement("label");
@@ -1233,7 +1276,7 @@ body.role-user .admin-only{
       const input = label.querySelector("input");
       input.addEventListener("change", ()=>{
         availability[name] = input.checked;
-        saveAvailability();
+        saveShiftPersonnelState();
         renderAvailability();
         renderManual();
       });
@@ -1289,10 +1332,20 @@ body.role-user .admin-only{
         ${saved?'<div class="shift-saved">✓ Besetzung geplant</div>':""}`;
       card.onclick=()=>{
         selectedShift=shift.date;
+        loadShiftPersonnelState();
+        initFixedCover();
+        updateFixedCards();
+        renderAvailability();
+        renderManual();
+
         if(saved && saved.assignment){
           current=saved.assignment.map(x=>({...x}));
           renderResult();
-          document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(shift.date)} geladen.</div>`;
+          document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(shift.date)} geladen. Krankmeldungen und Gäste gelten nur für diesen Dienst.</div>`;
+        }else{
+          current=[];
+          renderResult();
+          document.getElementById("message").innerHTML=`<div class="info">Dienst ${formatShiftDate(shift.date)} ausgewählt. Krankmeldungen und Gäste werden nur für diesen Dienst gespeichert.</div>`;
         }
         renderPlanner();
       };
@@ -1574,8 +1627,8 @@ body.role-user .admin-only{
           <span>${entry.date}</span>
         </div>
         <div class="history-body">
-          Staffelführer: Dennis Treite<br>
-          Maschinisten-Chef: Raik Schindler<br>
+          Staffelführer: ${entry.staffelfuehrer || "Dennis Treite"}<br>
+          Maschinisten-Chef: ${entry.maschinistenChef || "Raik Schindler"}<br>
           ${lines}
         </div>
       `;
@@ -1596,11 +1649,13 @@ body.role-user .admin-only{
 
     history.unshift({
       date: selectedShift ? `${formatShiftDate(selectedShift)} · ${shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst"}` : date,
-      assignment:current.map(x=>({...x}))
+      assignment:current.map(x=>({...x})),
+      staffelfuehrer: fixedName("Staffelführer"),
+      maschinistenChef: fixedName("Maschinisten-Chef")
     });
 
     if(selectedShift){
-      plans[selectedShift]={assignment:current.map(x=>({...x}))};
+      plans[selectedShift]={assignment:current.map(x=>({...x})), availability:{...availability}, fixedCover:{...fixedCover}};
       savePlans();
       renderPlanner();
     }
@@ -1637,7 +1692,7 @@ body.role-user .admin-only{
       return;
     }
 
-    plans[selectedShift]={assignment:current.map(x=>({...x}))};
+    plans[selectedShift]={assignment:current.map(x=>({...x})), availability:{...availability}, fixedCover:{...fixedCover}};
     savePlans();
 
     // Existing history entry for this shift is replaced, not duplicated.
@@ -1646,7 +1701,9 @@ body.role-user .admin-only{
     const shiftType=shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst";
     const entry={
       date:`${formatShiftDate(selectedShift)} · ${shiftType}`,
-      assignment:current.map(x=>({...x}))
+      assignment:current.map(x=>({...x})),
+      staffelfuehrer: fixedName("Staffelführer"),
+      maschinistenChef: fixedName("Maschinisten-Chef")
     };
     if(existingIndex>=0) history[existingIndex]=entry;
     else history.unshift(entry);
@@ -1662,6 +1719,11 @@ body.role-user .admin-only{
 
   document.getElementById("planMonth").addEventListener("change",()=>{
     selectedShift=null;
+    loadShiftPersonnelState();
+    initFixedCover();
+    updateFixedCards();
+    renderAvailability();
+    renderManual();
     renderPlanner();
   });
   document.getElementById("planSelectedBtn").addEventListener("click",()=>{
@@ -1696,6 +1758,7 @@ body.role-user .admin-only{
 
   document.getElementById("applyManualBtn").addEventListener("click",applyManualAssignment);
 
+  loadShiftPersonnelState();
   initFixedCover();
   updateFixedCards();
   renderPeople();
