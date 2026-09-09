@@ -350,11 +350,11 @@ button{-webkit-tap-highlight-color:transparent}
 }
 .seat{
   min-height:132px;
-  border:1px solid #6b5900;
+  border:1.5px solid #806900;
   border-radius:18px;
   background:
-    repeating-linear-gradient(135deg,rgba(255,212,59,.035) 0 8px,transparent 8px 16px),
-    #121212;
+    radial-gradient(circle at 50% 0%,rgba(255,212,59,.055),transparent 48%),
+    #101010;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -375,10 +375,14 @@ button{-webkit-tap-highlight-color:transparent}
   line-height:1.25;
 }
 .seat .seat-name{
-  margin-top:8px;
-  font-weight:900;
-  font-size:1rem;
-  line-height:1.2;
+  margin-top:9px;
+  font-weight:950;
+  font-size:1.08rem;
+  line-height:1.18;
+  color:#ffe45c;
+  text-shadow:0 1px 2px #000,0 0 7px rgba(255,212,59,.28);
+  letter-spacing:.01em;
+  overflow-wrap:anywhere;
 }
 .seat .seat-initials{
   width:46px;height:46px;border-radius:50%;
@@ -402,17 +406,18 @@ button{-webkit-tap-highlight-color:transparent}
   .crew-row{grid-template-columns:repeat(2,1fr);gap:8px}
   .seat{min-height:118px;padding:9px}
   .seat .seat-role{font-size:.64rem}
-  .seat .seat-name{font-size:.88rem}
+  .seat .seat-name{font-size:.94rem}
   .vehicle-wrap{padding:12px}
 }
 
 
 .crew-cabin{
-  margin-top:16px;
-  border:1px solid #514500;
-  border-radius:20px;
-  padding:14px;
-  background:#0e0e0e;
+  margin-top:12px;
+  border:2px solid #5e4e00;
+  border-radius:14px 14px 22px 22px;
+  padding:16px;
+  background:linear-gradient(180deg,#121212,#090909);
+  box-shadow:inset 0 0 20px rgba(255,212,59,.025);
 }
 .direction-label{
   text-align:center;
@@ -465,15 +470,16 @@ button{-webkit-tap-highlight-color:transparent}
   position:relative;
   max-width:760px;
   margin:0 auto;
-  padding:18px 24px 24px;
-  border:3px solid #d8ad00;
-  border-radius:28px 28px 22px 22px;
+  padding:22px 26px 28px;
+  border:3px solid #e0b600;
+  border-radius:34px 34px 24px 24px;
   background:
-    linear-gradient(180deg,rgba(255,212,59,.04),transparent 22%),
-    #0d0d0d;
+    linear-gradient(90deg,transparent 0 3%,rgba(255,212,59,.035) 3% 4%,transparent 4% 96%,rgba(255,212,59,.035) 96% 97%,transparent 97%),
+    linear-gradient(180deg,#171717 0%,#0c0c0c 48%,#111 100%);
   box-shadow:
-    0 0 34px rgba(255,212,59,.18),
-    inset 0 0 28px rgba(255,212,59,.035);
+    0 0 38px rgba(255,212,59,.18),
+    inset 0 0 0 1px rgba(255,228,92,.10),
+    inset 0 0 30px rgba(0,0,0,.75);
 }
 .lf-shell:before,
 .lf-shell:after{
@@ -489,21 +495,35 @@ button{-webkit-tap-highlight-color:transparent}
 .lf-shell:after{bottom:8px}
 
 .lf-front{
-  border:1px solid #544500;
-  border-radius:22px 22px 12px 12px;
-  padding:14px;
-  background:linear-gradient(180deg,#141414,#0f0f0f);
+  position:relative;
+  border:2px solid #6f5b00;
+  border-radius:26px 26px 14px 14px;
+  padding:16px;
+  background:linear-gradient(180deg,#1c1c1c,#0d0d0d);
+  box-shadow:inset 0 0 18px rgba(255,212,59,.035);
 }
+.lf-front:before,.lf-front:after{
+  content:"";
+  position:absolute;
+  top:18px;
+  width:11px;height:11px;
+  border-radius:50%;
+  background:#ffe45c;
+  box-shadow:0 0 12px rgba(255,228,92,.55);
+}
+.lf-front:before{left:14px}
+.lf-front:after{right:14px}
 .windscreen{
   width:72%;
-  height:20px;
-  margin:0 auto 10px;
+  height:32px;
+  margin:0 auto 12px;
   border:2px solid #8b7100;
-  border-radius:12px 12px 5px 5px;
+  border-radius:15px 15px 6px 6px;
   background:
-    linear-gradient(180deg,rgba(255,212,59,.08),rgba(255,255,255,.01)),
+    linear-gradient(90deg,transparent 49.5%,#6f5b00 49.5% 50.5%,transparent 50.5%),
+    linear-gradient(180deg,rgba(255,212,59,.10),rgba(255,255,255,.015)),
     #101318;
-  box-shadow:inset 0 0 15px rgba(255,212,59,.05);
+  box-shadow:inset 0 0 18px rgba(255,212,59,.06);
 }
 .lf-front-label{
   text-align:center;
