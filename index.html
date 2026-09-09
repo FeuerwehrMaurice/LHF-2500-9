@@ -1569,6 +1569,25 @@ body.role-user .admin-only{
     }
   }
 
+
+  function recoverPlanFromHistory(shiftDate){
+    if(!shiftDate || plans[shiftDate]?.assignment) return false;
+    const displayDate=formatShiftDate(shiftDate);
+    const found=history.find(e=>{
+      const label=(e.date||"");
+      return label.includes(displayDate) && Array.isArray(e.assignment) && e.assignment.length;
+    });
+    if(!found) return false;
+
+    plans[shiftDate]={
+      assignment:found.assignment.map(x=>({...x})),
+      availability:defaultAvailability(),
+      fixedCover:{...DEFAULT_COVER}
+    };
+    savePlans();
+    return true;
+  }
+
   function renderNextShift(){
     const box=document.getElementById("nextShiftContent");
     if(!box) return;
@@ -1577,6 +1596,7 @@ body.role-user .admin-only{
       box.innerHTML='<div class="selected-shift-empty">Kein weiterer Dienst im hinterlegten Zeitraum.</div>';
       return;
     }
+    recoverPlanFromHistory(next.date);
     const saved=plans[next.date];
     box.innerHTML=`
       <div class="next-shift-main">
@@ -1671,6 +1691,7 @@ body.role-user .admin-only{
     daySelect.innerHTML='<option value="">Dienst auswählen</option>';
 
     monthShifts.forEach(shift=>{
+      recoverPlanFromHistory(shift.date);
       const opt=document.createElement("option");
       opt.value=shift.date;
       const saved=plans[shift.date];
@@ -1682,6 +1703,7 @@ body.role-user .admin-only{
 
     if(selectedShift && selectedShift.startsWith(month)){
       const shift=shifts.find(x=>x.date===selectedShift);
+      recoverPlanFromHistory(selectedShift);
       const saved=plans[selectedShift];
       selectedCard.innerHTML=`
         <div class="selected-shift-main">
