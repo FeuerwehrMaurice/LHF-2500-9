@@ -1050,6 +1050,120 @@ body.role-user .admin-only{
   font-weight:800;
 }
 
+
+/* Statistik ist für Benutzer UND Admin sichtbar */
+body.role-user #statsSection,
+body.role-admin #statsSection{
+  display:block !important;
+}
+
+
+/* Ungespeicherte Änderungen nach Tausch */
+.unsaved-bar{
+  display:none;
+  margin-top:12px;
+  padding:12px 14px;
+  border:1px solid #8a6f00;
+  border-radius:14px;
+  background:#181400;
+}
+.unsaved-bar.show{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.unsaved-text{
+  color:#ffe45c;
+  font-weight:900;
+}
+.unsaved-sub{
+  color:#b9b9b9;
+  font-size:.82rem;
+  margin-top:2px;
+}
+.unsaved-save{
+  min-width:170px;
+}
+
+
+/* Wachabteilungs-Startseite */
+.wa-gate{
+  position:fixed;
+  inset:0;
+  z-index:20000;
+  background:#050505;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+}
+.wa-gate.hidden{display:none}
+.wa-card{
+  width:min(520px,100%);
+  border:1px solid #5b4a00;
+  border-radius:24px;
+  background:#0d0d0d;
+  padding:26px 20px;
+  text-align:center;
+  box-shadow:0 24px 70px rgba(0,0,0,.55);
+}
+.wa-kicker{
+  color:#ffe45c;
+  letter-spacing:.22em;
+  font-size:.76rem;
+  font-weight:900;
+}
+.wa-card h1{
+  color:#fff;
+  margin:10px 0 8px;
+  font-size:1.65rem;
+}
+.wa-card p{color:#aaa;margin:0 0 20px}
+.wa-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.wa-buttons button{
+  min-height:62px;
+  border:1px solid #444;
+  border-radius:16px;
+  background:#151515;
+  color:#fff;
+  font-size:1.08rem;
+  font-weight:900;
+}
+.wa-buttons button.selected{
+  border-color:#ffe45c;
+  color:#ffe45c;
+  box-shadow:0 0 0 1px #ffe45c inset;
+}
+.wa-password-wrap{
+  display:none;
+  margin-top:18px;
+}
+.wa-password-wrap.show{display:block}
+.wa-selected{
+  color:#ffe45c;
+  font-weight:900;
+  margin-bottom:8px;
+}
+#waPassword{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #555;
+  border-radius:14px;
+  background:#090909;
+  color:#fff;
+  padding:15px;
+  font-size:1.1rem;
+  text-align:center;
+  letter-spacing:.22em;
+}
+.wa-error{color:#ff6b6b;font-weight:800;margin-top:8px;min-height:20px}
+
 </style>
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -1060,6 +1174,29 @@ body.role-user .admin-only{
 
 </head>
 <body>
+
+<div class="wa-gate" id="waGate">
+  <div class="wa-card">
+    <div class="wa-kicker">LEHRFEUERWEHR 2500</div>
+    <h1>Wachabteilung auswählen</h1>
+    <p>Wähle deine Wachabteilung und gib anschließend das Passwort ein.</p>
+
+    <div class="wa-buttons">
+      <button type="button" data-wa="1">WA 1</button>
+      <button type="button" data-wa="2">WA 2</button>
+      <button type="button" data-wa="3">WA 3</button>
+      <button type="button" data-wa="4">WA 4</button>
+    </div>
+
+    <div class="wa-password-wrap" id="waPasswordWrap">
+      <div class="wa-selected" id="waSelected">WA auswählen</div>
+      <input id="waPassword" type="password" inputmode="numeric" pattern="[0-9]*"
+             maxlength="6" autocomplete="off" placeholder="6-stelliges Passwort">
+      <div class="wa-error" id="waError"></div>
+    </div>
+  </div>
+</div>
+
 
 <div class="login-overlay" id="loginOverlay">
   <div class="login-card">
@@ -1240,14 +1377,23 @@ body.role-user .admin-only{
     <div class="actions">
       <button class="btn" id="rerollBtn">Neu auslosen</button>
       <button class="btn" id="saveBtn">Besetzung speichern</button>
-      <button class="btn danger" id="resetHistoryBtn">Historie löschen</button>
+      <button class="btn danger admin-only" id="resetHistoryBtn">Historie löschen</button>
     </div>
   </section>
 
 
-  <button class="btn admin-only" id="repairStatsBtn" type="button">Statistik reparieren</button>
+
+  <div class="unsaved-bar" id="unsavedBar">
+    <div>
+      <div class="unsaved-text">Änderung noch nicht gespeichert</div>
+      <div class="unsaved-sub">Die Besetzung wurde im LHF getauscht.</div>
+    </div>
+    <button class="btn unsaved-save" id="saveSwapBtn" type="button">Änderung speichern</button>
+  </div>
+
 <section class="section stats" id="statsSection">
     <h2 class="section-title">Statistik</h2>
+    <button class="btn admin-only" id="repairStatsBtn" type="button">Statistik reparieren</button>
     <div class="stats-summary" id="statsSummary"></div>
     <div class="stats-table-wrap">
       <div id="statsContent"></div>
@@ -1265,6 +1411,99 @@ body.role-user .admin-only{
 </div>
 
 <script>
+
+  const WA_PASSWORDS = {
+    "1":"111111",
+    "2":"222222",
+    "3":"333333",
+    "4":"444444"
+  };
+  const GLOBAL_ADMIN_PASSWORD = "121212";
+  let selectedWA = null;
+
+  function showWAGate(){
+    const gate=document.getElementById("waGate");
+    if(gate) gate.classList.remove("hidden");
+  }
+
+  function enterWA(wa, role){
+    sessionStorage.setItem("lf2500_wa", wa);
+    sessionStorage.setItem("lf2500_role_v1", role);
+    selectedWA=wa;
+    document.body.dataset.wa=wa;
+    document.body.classList.remove("role-user","role-admin");
+    document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
+
+    const gate=document.getElementById("waGate");
+    if(gate) gate.classList.add("hidden");
+
+    // Hide the old standalone login overlay because WA login replaces it.
+    const oldLogin=document.getElementById("loginOverlay");
+    if(oldLogin) oldLogin.style.display="none";
+
+    const heroPill=document.querySelector(".hero-pill");
+    if(heroPill) heroPill.textContent=`● Lehrfeuerwehr 2500 · WA ${wa}`;
+
+    if(typeof renderTodayStatus==="function") renderTodayStatus();
+    if(typeof renderNextShift==="function") renderNextShift();
+    if(typeof renderPlanner==="function") renderPlanner();
+    if(typeof renderHistory==="function") renderHistory();
+    if(typeof renderStats==="function") renderStats();
+  }
+
+  function initWAGate(){
+    const gate=document.getElementById("waGate");
+    const wrap=document.getElementById("waPasswordWrap");
+    const input=document.getElementById("waPassword");
+    const label=document.getElementById("waSelected");
+    const error=document.getElementById("waError");
+
+    document.querySelectorAll(".wa-buttons button").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        selectedWA=btn.dataset.wa;
+        document.querySelectorAll(".wa-buttons button").forEach(x=>x.classList.remove("selected"));
+        btn.classList.add("selected");
+        label.textContent=`WA ${selectedWA}`;
+        wrap.classList.add("show");
+        error.textContent="";
+        input.value="";
+        input.focus();
+      });
+    });
+
+    function tryWA(){
+      if(!selectedWA) return;
+      const pw=input.value;
+      if(pw.length<6) return;
+
+      if(pw===GLOBAL_ADMIN_PASSWORD){
+        enterWA(selectedWA,"admin");
+        return;
+      }
+      if(pw===WA_PASSWORDS[selectedWA]){
+        enterWA(selectedWA,"user");
+        return;
+      }
+      error.textContent="Passwort nicht korrekt.";
+      input.value="";
+      input.focus();
+    }
+
+    input.addEventListener("input",tryWA);
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter") tryWA();
+    });
+
+    const rememberedWA=sessionStorage.getItem("lf2500_wa");
+    const rememberedRole=sessionStorage.getItem("lf2500_role_v1");
+    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
+       (rememberedRole==="user" || rememberedRole==="admin")){
+      enterWA(rememberedWA,rememberedRole);
+    }else{
+      gate.classList.remove("hidden");
+    }
+  }
+
 
   const NORMAL_PASSWORD = "111111";
   const ADMIN_PASSWORD = "121212";
@@ -1445,11 +1684,8 @@ body.role-user .admin-only{
         <span class="availability-name">${name}</span>`;
       const input = label.querySelector("input");
       input.addEventListener("change", ()=>{
-        availability[name] = input.checked;
-        saveShiftPersonnelState();
-        renderAvailability();
-        renderManual();
-      });
+    saveCurrentAssignment();
+  });
       box.appendChild(label);
     });
   }
@@ -1611,20 +1847,31 @@ body.role-user .admin-only{
       const [y,m]=next.date.split("-");
       document.getElementById("planMonth").value=`${y}-${m}`;
       selectedShift=next.date;
+      setUnsavedSwap(false);
+
       normalizeHistory();
-  loadShiftPersonnelState();
+      recoverPlanFromHistory(selectedShift);
+      loadShiftPersonnelState();
       initFixedCover();
       updateFixedCards();
       renderAvailability();
       renderManual();
-      if(saved && saved.assignment){
-        current=saved.assignment.map(x=>({...x}));
+
+      const currentPlan=plans[selectedShift];
+      if(currentPlan && Array.isArray(currentPlan.assignment) && currentPlan.assignment.length){
+        current=currentPlan.assignment.map(x=>({...x}));
         renderResult();
+        document.getElementById("message").innerHTML=
+          `<div class="info ok">Gespeicherte Besetzung für ${formatShiftDate(selectedShift)} geöffnet.</div>`;
       }else{
         current=[];
         renderResult();
+        document.getElementById("message").innerHTML=
+          `<div class="info">Für ${formatShiftDate(selectedShift)} ist noch keine Besetzung gespeichert.</div>`;
       }
+
       renderPlanner();
+      renderNextShift();
       document.getElementById("plannerSection").scrollIntoView({behavior:"smooth",block:"start"});
     };
   }
@@ -1636,6 +1883,64 @@ body.role-user .admin-only{
       el.classList.add("swap-enabled");
       el.classList.toggle("swap-selected", el.dataset.seatPosition===swapSourcePosition);
     });
+  }
+
+
+  let hasUnsavedSwap=false;
+
+  function setUnsavedSwap(state){
+    hasUnsavedSwap=!!state;
+    const bar=document.getElementById("unsavedBar");
+    if(bar) bar.classList.toggle("show", hasUnsavedSwap);
+  }
+
+  function saveCurrentAssignment(){
+    if(!current || !current.length){
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Es gibt noch keine Besetzung zum Speichern.</div>';
+      return false;
+    }
+
+    const date = new Date().toLocaleString("de-DE");
+
+    if(selectedShift){
+      plans[selectedShift]={
+        assignment:current.map(x=>({...x})),
+        availability:{...availability},
+        fixedCover:{...fixedCover}
+      };
+      savePlans();
+      renderPlanner();
+      renderNextShift();
+    }
+
+    const historyEntry={
+      date: selectedShift
+        ? `${formatShiftDate(selectedShift)} · ${shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst"}`
+        : date,
+      assignment:current.map(x=>({...x})),
+      staffelfuehrer: fixedName("Staffelführer"),
+      maschinistenChef: fixedName("Maschinisten-Chef")
+    };
+
+    if(selectedShift){
+      history=history.filter(e=>e.date!==historyEntry.date);
+    }
+    history.unshift(historyEntry);
+    history=history.slice(0,50);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+
+    renderHistory();
+    renderStats();
+    setUnsavedSwap(false);
+
+    const msg=document.getElementById("message");
+    if(msg){
+      msg.innerHTML=selectedShift
+        ? `<div class="info ok">Änderung für ${formatShiftDate(selectedShift)} gespeichert.</div>`
+        : '<div class="info ok">Besetzung gespeichert.</div>';
+    }
+    return true;
   }
 
   function enableSeatSwapping(){
@@ -1673,8 +1978,9 @@ body.role-user .admin-only{
         swapSourcePosition=null;
 
         renderResult();
+        setUnsavedSwap(true);
         const msg=document.getElementById("message");
-        if(msg) msg.innerHTML='<div class="info ok">Besetzung im LHF getauscht. Zum dauerhaften Übernehmen anschließend speichern bzw. Planung überschreiben.</div>';
+        if(msg) msg.innerHTML='<div class="info">Besetzung getauscht – Änderung noch nicht gespeichert.</div>';
       };
     });
     refreshSeatSwapState();
@@ -1720,7 +2026,8 @@ body.role-user .admin-only{
 
 
   function initials(name){
-    return name.split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase();
+    if(!name) return "";
+    return String(name).split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase();
   }
 
   function loadHistory(){
@@ -1875,10 +2182,12 @@ body.role-user .admin-only{
 
   function renderSeat(id, role, person, fixed=false){
     const el = document.getElementById(id);
+    if(!el) return;
+    const shown = person || "Nicht besetzt";
     el.className = "seat" + (fixed ? " fixed" : "");
     el.innerHTML = `
       <div class="seat-role">${role}</div>
-      <div class="seat-name">${person}</div>
+      <div class="seat-name">${shown}</div>
       <div class="seat-initials">${initials(person)}</div>
     `;
   }
@@ -1888,7 +2197,7 @@ body.role-user .admin-only{
     section.style.display = "block";
 
     const byPos = {};
-    current.forEach(item => byPos[item.position] = item.person);
+    (current || []).forEach(item => byPos[item.position] = item.person);
 
     renderSeat("seatMaschinist", "Maschinist", byPos["Maschinist"]);
     renderSeat("seatMaschChef", "Maschinisten-Chef", fixedName("Maschinisten-Chef"), true);
@@ -2028,9 +2337,14 @@ body.role-user .admin-only{
     history.unshift(historyEntry);
 
     if(selectedShift){
-      plans[selectedShift]={assignment:current.map(x=>({...x})), availability:{...availability}, fixedCover:{...fixedCover}};
+      plans[selectedShift]={
+        assignment:current.map(x=>({...x})),
+        availability:{...availability},
+        fixedCover:{...fixedCover}
+      };
       savePlans();
       renderPlanner();
+      renderNextShift();
     }
 
     history = history.slice(0,50);
@@ -2103,6 +2417,7 @@ body.role-user .admin-only{
 
   document.getElementById("planDay").addEventListener("change",(e)=>{
     selectedShift=e.target.value || null;
+    setUnsavedSwap(false);
     loadShiftPersonnelState();
     initFixedCover();
     updateFixedCards();
@@ -2110,8 +2425,9 @@ body.role-user .admin-only{
     renderManual();
 
     if(selectedShift){
+      recoverPlanFromHistory(selectedShift);
       const saved=plans[selectedShift];
-      if(saved && saved.assignment){
+      if(saved && Array.isArray(saved.assignment) && saved.assignment.length){
         current=saved.assignment.map(x=>({...x}));
         renderResult();
         document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(selectedShift)} geladen.</div>`;
@@ -2175,6 +2491,30 @@ body.role-user .admin-only{
       repairStatistics();
     });
   }
+
+
+  const saveSwapBtn=document.getElementById("saveSwapBtn");
+  if(saveSwapBtn){
+    saveSwapBtn.addEventListener("click",()=>{
+      saveCurrentAssignment();
+    });
+  }
+
+
+  document.addEventListener("click",(e)=>{
+    const btn=e.target.closest(".logout-btn, #logoutBtn");
+    if(!btn) return;
+    sessionStorage.removeItem("lf2500_wa");
+    sessionStorage.removeItem("lf2500_role_v1");
+    selectedWA=null;
+    setTimeout(()=>{
+      showWAGate();
+      const oldLogin=document.getElementById("loginOverlay");
+      if(oldLogin) oldLogin.style.display="none";
+    },0);
+  },true);
+
+  window.addEventListener("DOMContentLoaded",initWAGate);
 
 </script>
 </body>
