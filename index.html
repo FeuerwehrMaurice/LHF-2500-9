@@ -593,6 +593,22 @@ button{-webkit-tap-highlight-color:transparent}
   .locker-row span{min-height:42px;font-size:.6rem}
 }
 
+
+/* Dienstplanung */
+.planner{margin-top:18px}
+.planner-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.planner-toolbar select{background:#101010;color:#ffe45c;border:1px solid #806900;border-radius:12px;padding:10px 12px;font-weight:800}
+.shift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.shift-card{background:#101010;border:1px solid #4d430d;border-radius:16px;padding:12px;cursor:pointer}
+.shift-card.day{border-left:4px solid #ffd43b}
+.shift-card.night{border-left:4px solid #4d91c9}
+.shift-card.selected{outline:2px solid #ffe45c;box-shadow:0 0 18px rgba(255,212,59,.18)}
+.shift-date{font-weight:900;color:#fff}
+.shift-type{font-size:.82rem;margin-top:4px;color:#bdbdbd}
+.shift-saved{font-size:.75rem;margin-top:7px;color:#ffe45c;font-weight:800}
+.plan-note{font-size:.82rem;color:#aaa;margin-top:10px}
+@media(max-width:650px){.shift-grid{grid-template-columns:repeat(2,1fr)}}
+
 </style>
 </head>
 <body>
@@ -629,6 +645,22 @@ button{-webkit-tap-highlight-color:transparent}
   <section class="section">
     <h2 class="section-title">LHF-Besatzung zur Auslosung</h2>
     <div class="people-grid" id="peopleGrid"></div>
+  </section>
+
+
+  <section class="section planner" id="plannerSection">
+    <h2 class="section-title">Dienstplanung</h2>
+    <div class="planner-toolbar">
+      <select id="planMonth" aria-label="Monat">
+        <option value="2026-09">September 2026</option>
+        <option value="2026-10">Oktober 2026</option>
+        <option value="2026-11">November 2026</option>
+        <option value="2026-12">Dezember 2026</option>
+      </select>
+      <button class="btn" id="planSelectedBtn">Ausgewählten Dienst auslosen</button>
+    </div>
+    <div class="shift-grid" id="shiftGrid"></div>
+    <div class="plan-note">☀️ Tagdienst · 🌙 Nachtdienst · Dienst auswählen und anschließend auslosen. Gespeicherte Vorplanungen bleiben auf diesem Gerät.</div>
   </section>
 
   <section class="generate-wrap">
@@ -722,6 +754,64 @@ button{-webkit-tap-highlight-color:transparent}
 
   let current = [];
   let history = loadHistory();
+  const PLAN_KEY = "lhf25009_plans_v1";
+  let selectedShift = null;
+  let plans = loadPlans();
+
+  // Dienste 1. Wachabteilung aus den übermittelten Kalendern.
+  const shifts = [
+    ["2026-09-01","day"],["2026-09-02","night"],["2026-09-04","day"],["2026-09-05","night"],
+    ["2026-09-09","day"],["2026-09-10","night"],["2026-09-12","day"],["2026-09-13","night"],
+    ["2026-09-17","day"],["2026-09-18","night"],["2026-09-20","day"],["2026-09-21","night"],
+    ["2026-09-25","day"],["2026-09-26","night"],["2026-09-28","day"],["2026-09-29","night"],
+    ["2026-10-03","day"],["2026-10-04","night"],["2026-10-06","day"],["2026-10-07","night"],
+    ["2026-10-11","day"],["2026-10-12","night"],["2026-10-14","day"],["2026-10-15","night"],
+    ["2026-10-19","day"],["2026-10-20","night"],["2026-10-22","day"],["2026-10-23","night"],
+    ["2026-10-27","day"],["2026-10-28","night"],["2026-10-30","day"],["2026-10-31","night"],
+    ["2026-11-04","day"],["2026-11-05","night"],["2026-11-07","day"],["2026-11-08","night"],
+    ["2026-11-12","day"],["2026-11-13","night"],["2026-11-15","day"],["2026-11-16","night"],
+    ["2026-11-20","day"],["2026-11-21","night"],["2026-11-23","day"],["2026-11-24","night"],
+    ["2026-11-28","day"],["2026-11-29","night"],
+    ["2026-12-01","day"],["2026-12-02","night"],["2026-12-06","day"],["2026-12-07","night"],
+    ["2026-12-09","day"],["2026-12-10","night"],["2026-12-14","day"],["2026-12-15","night"],
+    ["2026-12-17","day"],["2026-12-18","night"],["2026-12-22","day"],["2026-12-23","night"],
+    ["2026-12-25","day"],["2026-12-26","night"],["2026-12-30","day"],["2026-12-31","night"]
+  ].map(([date,type])=>({date,type}));
+
+  function loadPlans(){
+    try{return JSON.parse(localStorage.getItem(PLAN_KEY)||"{}")}catch(e){return {}}
+  }
+  function savePlans(){
+    try{localStorage.setItem(PLAN_KEY,JSON.stringify(plans))}catch(e){}
+  }
+  function formatShiftDate(iso){
+    const [y,m,d]=iso.split("-");
+    return `${d}.${m}.${y}`;
+  }
+  function renderPlanner(){
+    const month=document.getElementById("planMonth").value;
+    const grid=document.getElementById("shiftGrid");
+    grid.innerHTML="";
+    shifts.filter(x=>x.date.startsWith(month)).forEach(shift=>{
+      const card=document.createElement("div");
+      card.className=`shift-card ${shift.type}`+(selectedShift===shift.date?" selected":"");
+      const saved=plans[shift.date];
+      card.innerHTML=`<div class="shift-date">${shift.type==="day"?"☀️":"🌙"} ${formatShiftDate(shift.date)}</div>
+        <div class="shift-type">${shift.type==="day"?"Tagdienst":"Nachtdienst"}</div>
+        ${saved?'<div class="shift-saved">✓ Besetzung geplant</div>':""}`;
+      card.onclick=()=>{
+        selectedShift=shift.date;
+        if(saved && saved.assignment){
+          current=saved.assignment.map(x=>({...x}));
+          renderResult();
+          document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(shift.date)} geladen.</div>`;
+        }
+        renderPlanner();
+      };
+      grid.appendChild(card);
+    });
+  }
+
 
   function initials(name){
     return name.split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase();
@@ -879,9 +969,15 @@ button{-webkit-tap-highlight-color:transparent}
     });
 
     history.unshift({
-      date,
+      date: selectedShift ? `${formatShiftDate(selectedShift)} · ${shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst"}` : date,
       assignment:current.map(x=>({...x}))
     });
+
+    if(selectedShift){
+      plans[selectedShift]={assignment:current.map(x=>({...x}))};
+      savePlans();
+      renderPlanner();
+    }
 
     history = history.slice(0,50);
     saveHistory();
@@ -901,7 +997,22 @@ button{-webkit-tap-highlight-color:transparent}
     }
   });
 
+  document.getElementById("planMonth").addEventListener("change",()=>{
+    selectedShift=null;
+    renderPlanner();
+  });
+  document.getElementById("planSelectedBtn").addEventListener("click",()=>{
+    if(!selectedShift){
+      document.getElementById("message").innerHTML='<div class="info">Bitte zuerst einen Dienst auswählen.</div>';
+      document.getElementById("plannerSection").scrollIntoView({behavior:"smooth"});
+      return;
+    }
+    generateAssignment();
+    document.getElementById("message").innerHTML=`<div class="info ok">Besetzung für ${formatShiftDate(selectedShift)} ausgelost. Jetzt „Besetzung speichern“ drücken.</div>`;
+  });
+
   renderPeople();
+  renderPlanner();
   renderHistory();
 })();
 </script>
