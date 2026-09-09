@@ -508,8 +508,8 @@ button{-webkit-tap-highlight-color:transparent}
   top:18px;
   width:11px;height:11px;
   border-radius:50%;
-  background:#d71920;
-  box-shadow:0 0 12px rgba(215,25,32,.65);
+  background:#2f80ff;
+  box-shadow:0 0 10px rgba(47,128,255,.95),0 0 18px rgba(47,128,255,.55);
 }
 .lf-front:before{left:14px}
 .lf-front:after{right:14px}
@@ -766,6 +766,27 @@ button{-webkit-tap-highlight-color:transparent}
   color:#aaa;
 }
 
+
+/* Vertretung Stammpersonal */
+.fixed-cover-box{
+  margin-top:14px;
+  padding:14px;
+  border:1px solid #6b5700;
+  border-radius:16px;
+  background:#0d0d0d;
+}
+.fixed-cover-title{font-weight:900;color:#ffe45c;margin-bottom:10px}
+.fixed-cover-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fixed-cover-item{padding:11px;border:1px solid #353535;border-radius:12px;background:#121212}
+.fixed-cover-item label{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;margin-bottom:8px}
+.fixed-cover-item input[type="checkbox"]{accent-color:#ffd43b;transform:scale(1.15)}
+.fixed-cover-item input[type="text"]{
+  width:100%;box-sizing:border-box;background:#090909;color:#ffe45c;border:1px solid #665400;
+  border-radius:10px;padding:10px;font-weight:800;
+}
+.fixed-cover-item input[type="text"]:disabled{opacity:.35}
+@media(max-width:650px){.fixed-cover-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -791,12 +812,27 @@ button{-webkit-tap-highlight-color:transparent}
     </div>
   </section>
 
+  <section class="fixed-cover-box" id="fixedCoverBox">
+    <div class="fixed-cover-title">Stammpersonal / Vertretung</div>
+    <div class="fixed-cover-grid">
+      <div class="fixed-cover-item">
+        <label><input id="sfAbsent" type="checkbox"> Staffelführer nicht da</label>
+        <input id="sfGuest" type="text" placeholder="Gast / Vertretung eintragen" disabled>
+      </div>
+      <div class="fixed-cover-item">
+        <label><input id="mcAbsent" type="checkbox"> Maschinisten-Chef nicht da</label>
+        <input id="mcGuest" type="text" placeholder="Gast / Vertretung eintragen" disabled>
+      </div>
+    </div>
+  </section>
+
+
 
   <section class="section">
     <h2 class="section-title">Staffelführer</h2>
     <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
       <div class="avatar">DT</div>
-      <div class="person-name">Dennis Treite</div>
+      <div class="person-name">${fixedName("Staffelführer")}</div>
       <div class="tag">Stammpersonal</div>
     </div>
   </section>
@@ -805,7 +841,7 @@ button{-webkit-tap-highlight-color:transparent}
     <h2 class="section-title">Maschinisten-Chef</h2>
     <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
       <div class="avatar">RS</div>
-      <div class="person-name">Raik Schindler</div>
+      <div class="person-name">${fixedName("Maschinisten-Chef")}</div>
       <div class="tag">Stammpersonal</div>
     </div>
   </section>
@@ -930,6 +966,37 @@ button{-webkit-tap-highlight-color:transparent}
   ];
 
   let current = [];
+  const COVER_KEY = "lhf25009_fixed_cover_v1";
+  let fixedCover = loadFixedCover();
+
+  function loadFixedCover(){
+    try{
+      return Object.assign({sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""},
+        JSON.parse(localStorage.getItem(COVER_KEY)||"{}"));
+    }catch(e){return {sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""}}
+  }
+  function saveFixedCover(){
+    try{localStorage.setItem(COVER_KEY,JSON.stringify(fixedCover))}catch(e){}
+  }
+  function initFixedCover(){
+    const sfAbsent=document.getElementById("sfAbsent");
+    const sfGuest=document.getElementById("sfGuest");
+    const mcAbsent=document.getElementById("mcAbsent");
+    const mcGuest=document.getElementById("mcGuest");
+    sfAbsent.checked=!!fixedCover.sfAbsent; sfGuest.value=fixedCover.sfGuest||""; sfGuest.disabled=!sfAbsent.checked;
+    mcAbsent.checked=!!fixedCover.mcAbsent; mcGuest.value=fixedCover.mcGuest||""; mcGuest.disabled=!mcAbsent.checked;
+    sfAbsent.onchange=()=>{fixedCover.sfAbsent=sfAbsent.checked;sfGuest.disabled=!sfAbsent.checked;saveFixedCover();renderPeople();renderResult();};
+    mcAbsent.onchange=()=>{fixedCover.mcAbsent=mcAbsent.checked;mcGuest.disabled=!mcAbsent.checked;saveFixedCover();renderPeople();renderResult();};
+    sfGuest.oninput=()=>{fixedCover.sfGuest=sfGuest.value;saveFixedCover();renderPeople();renderResult();};
+    mcGuest.oninput=()=>{fixedCover.mcGuest=mcGuest.value;saveFixedCover();renderPeople();renderResult();};
+  }
+
+  function fixedName(role){
+    if(role==="Staffelführer") return fixedCover.sfAbsent ? (fixedCover.sfGuest.trim()||"Vertretung fehlt") : "Dennis Treite";
+    if(role==="Maschinisten-Chef") return fixedCover.mcAbsent ? (fixedCover.mcGuest.trim()||"Vertretung fehlt") : "Raik Schindler";
+    return "";
+  }
+
   const AVAIL_KEY = "lhf25009_availability_v1";
   let availability = loadAvailability();
 
@@ -1166,8 +1233,8 @@ button{-webkit-tap-highlight-color:transparent}
     current.forEach(item => byPos[item.position] = item.person);
 
     renderSeat("seatMaschinist", "Maschinist", byPos["Maschinist"]);
-    renderSeat("seatMaschChef", "Maschinisten-Chef", "Raik Schindler", true);
-    renderSeat("seatStaffel", "Staffelführer", "Dennis Treite", true);
+    renderSeat("seatMaschChef", "Maschinisten-Chef", fixedName("Maschinisten-Chef"), true);
+    renderSeat("seatStaffel", "Staffelführer", fixedName("Staffelführer"), true);
     renderSeat("seatATF", "Angriffstruppführer", byPos["Angriffstruppführer"]);
     renderSeat("seatATM", "Angriffstruppmann", byPos["Angriffstruppmann"]);
     renderSeat("seatWTF", "Wassertruppführer", byPos["Wassertruppführer"]);
@@ -1332,6 +1399,7 @@ button{-webkit-tap-highlight-color:transparent}
     document.getElementById("message").innerHTML=`<div class="info ok">Besetzung für ${formatShiftDate(selectedShift)} ausgelost. Jetzt „Besetzung speichern“ drücken.</div>`;
   });
 
+  initFixedCover();
   renderPeople();
   renderAvailability();
   renderPlanner();
