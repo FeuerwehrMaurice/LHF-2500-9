@@ -1051,6 +1051,13 @@ body.role-user .admin-only{
 }
 
 </style>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LFW 2500">
+
 </head>
 <body>
 
@@ -1238,7 +1245,8 @@ body.role-user .admin-only{
   </section>
 
 
-  <section class="section stats" id="statsSection">
+  <button class="btn admin-only" id="repairStatsBtn" type="button">Statistik reparieren</button>
+<section class="section stats" id="statsSection">
     <h2 class="section-title">Statistik</h2>
     <div class="stats-summary" id="statsSummary"></div>
     <div class="stats-table-wrap">
@@ -1449,21 +1457,40 @@ body.role-user .admin-only{
   let history = loadHistory();
 
   function normalizeHistory(){
-    const seen=new Set();
+    const seenDates=new Set();
     const cleaned=[];
+
     for(const entry of history){
-      // Planned services use a date label such as "10.09.2026 · Nachtdienst".
-      // Keep only the newest saved version of the same service.
-      const key=(entry.date || "").trim();
-      if(key && /^\d{2}\.\d{2}\.\d{4}\s*·\s*(Tagdienst|Nachtdienst)$/i.test(key)){
-        if(seen.has(key)) continue;
-        seen.add(key);
+      const label=(entry.date || "").trim();
+      const m=label.match(/(\d{2}\.\d{2}\.\d{4})/);
+
+      // For every saved planned service, only the newest entry for that date counts.
+      if(m){
+        const dayKey=m[1];
+        if(seenDates.has(dayKey)) continue;
+        seenDates.add(dayKey);
       }
+
       cleaned.push(entry);
     }
-    if(cleaned.length!==history.length){
-      history=cleaned.slice(0,50);
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+
+    history=cleaned.slice(0,50);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  }
+
+  function repairStatistics(){
+    const before=history.length;
+    normalizeHistory();
+    renderHistory();
+    renderStats();
+    renderNextShift();
+
+    const removed=before-history.length;
+    const msg=document.getElementById("message");
+    if(msg){
+      msg.innerHTML = removed>0
+        ? `<div class="info ok">${removed} doppelte gespeicherte ${removed===1?"Besetzung wurde":"Besetzungen wurden"} entfernt. Die Statistik ist neu berechnet.</div>`
+        : `<div class="info ok">Keine doppelten Dienste mehr gefunden. Die Statistik wurde neu berechnet.</div>`;
     }
   }
 
@@ -2118,6 +2145,15 @@ body.role-user .admin-only{
   renderHistory();
   renderStats();
 })();
+
+  const repairStatsBtn=document.getElementById("repairStatsBtn");
+  if(repairStatsBtn){
+    repairStatsBtn.addEventListener("click",()=>{
+      if(!requireAdmin()) return;
+      repairStatistics();
+    });
+  }
+
 </script>
 </body>
 </html>
