@@ -350,10 +350,10 @@ button{-webkit-tap-highlight-color:transparent}
 }
 .seat{
   min-height:132px;
-  border:1.5px solid #806900;
+  border:1.5px solid #7b2428;
   border-radius:18px;
   background:
-    radial-gradient(circle at 50% 0%,rgba(255,212,59,.055),transparent 48%),
+    radial-gradient(circle at 50% 0%,rgba(215,25,32,.08),transparent 48%),
     #101010;
   display:flex;
   flex-direction:column;
@@ -413,11 +413,11 @@ button{-webkit-tap-highlight-color:transparent}
 
 .crew-cabin{
   margin-top:12px;
-  border:2px solid #5e4e00;
+  border:2px solid #7f171c;
   border-radius:14px 14px 22px 22px;
   padding:16px;
   background:linear-gradient(180deg,#121212,#090909);
-  box-shadow:inset 0 0 20px rgba(255,212,59,.025);
+  box-shadow:inset 0 0 20px rgba(215,25,32,.06);
 }
 .direction-label{
   text-align:center;
@@ -471,14 +471,14 @@ button{-webkit-tap-highlight-color:transparent}
   max-width:760px;
   margin:0 auto;
   padding:22px 26px 28px;
-  border:3px solid #e0b600;
+  border:3px solid #d71920;
   border-radius:34px 34px 24px 24px;
   background:
     linear-gradient(90deg,transparent 0 3%,rgba(255,212,59,.035) 3% 4%,transparent 4% 96%,rgba(255,212,59,.035) 96% 97%,transparent 97%),
     linear-gradient(180deg,#171717 0%,#0c0c0c 48%,#111 100%);
   box-shadow:
-    0 0 38px rgba(255,212,59,.18),
-    inset 0 0 0 1px rgba(255,228,92,.10),
+    0 0 38px rgba(215,25,32,.24),
+    inset 0 0 0 1px rgba(255,90,95,.12),
     inset 0 0 30px rgba(0,0,0,.75);
 }
 .lf-shell:before,
@@ -496,11 +496,11 @@ button{-webkit-tap-highlight-color:transparent}
 
 .lf-front{
   position:relative;
-  border:2px solid #6f5b00;
+  border:2px solid #8f151a;
   border-radius:26px 26px 14px 14px;
   padding:16px;
   background:linear-gradient(180deg,#1c1c1c,#0d0d0d);
-  box-shadow:inset 0 0 18px rgba(255,212,59,.035);
+  box-shadow:inset 0 0 18px rgba(215,25,32,.08);
 }
 .lf-front:before,.lf-front:after{
   content:"";
@@ -508,8 +508,8 @@ button{-webkit-tap-highlight-color:transparent}
   top:18px;
   width:11px;height:11px;
   border-radius:50%;
-  background:#ffe45c;
-  box-shadow:0 0 12px rgba(255,228,92,.55);
+  background:#d71920;
+  box-shadow:0 0 12px rgba(215,25,32,.65);
 }
 .lf-front:before{left:14px}
 .lf-front:after{right:14px}
@@ -517,13 +517,13 @@ button{-webkit-tap-highlight-color:transparent}
   width:72%;
   height:32px;
   margin:0 auto 12px;
-  border:2px solid #8b7100;
+  border:2px solid #a61c22;
   border-radius:15px 15px 6px 6px;
   background:
-    linear-gradient(90deg,transparent 49.5%,#6f5b00 49.5% 50.5%,transparent 50.5%),
-    linear-gradient(180deg,rgba(255,212,59,.10),rgba(255,255,255,.015)),
+    linear-gradient(90deg,transparent 49.5%,#8f151a 49.5% 50.5%,transparent 50.5%),
+    linear-gradient(180deg,rgba(215,25,32,.12),rgba(255,255,255,.015)),
     #101318;
-  box-shadow:inset 0 0 18px rgba(255,212,59,.06);
+  box-shadow:inset 0 0 18px rgba(215,25,32,.10);
 }
 .lf-front-label{
   text-align:center;
@@ -608,6 +608,36 @@ button{-webkit-tap-highlight-color:transparent}
 .shift-saved{font-size:.75rem;margin-top:7px;color:#ffe45c;font-weight:800}
 .plan-note{font-size:.82rem;color:#aaa;margin-top:10px}
 @media(max-width:650px){.shift-grid{grid-template-columns:repeat(2,1fr)}}
+
+
+.lf-shell{
+  background:
+    linear-gradient(90deg,rgba(190,18,24,.24) 0 4%,transparent 4% 96%,rgba(190,18,24,.24) 96% 100%),
+    linear-gradient(180deg,#351114 0%,#160d0e 18%,#0c0c0c 48%,#171010 100%) !important;
+}
+.lf-front{
+  background:linear-gradient(180deg,#471317 0%,#1d0c0e 45%,#0d0d0d 100%) !important;
+}
+.crew-cabin{
+  background:linear-gradient(180deg,#2a0f12 0%,#120b0c 38%,#090909 100%) !important;
+}
+
+
+/* Klare gelbe Personenanzeige – ohne Streifen */
+.avatar,.initials,.person-avatar,.seat-avatar,.badge-initials{
+  background:#ffd43b !important;
+  background-image:none !important;
+  color:#0a0a0a !important;
+  text-shadow:none !important;
+}
+.seat .seat-name,
+.person-name,
+.assigned-name{
+  color:#ffe45c !important;
+  background:none !important;
+  background-image:none !important;
+  text-shadow:0 2px 3px #000,0 0 5px rgba(0,0,0,.75) !important;
+}
 
 </style>
 </head>
