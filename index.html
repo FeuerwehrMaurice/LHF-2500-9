@@ -2307,6 +2307,208 @@ body[data-active-wa] .seat.selected{
 /* Weniger visuelles Gewicht bei leeren Sitzen */
 </style>
 
+
+<!-- LFW 2500/9 typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="lfwTypographyV2">
+/* Hauptschrift */
+html,body,button,input,select,textarea,
+.card,.panel,.seat,.person-card,.staff-card,.admin-hub,.legal-card{
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+
+/* Überschriften */
+h1,h2,h3,
+.hero h1,
+.section-title,
+.wa-login-logo{
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-weight:800!important;
+  letter-spacing:-.025em!important;
+}
+
+/* Technische Informationen */
+.vehicle-designation,
+.status-chip,
+.cloud-status,
+.eyebrow,.kicker,
+.seat .role,.seat .seat-role,
+#waGate .wa-buttons button[data-wa]::before,
+.date,.shift-date,.shift-type,
+code,.mono{
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  letter-spacing:.025em!important;
+}
+
+/* Namen bleiben angenehm lesbar */
+.person-name,
+.seat .name,
+.staff-card .name{
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-weight:700!important;
+  letter-spacing:-.01em!important;
+}
+
+/* Initialen technisch, aber kompakt */
+.avatar,.initials,.person-avatar,.seat .avatar,.seat .initials{
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+</style>
+
+
+<style id="lfwV1CompleteStyles">
+:root{
+  --surface:#0f1215;
+  --surface-2:#14181c;
+  --line:#2c3238;
+  --text:#f3f5f6;
+  --muted:#9aa2aa;
+}
+
+/* Compact info cards */
+.lfw-v1-card{
+  background:var(--surface)!important;
+  border:1px solid var(--line)!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+  padding:14px!important;
+}
+.lfw-v1-eyebrow{
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:.72rem;
+  color:var(--muted);
+  margin-bottom:7px;
+}
+.lfw-v1-title{
+  margin:0 0 5px;
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-weight:800;
+  font-size:1rem;
+  color:var(--text);
+}
+.lfw-v1-text{margin:0;color:#d9dde0;line-height:1.45}
+.lfw-v1-meta{
+  margin-top:9px;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-size:.72rem;color:var(--muted)
+}
+
+/* Announcement panel */
+#announcementPanel{
+  margin:12px 0 14px;
+  display:none;
+  position:relative;
+}
+#announcementPanel.show{display:block}
+#announcementPanel::before{
+  content:"";
+  position:absolute;
+  left:0;top:10px;bottom:10px;width:3px;
+  border-radius:2px;
+  background:var(--active-wa,#c9cdd1);
+}
+#announcementPanel .lfw-v1-card{padding-left:17px!important}
+#announcementDismiss{
+  float:right;
+  min-height:34px!important;
+  padding:6px 10px!important;
+  border:1px solid var(--line)!important;
+  background:#101418!important;
+  color:#cfd4d8!important;
+  font-size:.78rem!important;
+}
+
+/* Info panel */
+#appInfoPanel{margin:18px 0 10px}
+#appInfoGrid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:10px
+}
+#appInfoGrid .mini{
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:#111519;
+}
+#appInfoGrid strong{display:block;color:#f1f3f4;margin-bottom:3px}
+#appInfoGrid span{
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-size:.72rem;color:var(--muted)
+}
+
+/* Footer navigation */
+#lfwLegalNav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:14px 8px 4px;
+}
+#lfwLegalNav button{
+  appearance:none;
+  border:0!important;
+  background:transparent!important;
+  color:#aeb5bb!important;
+  padding:4px 3px!important;
+  min-height:32px!important;
+  font-size:.78rem!important;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+#lfwLegalNav button:hover{color:#f3f5f6!important}
+
+/* Modal */
+.lfw-modal{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  background:rgba(0,0,0,.72);
+  padding:18px;
+  overflow:auto;
+}
+.lfw-modal.show{display:block}
+.lfw-modal-dialog{
+  max-width:760px;
+  margin:28px auto;
+  background:#0d1013;
+  border:1px solid #363d44;
+  border-radius:9px;
+  padding:18px;
+}
+.lfw-modal-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid #2d3339;padding-bottom:10px;margin-bottom:14px
+}
+.lfw-modal-head h2{margin:0;font-size:1.15rem}
+.lfw-modal-close{
+  min-height:36px!important;padding:6px 10px!important;
+  background:#14191d!important;border:1px solid #343b42!important;color:#fff!important
+}
+.lfw-modal h3{font-size:1rem;margin-top:18px}
+.lfw-modal p,.lfw-modal li{color:#d7dbde;line-height:1.5}
+.lfw-modal ul{padding-left:20px}
+.lfw-modal .note{
+  border:1px solid #3b4249;background:#12171b;border-radius:6px;padding:10px;margin:12px 0;
+  color:#bfc6cc
+}
+
+/* Keep layout mobile friendly */
+@media(max-width:640px){
+  #appInfoGrid{grid-template-columns:1fr}
+  .lfw-modal{padding:10px}
+  .lfw-modal-dialog{margin:10px auto;padding:14px}
+}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -4281,6 +4483,19 @@ body[data-active-wa] .seat.selected{
 
 </script>
 
+
+<section id="appInfoPanel" class="lfw-v1-card">
+  <div class="lfw-v1-eyebrow">Systeminformation</div>
+  <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
+  <p class="lfw-v1-text">Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
+  <div id="appInfoGrid">
+    <div class="mini"><strong>Version</strong><span>1.0</span></div>
+    <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
+    <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
+    <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
+  </div>
+</section>
+
 <div class="love-footer" id="loveFooter">
   <div class="love-footer-line"></div>
   <div class="love-footer-main"><span>♥</span> Mit Liebe <strong>1. WA</strong> <span>♥</span></div>
@@ -4407,6 +4622,252 @@ body.legal-open{overflow:hidden}
       var wa=b.getAttribute('data-wa');
       setTimeout(function(){ applyActiveWAColor(wa); },0);
     }
+  });
+})();
+</script>
+
+
+<nav id="lfwLegalNav" aria-label="Rechtliches und App-Informationen">
+  <button type="button" data-lfw-modal="lfwImpressum">Impressum</button>
+  <button type="button" data-lfw-modal="lfwDatenschutz">Datenschutz</button>
+  <button type="button" data-lfw-modal="lfwKontakt">Kontakt</button>
+  <button type="button" data-lfw-modal="lfwInfo">Über die App</button>
+</nav>
+
+<div id="lfwImpressum" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwImpressumTitle">
+  <div class="lfw-modal-dialog">
+    <div class="lfw-modal-head"><h2 id="lfwImpressumTitle">Impressum</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
+    <p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p>
+    <h3>Kontakt</h3>
+    <p>E-Mail: <em>wird nach Einrichtung der eigenen Domain ergänzt</em></p>
+    <div class="note">Vor einer öffentlichen bzw. offiziellen Nutzung sollte die Kontakt-E-Mail ergänzt und geprüft werden, ob weitere Angaben erforderlich sind.</div>
+  </div>
+</div>
+
+<div id="lfwDatenschutz" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwDatenschutzTitle">
+  <div class="lfw-modal-dialog">
+    <div class="lfw-modal-head"><h2 id="lfwDatenschutzTitle">Datenschutzerklärung</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
+    <h3>1. Verantwortlicher</h3>
+    <p>Maurice Klose, Eschenweg 107, 13587 Berlin, Deutschland. Eine Kontakt-E-Mail wird nach Einrichtung der eigenen Domain ergänzt.</p>
+
+    <h3>2. Zweck der Web-App</h3>
+    <p>Die Web-App dient der Dienstplanung, Verfügbarkeitsverwaltung, Fahrzeugbesetzung sowie der Anzeige von Historien und Statistiken innerhalb der Lehrfeuerwehr 2500.</p>
+
+    <h3>3. Verarbeitete Daten</h3>
+    <p>Je nach Nutzung werden insbesondere Namen, Wachabteilung, Verfügbarkeitsstatus, zugeteilte Fahrzeugfunktion, Dienst- und Besetzungsdaten sowie daraus entstehende Historien- und Statistikdaten verarbeitet.</p>
+
+    <h3>4. Firebase / Google</h3>
+    <p>Zur geräteübergreifenden Synchronisierung nutzt die Anwendung Google Firebase, insbesondere Cloud Firestore und Firebase Authentication. Die Anmeldung gegenüber Firebase erfolgt derzeit anonym. Dabei können technische Verbindungsdaten verarbeitet werden.</p>
+
+    <h3>5. GitHub Pages</h3>
+    <p>Die Web-App wird derzeit über GitHub Pages bereitgestellt. Beim Abruf der Website können technisch erforderliche Verbindungs- und Protokolldaten verarbeitet werden.</p>
+
+    <h3>6. Browser-Speicher</h3>
+    <p>Die Anwendung nutzt LocalStorage und SessionStorage, um erforderliche Einstellungen und Anwendungszustände lokal im Browser zu speichern. Diese Speichermechanismen dienen der Funktion der App und nicht zu Werbe- oder Trackingzwecken.</p>
+
+    <h3>7. Empfänger und technische Dienstleister</h3>
+    <p>Technische Dienstleister können insbesondere Google/Firebase sowie GitHub sein. Eine Weitergabe an weitere Empfänger erfolgt nur, soweit dies für Betrieb, Sicherheit oder aufgrund gesetzlicher Pflichten erforderlich ist.</p>
+
+    <h3>8. Speicherdauer</h3>
+    <p>Daten werden grundsätzlich nur so lange gespeichert, wie sie für Dienstplanung, Besetzung, Historie und Statistik erforderlich sind oder bis sie durch berechtigte Nutzer bzw. Administratoren gelöscht oder überschrieben werden.</p>
+
+    <h3>9. Betroffenenrechte</h3>
+    <p>Betroffene Personen können im Rahmen der gesetzlichen Voraussetzungen insbesondere Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und gegebenenfalls Widerspruch verlangen. Außerdem besteht grundsätzlich das Recht auf Beschwerde bei einer zuständigen Datenschutzaufsichtsbehörde.</p>
+
+    <h3>10. Rechtsgrundlage und dienstlicher Einsatz</h3>
+    <p>Die konkrete Rechtsgrundlage hängt davon ab, in welchem organisatorischen Rahmen die App genutzt wird und wer datenschutzrechtlich als Verantwortlicher gilt. Vor einer offiziellen dienstlichen Nutzung sollte dies verbindlich geklärt und dieser Abschnitt entsprechend ergänzt werden.</p>
+
+    <h3>11. Keine Werbung / kein Tracking</h3>
+    <p>Die Anwendung setzt nach aktuellem Stand keine Werbenetzwerke und keine Analyse- oder Marketingtracker ein. Ein allgemeines Cookie-Einwilligungsbanner ist daher nicht vorgesehen.</p>
+
+    <div class="note">Stand: September 2026. Diese Erklärung beschreibt den aktuellen technischen Aufbau der Web-App. Änderungen an Hosting, Firebase, Authentifizierung oder weiteren Diensten müssen hier nachvollzogen werden.</div>
+  </div>
+</div>
+
+<div id="lfwKontakt" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwKontaktTitle">
+  <div class="lfw-modal-dialog">
+    <div class="lfw-modal-head"><h2 id="lfwKontaktTitle">Kontakt</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
+    <p>Für Rückfragen, Fehlerhinweise oder Verbesserungsvorschläge wird hier nach Einrichtung der Domain eine Kontakt-E-Mail hinterlegt.</p>
+    <div class="note">Ein eigenes Kontaktformular ist bewusst nicht eingebaut, damit keine zusätzlichen personenbezogenen Nachrichtendaten in der App gespeichert werden müssen.</div>
+  </div>
+</div>
+
+<div id="lfwInfo" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwInfoTitle">
+  <div class="lfw-modal-dialog">
+    <div class="lfw-modal-head"><h2 id="lfwInfoTitle">Über die App</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
+    <p><strong>LHF 2500/9 Dienstplaner</strong><br>Version 1.0</p>
+    <p>Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
+    <h3>Änderungen in Version 1.0</h3>
+    <ul>
+      <li>WA-spezifische Farbführung</li>
+      <li>Dienst- und Besetzungsplanung</li>
+      <li>Verfügbarkeitsverwaltung</li>
+      <li>Besetzungsauslosung und Historie</li>
+      <li>Statistik und Adminbereich</li>
+      <li>Cloud-Synchronisierung über Firebase</li>
+      <li>Eigenständiges Terminal-Design ohne Glow</li>
+      <li>Impressum, Datenschutz, Kontakt und App-Info</li>
+      <li>Ankündigungsbereich für Wachabteilungen</li>
+    </ul>
+  </div>
+</div>
+
+
+<script id="lfwV1CompleteScript">
+(function(){
+  const ANNOUNCEMENT_KEY_PREFIX = 'lfw2500_announcement_wa_';
+
+  function activeWA(){
+    return String(sessionStorage.getItem('lf2500_wa') || document.body.getAttribute('data-active-wa') || '');
+  }
+
+  function announcementKey(wa){ return ANNOUNCEMENT_KEY_PREFIX + wa; }
+
+  function loadAnnouncement(){
+    const wa = activeWA();
+    const panel = document.getElementById('announcementPanel');
+    if(!panel) return;
+    if(!/^[1-4]$/.test(wa)){ panel.classList.remove('show'); return; }
+
+    let data = null;
+    try { data = JSON.parse(localStorage.getItem(announcementKey(wa)) || 'null'); } catch(e){ data = null; }
+    if(!data || !data.title){
+      panel.classList.remove('show');
+      return;
+    }
+
+    if(data.expiresAt && Date.now() > Number(data.expiresAt)){
+      localStorage.removeItem(announcementKey(wa));
+      panel.classList.remove('show');
+      return;
+    }
+
+    const dismissed = sessionStorage.getItem(announcementKey(wa) + '_dismissed') === String(data.updatedAt || '');
+    if(dismissed){ panel.classList.remove('show'); return; }
+
+    document.getElementById('announcementWA').textContent = wa + '. WA';
+    document.getElementById('announcementTitle').textContent = data.title || '';
+    document.getElementById('announcementText').textContent = data.text || '';
+    document.getElementById('announcementMeta').textContent =
+      data.updatedAt ? ('Aktualisiert · ' + new Date(data.updatedAt).toLocaleString('de-DE')) : '';
+    panel.classList.add('show');
+  }
+
+  window.setLFWAnnouncement = function(wa, title, message, expiresAt){
+    wa = String(wa);
+    if(!/^[1-4]$/.test(wa)) return false;
+    const data = {
+      title: String(title || '').trim(),
+      text: String(message || '').trim(),
+      expiresAt: expiresAt ? new Date(expiresAt).getTime() : null,
+      updatedAt: Date.now()
+    };
+    if(!data.title){
+      localStorage.removeItem(announcementKey(wa));
+    }else{
+      localStorage.setItem(announcementKey(wa), JSON.stringify(data));
+    }
+    loadAnnouncement();
+    return true;
+  };
+
+  window.clearLFWAnnouncement = function(wa){
+    localStorage.removeItem(announcementKey(String(wa)));
+    loadAnnouncement();
+  };
+
+  document.addEventListener('click', function(e){
+    const openBtn = e.target.closest && e.target.closest('[data-lfw-modal]');
+    if(openBtn){
+      const id = openBtn.getAttribute('data-lfw-modal');
+      const modal = document.getElementById(id);
+      if(modal) modal.classList.add('show');
+    }
+
+    if(e.target.classList && e.target.classList.contains('lfw-modal-close')){
+      const modal = e.target.closest('.lfw-modal');
+      if(modal) modal.classList.remove('show');
+    }
+
+    if(e.target.classList && e.target.classList.contains('lfw-modal')){
+      e.target.classList.remove('show');
+    }
+
+    if(e.target.id === 'announcementDismiss'){
+      const wa = activeWA();
+      try{
+        const data = JSON.parse(localStorage.getItem(announcementKey(wa)) || 'null');
+        if(data) sessionStorage.setItem(announcementKey(wa) + '_dismissed', String(data.updatedAt || ''));
+      }catch(err){}
+      document.getElementById('announcementPanel')?.classList.remove('show');
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.lfw-modal.show').forEach(m => m.classList.remove('show'));
+    }
+  });
+
+  // Keep announcement in sync with WA switching.
+  const originalApply = window.applyActiveWAColor;
+  if(typeof originalApply === 'function'){
+    window.applyActiveWAColor = function(wa){
+      const result = originalApply.apply(this, arguments);
+      setTimeout(loadAnnouncement, 0);
+      return result;
+    };
+  }
+
+  // Lightweight admin editor for announcements, injected only when admin controls are visible.
+  function maybeAddAdminAnnouncementEditor(){
+    const admin = document.querySelector('.admin-hub, #adminHub, #adminSection');
+    if(!admin || document.getElementById('announcementAdminEditor')) return;
+
+    const wrap = document.createElement('div');
+    wrap.id = 'announcementAdminEditor';
+    wrap.className = 'lfw-v1-card';
+    wrap.style.marginTop = '10px';
+    wrap.innerHTML = `
+      <div class="lfw-v1-eyebrow">Ankündigungen</div>
+      <h3 class="lfw-v1-title">Mitteilung für aktuelle WA</h3>
+      <input id="announcementAdminTitle" type="text" maxlength="80" placeholder="Überschrift" style="width:100%;margin:6px 0">
+      <textarea id="announcementAdminText" maxlength="400" placeholder="Mitteilung" style="width:100%;min-height:90px;margin:6px 0"></textarea>
+      <label style="display:block;margin:6px 0;color:#b9c0c6">Ablaufdatum (optional)
+        <input id="announcementAdminExpires" type="datetime-local" style="width:100%;margin-top:4px">
+      </label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+        <button id="announcementAdminSave" type="button">Mitteilung speichern</button>
+        <button id="announcementAdminClear" type="button">Mitteilung löschen</button>
+      </div>`;
+    admin.appendChild(wrap);
+
+    document.getElementById('announcementAdminSave').addEventListener('click', function(){
+      const wa = activeWA();
+      const title = document.getElementById('announcementAdminTitle').value;
+      const msg = document.getElementById('announcementAdminText').value;
+      const exp = document.getElementById('announcementAdminExpires').value;
+      window.setLFWAnnouncement(wa, title, msg, exp || null);
+    });
+
+    document.getElementById('announcementAdminClear').addEventListener('click', function(){
+      window.clearLFWAnnouncement(activeWA());
+      document.getElementById('announcementAdminTitle').value = '';
+      document.getElementById('announcementAdminText').value = '';
+      document.getElementById('announcementAdminExpires').value = '';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    loadAnnouncement();
+    setTimeout(maybeAddAdminAnnouncementEditor, 300);
+    setTimeout(maybeAddAdminAnnouncementEditor, 1200);
+  });
+
+  // Also watch DOM changes because admin area may be built dynamically.
+  const observer = new MutationObserver(function(){ maybeAddAdminAnnouncementEditor(); });
+  document.addEventListener('DOMContentLoaded', function(){
+    observer.observe(document.body, {childList:true, subtree:true});
   });
 })();
 </script>
