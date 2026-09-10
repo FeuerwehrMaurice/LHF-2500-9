@@ -1789,6 +1789,318 @@ button,.btn,.card,.panel,.shift-card,.seat{transition:background-color .15s ease
 .legal-card{border-radius:8px!important;background:#121519!important;border-color:#30353a!important}
 .legal-close{border-radius:6px!important}
 </style>
+
+<style id="officialWAColors">
+/* Offizielle Wachabteilungsfarben: 1 Gelb, 2 Blau, 3 Grün, 4 Rot */
+#waGate .wa-buttons button[data-wa="1"]{--wa:#f2cc2f;--wa-rgb:242,204,47}
+#waGate .wa-buttons button[data-wa="2"]{--wa:#2f80ed;--wa-rgb:47,128,237}
+#waGate .wa-buttons button[data-wa="3"]{--wa:#27ae60;--wa-rgb:39,174,96}
+#waGate .wa-buttons button[data-wa="4"]{--wa:#e53935;--wa-rgb:229,57,53}
+
+#waGate .wa-buttons button[data-wa]{
+  border-color:rgba(var(--wa-rgb),.42)!important;
+  background:linear-gradient(90deg,rgba(var(--wa-rgb),.07),#101216 38%)!important;
+}
+#waGate .wa-buttons button[data-wa]::before{
+  background:var(--wa)!important;
+  color:#0b0d0f!important;
+  border-color:var(--wa)!important;
+}
+#waGate .wa-buttons button[data-wa] strong{color:var(--wa)!important}
+#waGate .wa-buttons button[data-wa].selected{
+  border-color:var(--wa)!important;
+  background:linear-gradient(90deg,rgba(var(--wa-rgb),.12),#101216 42%)!important;
+  box-shadow:inset 3px 0 0 var(--wa)!important;
+}
+#waGate .wa-buttons button[data-wa].selected::after{color:var(--wa)!important}
+</style>
+
+
+<style id="lfwFlatNoGlowV2">
+/* LFW 2500/9 – konsequent flaches, eigenständiges Design ohne Glow */
+:root{
+  --shadow:none!important;
+}
+
+/* Keine Leucht-, Blur- oder Neon-Effekte */
+*,*::before,*::after{
+  text-shadow:none!important;
+  filter:none!important;
+}
+body,
+.app-shell,
+main,
+section,
+.card,
+.panel,
+.shift-card,
+.seat,
+.vehicle,
+.cab,
+.crew-cabin,
+.admin-hub,
+.wa-card,
+.status-chip,
+.cloud-status,
+.love-footer,
+.legal-card,
+button,
+input,
+select{
+  box-shadow:none!important;
+}
+
+/* Leuchtende Radialverläufe entfernen, Flächen ruhig und technisch halten */
+body,
+.app-shell,
+.hero,
+.hero-card,
+.card,
+.panel,
+.vehicle,
+.cab,
+.crew-cabin,
+.seat,
+.shift-card,
+.admin-hub,
+.wa-card,
+.legal-card{
+  background-image:none!important;
+}
+
+/* Fahrzeug: klare Linien statt Lichtschein */
+.vehicle{
+  background:#0c0e10!important;
+}
+.cab,
+.crew-cabin{
+  background:#111315!important;
+}
+.seat{
+  background:#101214!important;
+}
+
+/* Blaulichter bleiben als erkennbare Punkte, aber ohne Leuchten */
+.beacon,
+.blue-light,
+.light{
+  box-shadow:none!important;
+  filter:none!important;
+  opacity:1!important;
+}
+
+/* Initialen ohne gelben Lichtkranz */
+.avatar,
+.initials,
+.person-avatar,
+.seat .avatar,
+.seat .initials{
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/* Buttons und Statusflächen: keine schwebenden Schatten */
+button,
+.btn,
+.primary-btn,
+.secondary-btn,
+#shareAssignmentBtn,
+#waEnterBtn{
+  box-shadow:none!important;
+  transform:none;
+}
+
+/* WA-Anmeldung: komplett flach, keine roten/blauen Hintergrundlichter */
+#waGate,
+.wa-gate{
+  background:#090b0d!important;
+  background-image:none!important;
+}
+#waGate::before,
+#waGate::after,
+.wa-gate::before,
+.wa-gate::after{
+  display:none!important;
+  content:none!important;
+}
+#waGate .wa-card,
+#waGate .wa-login-card,
+#waGate .wa-buttons button{
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+
+/* WA-Farben bleiben nur als klare Akzentlinien/Textfarben */
+#waGate .wa-buttons button[data-wa="1"]{--wa:#f2cc2f;--wa-rgb:242,204,47}
+#waGate .wa-buttons button[data-wa="2"]{--wa:#2f80ed;--wa-rgb:47,128,237}
+#waGate .wa-buttons button[data-wa="3"]{--wa:#27ae60;--wa-rgb:39,174,96}
+#waGate .wa-buttons button[data-wa="4"]{--wa:#e53935;--wa-rgb:229,57,53}
+#waGate .wa-buttons button[data-wa]{
+  background:#101216!important;
+  border-color:#30343a!important;
+}
+#waGate .wa-buttons button[data-wa].selected{
+  border-color:var(--wa)!important;
+  background:#101216!important;
+  box-shadow:inset 4px 0 0 var(--wa)!important;
+}
+
+/* Karten in der App ebenfalls ohne Glow, mit klaren Konturen */
+.person-card,
+.staff-card,
+.assignment-card,
+.availability-card,
+.next-shift-card{
+  box-shadow:none!important;
+  background-image:none!important;
+}
+
+/* Fußbereich ebenfalls neutral */
+.love-footer-line{
+  background:#34383d!important;
+  box-shadow:none!important;
+}
+</style>
+
+
+<style id="lfwTerminalDesign">
+/* LHF 2500/9 – eigenständiger Fahrzeugterminal-/Diensttafel-Look */
+:root{
+  --terminal-bg:#080a0c;
+  --terminal-panel:#0f1215;
+  --terminal-panel2:#13171b;
+  --terminal-line:#2a3036;
+  --terminal-text:#f2f4f5;
+  --terminal-muted:#899199;
+}
+body{background:var(--terminal-bg)!important;color:var(--terminal-text)!important}
+
+/* Technische, flachere Geometrie */
+.card,.panel,.shift-card,.seat,.admin-hub,.legal-card,
+.person-card,.staff-card,.assignment-card,.availability-card,.next-shift-card{
+  border-radius:8px!important;
+  border:1px solid var(--terminal-line)!important;
+  background:var(--terminal-panel)!important;
+  box-shadow:none!important;
+}
+button,.btn,input,select{border-radius:7px!important;box-shadow:none!important}
+
+/* Header / Hero wie Fahrzeugterminal */
+.hero{
+  border-bottom:1px solid var(--terminal-line)!important;
+  padding-bottom:18px!important;
+}
+.hero h1{
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+  text-shadow:none!important;
+}
+.vehicle-designation,.eyebrow,.kicker{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace!important;
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
+}
+
+/* WA-Auswahl: Diensttafel statt App-Kacheln */
+#waGate .wa-buttons{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:8px!important;
+}
+#waGate .wa-buttons button[data-wa]{
+  min-height:58px!important;
+  width:100%!important;
+  border-radius:6px!important;
+  border:1px solid #30363c!important;
+  background:#0f1215!important;
+  box-shadow:none!important;
+  text-align:left!important;
+  padding:10px 14px 10px 62px!important;
+  position:relative!important;
+}
+#waGate .wa-buttons button[data-wa]::before{
+  position:absolute!important;
+  left:12px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:34px!important;
+  height:34px!important;
+  border-radius:4px!important;
+  display:grid!important;
+  place-items:center!important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important;
+  font-weight:900!important;
+  background:transparent!important;
+  border:1px solid var(--wa)!important;
+  color:var(--wa)!important;
+}
+#waGate .wa-buttons button[data-wa="1"]::before{content:"01"!important}
+#waGate .wa-buttons button[data-wa="2"]::before{content:"02"!important}
+#waGate .wa-buttons button[data-wa="3"]::before{content:"03"!important}
+#waGate .wa-buttons button[data-wa="4"]::before{content:"04"!important}
+#waGate .wa-buttons button[data-wa] strong{
+  font-size:15px!important;
+  letter-spacing:.04em!important;
+}
+#waGate .wa-buttons button[data-wa].selected{
+  background:#15191d!important;
+  border-color:var(--wa)!important;
+  box-shadow:inset 4px 0 0 var(--wa)!important;
+}
+
+/* Initialen: kantige Kennzeichnungsfelder statt runder Avatare */
+.avatar,.initials,.person-avatar,.seat .avatar,.seat .initials{
+  border-radius:5px!important;
+  width:42px!important;
+  height:34px!important;
+  min-width:42px!important;
+  display:grid!important;
+  place-items:center!important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace!important;
+  font-weight:800!important;
+  letter-spacing:.04em!important;
+  box-shadow:none!important;
+  border:1px solid #424950!important;
+  background:#171b1f!important;
+}
+
+/* Fahrzeugdarstellung stärker als eigenes Kernelement */
+.vehicle{
+  border:1px solid #3a4046!important;
+  border-radius:8px!important;
+  background:#0b0e10!important;
+  box-shadow:none!important;
+}
+.cab,.crew-cabin{
+  border-radius:6px!important;
+  border:1px solid #343a40!important;
+  background:#111519!important;
+}
+.seat{
+  border-radius:5px!important;
+  background:#101418!important;
+}
+
+/* Statusinformationen wie Instrumententafel */
+.status-chip,.cloud-status{
+  border-radius:4px!important;
+  background:#111519!important;
+  border:1px solid #343a40!important;
+  box-shadow:none!important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important;
+  letter-spacing:.035em!important;
+}
+
+/* Normale UI überwiegend neutral; WA-Farbe nur als Information */
+.section-title,h2,h3{color:#f2f4f5!important;text-shadow:none!important}
+.muted,.subtle{color:var(--terminal-muted)!important}
+
+/* Footer / Rechtliches */
+.love-footer{box-shadow:none!important}
+.love-footer-line{height:1px!important;background:#30363c!important}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
