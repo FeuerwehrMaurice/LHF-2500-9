@@ -1716,6 +1716,56 @@ body.role-admin #statsSection{
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="LFW 2500">
 
+
+<style id="lfw-original-design-v2">
+/* Eigenständige LFW-2500 Designsprache: technische Einsatztafel statt Kartenraster */
+#waGate .wa-card{
+  width:min(92vw,520px)!important;
+  border-radius:10px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  border-left:4px solid #f2cc2f!important;
+  background:linear-gradient(180deg,rgba(12,14,17,.97),rgba(5,6,8,.98))!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.65)!important;
+  text-align:left!important;
+}
+#waGate .wa-login-kicker{color:#f2cc2f;letter-spacing:.28em;text-indent:0;margin-bottom:9px}
+#waGate .wa-login-logo{
+  transform:none!important;font-style:normal!important;letter-spacing:-.04em!important;
+  text-shadow:none!important;font-size:clamp(2.8rem,13vw,4.8rem)!important;
+}
+#waGate .wa-login-logo span{color:#f2cc2f;margin-left:.06em}
+#waGate .wa-login-sub{margin-top:10px;color:#a8adb4;letter-spacing:.18em;text-indent:0}
+#waGate .wa-login-line{width:100%;margin:18px 0 16px;background:linear-gradient(90deg,#f2cc2f 0 28%,#34383e 28% 100%);box-shadow:none}
+#waGate .wa-login-prompt{text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:#858b93}
+#waGate .wa-buttons{display:flex!important;flex-direction:column!important;gap:7px!important}
+#waGate .wa-buttons button{
+  position:relative;display:grid!important;grid-template-columns:62px 1fr 22px;grid-template-rows:auto auto;
+  align-items:center;min-height:68px!important;padding:10px 14px 10px 0!important;
+  border-radius:5px!important;border:1px solid #292d32!important;border-left:0!important;
+  background:#101216!important;text-align:left!important;box-shadow:none!important;overflow:hidden;
+}
+#waGate .wa-buttons button::before{
+  content:attr(data-wa);grid-row:1 / span 2;display:flex;align-items:center;justify-content:center;
+  align-self:stretch;margin-right:13px;background:#1b1e23;color:#697078;font-size:1.55rem;font-weight:1000;
+  border-right:1px solid #30343a;
+}
+#waGate .wa-buttons button::after{content:'›'!important;display:block!important;grid-column:3;grid-row:1 / span 2;margin:0!important;color:#697078!important;font-size:1.7rem!important;line-height:1!important}
+#waGate .wa-buttons button strong{grid-column:2;grid-row:1;font-size:1rem!important;letter-spacing:.04em}
+#waGate .wa-buttons button small{grid-column:2;grid-row:2;margin-top:3px!important;color:#70767e!important}
+/* Nur die bekannte offizielle Farbe setzen. WA 2–4 bleiben neutral, bis die Farben feststehen. */
+#waGate .wa-buttons button[data-wa="1"]{border-color:rgba(242,204,47,.45)!important;background:linear-gradient(90deg,rgba(242,204,47,.08),#101216 38%)!important}
+#waGate .wa-buttons button[data-wa="1"]::before{background:#f2cc2f;color:#111;border-color:#f2cc2f}
+#waGate .wa-buttons button[data-wa="1"] strong{color:#f2cc2f!important}
+#waGate .wa-buttons button.selected{border-color:#f2cc2f!important;background:linear-gradient(90deg,rgba(242,204,47,.12),#101216 42%)!important;transform:none!important;box-shadow:inset 3px 0 0 #f2cc2f!important}
+#waGate .wa-buttons button.selected::after{color:#f2cc2f!important}
+#waGate #waPasswordWrap{border-top:1px solid #2c3035!important;margin-top:14px!important;padding-top:14px!important}
+#waGate #waPassword{border-radius:5px!important;background:#090b0d!important}
+#waGate #waEnterBtn{border-radius:5px!important;background:#f2cc2f!important;box-shadow:none!important;text-transform:uppercase;letter-spacing:.08em}
+/* Rot/Blau-Glow am Login entfernen: unverwechselbarer technischer Look */
+#waGate.wa-gate::before,#waGate.wa-gate::after{display:none!important}
+@media(max-width:520px){#waGate .wa-card{width:94vw!important;padding:22px 16px 18px!important}}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -3696,5 +3746,60 @@ body.role-admin #statsSection{
   <div class="love-footer-sub">LEHRFEUERWEHR 2500</div>
   <div class="love-footer-line"></div>
 </div>
+
+<style>
+.legal-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px auto 34px;color:#8d8d8d;font-size:13px;letter-spacing:.04em}
+.legal-links button{appearance:none;border:0;background:none;color:#aaa;font:inherit;padding:6px 4px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.legal-overlay{position:fixed;inset:0;z-index:100000;background:#0b0b0b;color:#eee;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
+.legal-overlay.open{display:block}
+.legal-shell{max-width:760px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top)) 24px calc(50px + env(safe-area-inset-bottom))}
+.legal-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:42px;padding-bottom:18px;border-bottom:1px solid #2a2a2a}
+.legal-brand{font-size:13px;font-weight:800;letter-spacing:.16em;color:#aaa}.legal-close{border:1px solid #444;border-radius:999px;background:#171717;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}
+.legal-overlay h1{font-size:clamp(38px,10vw,68px);line-height:.95;margin:0 0 12px;font-weight:950;letter-spacing:-.04em}.legal-kicker{text-transform:uppercase;letter-spacing:.16em;color:#777;font-size:12px;margin-bottom:42px}
+.legal-overlay h2{font-size:24px;margin:38px 0 14px;line-height:1.2}.legal-overlay h3{font-size:17px;margin:26px 0 10px}.legal-overlay p,.legal-overlay li{font-size:16px;line-height:1.7;color:#cfcfcf}.legal-overlay ul{padding-left:22px}.legal-card{background:#151515;border:1px solid #2c2c2c;border-radius:18px;padding:22px;margin:18px 0 30px}.legal-note{border-left:3px solid #777;padding-left:14px;color:#aaa!important}.legal-placeholder{color:#aaa;font-style:italic}
+body.legal-open{overflow:hidden}
+</style>
+
+<div class="legal-links" aria-label="Rechtliche Informationen">
+  <button type="button" data-legal-open="impressum">Impressum</button><span>·</span>
+  <button type="button" data-legal-open="datenschutz">Datenschutz</button>
+</div>
+
+<section class="legal-overlay" id="legalImpressum" aria-hidden="true">
+ <div class="legal-shell"><div class="legal-top"><div class="legal-brand">LEHRFEUERWEHR 2500</div><button class="legal-close" data-legal-close>Schließen</button></div>
+ <h1>Impressum</h1><div class="legal-kicker">Anbieterkennzeichnung</div>
+ <div class="legal-card"><p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p><p><strong>Kontakt</strong><br><span class="legal-placeholder">E-Mail-Adresse wird nach Einrichtung der Domain ergänzt.</span></p></div>
+ <h2>Hinweis zum Angebot</h2><p>Diese Web-Anwendung dient der internen Organisation von Dienst- und Fahrzeugbesetzungen der Lehrfeuerwehr 2500.</p>
+ <h2>Verantwortlich für Inhalte</h2><p>Maurice Klose<br>Eschenweg 107<br>13587 Berlin</p>
+ <p class="legal-note">Vor einer öffentlichen Veröffentlichung sollte die Kontakt-E-Mail ergänzt und geprüft werden, welche gesetzlichen Anbieterangaben für den konkreten Betrieb der Seite erforderlich sind.</p>
+ </div>
+</section>
+
+<section class="legal-overlay" id="legalDatenschutz" aria-hidden="true">
+ <div class="legal-shell"><div class="legal-top"><div class="legal-brand">LEHRFEUERWEHR 2500</div><button class="legal-close" data-legal-close>Schließen</button></div>
+ <h1>Datenschutz</h1><div class="legal-kicker">Datenschutzhinweise · Stand September 2026</div>
+ <h2>1. Verantwortlicher</h2><div class="legal-card"><p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p><p><span class="legal-placeholder">Kontakt-E-Mail wird nach Einrichtung der Domain ergänzt.</span></p></div>
+ <h2>2. Zweck der Anwendung</h2><p>Die Anwendung unterstützt die interne Planung von Wachabteilungen, Diensten, Verfügbarkeiten und Fahrzeugbesetzungen. Dabei können Namen, Rollen, Verfügbarkeitsangaben, geplante Besetzungen und zugehörige Zeitangaben verarbeitet werden.</p>
+ <h2>3. Lokale Speicherung</h2><p>Die Anwendung verwendet Browser-Speicher wie LocalStorage und SessionStorage, um unter anderem Einstellungen, die gewählte Wachabteilung, Planungsstände und für die Funktion erforderliche Zustände auf dem verwendeten Gerät zu speichern.</p>
+ <h2>4. Firebase / Google</h2><p>Für die geräteübergreifende Synchronisierung nutzt die Anwendung Firebase-Dienste von Google, insbesondere Cloud Firestore und Firebase Authentication. Die Anmeldung erfolgt technisch anonym. Dabei können Anwendungsdaten wie Personalnamen, Dienstplanung und Besetzungen an Firebase übertragen und dort gespeichert werden.</p>
+ <h2>5. Hosting über GitHub Pages</h2><p>Die Web-Anwendung wird über GitHub Pages bereitgestellt. Beim Aufruf der Website können technisch erforderliche Verbindungs- und Protokolldaten, insbesondere IP-Adresse, Zeitpunkt des Abrufs, Browser- und Geräteinformationen, durch den Hosting-Anbieter verarbeitet werden.</p>
+ <h2>6. Empfänger</h2><p>Technische Empfänger der Daten können insbesondere GitHub als Hosting-Anbieter sowie Google als Anbieter der eingesetzten Firebase-Dienste sein.</p>
+ <h2>7. Speicherdauer</h2><p>Lokal gespeicherte Daten verbleiben grundsätzlich im Browser, bis sie durch die Anwendung, den Nutzer oder die Browserfunktionen gelöscht werden. In Firebase gespeicherte Planungsdaten verbleiben dort, bis sie geändert oder gelöscht werden. Gesetzliche Aufbewahrungspflichten bleiben unberührt.</p>
+ <h2>8. Rechte betroffener Personen</h2><p>Soweit die gesetzlichen Voraussetzungen vorliegen, bestehen insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch. Außerdem besteht grundsätzlich ein Beschwerderecht bei einer zuständigen Datenschutzaufsichtsbehörde.</p>
+ <h2>9. Sicherheit</h2><p>Die Anwendung verwendet technische Schutzmaßnahmen und die von den eingesetzten Plattformen bereitgestellten Sicherheitsfunktionen. Ein absoluter Schutz bei der Datenübertragung im Internet kann jedoch nicht garantiert werden.</p>
+ <h2>10. Änderungen</h2><p>Diese Datenschutzhinweise können angepasst werden, wenn sich Funktionen, eingesetzte Dienste oder die rechtlichen Anforderungen ändern.</p>
+ <p class="legal-note">Dieser Text ist auf die derzeitige technische Ausgestaltung der LHF-2500-Web-App zugeschnitten. Vor einer öffentlichen oder dienstlichen Produktivnutzung sollte die Datenschutzerklärung anhand der tatsächlich eingesetzten Dienste, Firebase-Region, Aufbewahrungsfristen und Rechtsgrundlagen abschließend geprüft werden.</p>
+ </div>
+</section>
+<script>
+(function(){
+ const map={impressum:document.getElementById('legalImpressum'),datenschutz:document.getElementById('legalDatenschutz')};
+ function closeAll(){Object.values(map).forEach(x=>{x.classList.remove('open');x.setAttribute('aria-hidden','true')});document.body.classList.remove('legal-open')}
+ document.querySelectorAll('[data-legal-open]').forEach(b=>b.addEventListener('click',()=>{closeAll();const x=map[b.dataset.legalOpen];if(x){x.classList.add('open');x.setAttribute('aria-hidden','false');document.body.classList.add('legal-open');x.scrollTop=0}}));
+ document.querySelectorAll('[data-legal-close]').forEach(b=>b.addEventListener('click',closeAll));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+})();
+</script>
+
 </body>
 </html>
