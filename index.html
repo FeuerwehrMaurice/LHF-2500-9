@@ -1766,6 +1766,29 @@ body.role-admin #statsSection{
 @media(max-width:520px){#waGate .wa-card{width:94vw!important;padding:22px 16px 18px!important}}
 </style>
 
+
+<style id="noGlowIndependentDesign">
+/* Eigenständiges, sachliches LHF-Design: bewusst ohne Neon-/Glow-Effekte */
+html,body{background:#0b0d0f!important}
+*,*::before,*::after{ text-shadow:none!important; filter:none!important; }
+.app-shell,.card,.panel,.shift-card,.seat,.vehicle,.admin-hub,.wa-card,.legal-card,.status-chip,.cloud-status{box-shadow:none!important}
+.wa-gate,.wa-gate::before,.wa-gate::after{background-image:none!important}
+#waGate .wa-card{background:#0e1114!important;border:1px solid #34393f!important;border-radius:8px!important}
+#waGate .wa-login-line{background:#3a3f45!important;height:1px!important}
+#waGate .wa-buttons button{background:#111418!important;border-radius:6px!important;box-shadow:none!important}
+#waGate .wa-buttons button[data-wa="1"],#waGate .wa-buttons button.selected{background:#111418!important}
+#waGate .wa-buttons button.selected{border-color:#f2cc2f!important;border-left:4px solid #f2cc2f!important}
+#waGate #waPassword,#waGate #waEnterBtn{border-radius:6px!important;box-shadow:none!important}
+.hero,.hero::before,.hero::after{background-image:none!important}
+.vehicle,.cab,.crew-cabin,.seat{box-shadow:none!important}
+.beacon,.blue-light,.light{box-shadow:none!important;filter:none!important}
+button,.btn,.card,.panel,.shift-card,.seat{transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .15s ease!important}
+.love-footer-line{background:#383d42!important;box-shadow:none!important}
+.love-footer-main,.love-footer-sub{filter:none!important;text-shadow:none!important}
+.legal-overlay{background:#0d0f11!important}
+.legal-card{border-radius:8px!important;background:#121519!important;border-color:#30353a!important}
+.legal-close{border-radius:6px!important}
+</style>
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -3778,17 +3801,56 @@ body.legal-open{overflow:hidden}
 <section class="legal-overlay" id="legalDatenschutz" aria-hidden="true">
  <div class="legal-shell"><div class="legal-top"><div class="legal-brand">LEHRFEUERWEHR 2500</div><button class="legal-close" data-legal-close>Schließen</button></div>
  <h1>Datenschutz</h1><div class="legal-kicker">Datenschutzhinweise · Stand September 2026</div>
- <h2>1. Verantwortlicher</h2><div class="legal-card"><p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p><p><span class="legal-placeholder">Kontakt-E-Mail wird nach Einrichtung der Domain ergänzt.</span></p></div>
- <h2>2. Zweck der Anwendung</h2><p>Die Anwendung unterstützt die interne Planung von Wachabteilungen, Diensten, Verfügbarkeiten und Fahrzeugbesetzungen. Dabei können Namen, Rollen, Verfügbarkeitsangaben, geplante Besetzungen und zugehörige Zeitangaben verarbeitet werden.</p>
- <h2>3. Lokale Speicherung</h2><p>Die Anwendung verwendet Browser-Speicher wie LocalStorage und SessionStorage, um unter anderem Einstellungen, die gewählte Wachabteilung, Planungsstände und für die Funktion erforderliche Zustände auf dem verwendeten Gerät zu speichern.</p>
- <h2>4. Firebase / Google</h2><p>Für die geräteübergreifende Synchronisierung nutzt die Anwendung Firebase-Dienste von Google, insbesondere Cloud Firestore und Firebase Authentication. Die Anmeldung erfolgt technisch anonym. Dabei können Anwendungsdaten wie Personalnamen, Dienstplanung und Besetzungen an Firebase übertragen und dort gespeichert werden.</p>
- <h2>5. Hosting über GitHub Pages</h2><p>Die Web-Anwendung wird über GitHub Pages bereitgestellt. Beim Aufruf der Website können technisch erforderliche Verbindungs- und Protokolldaten, insbesondere IP-Adresse, Zeitpunkt des Abrufs, Browser- und Geräteinformationen, durch den Hosting-Anbieter verarbeitet werden.</p>
- <h2>6. Empfänger</h2><p>Technische Empfänger der Daten können insbesondere GitHub als Hosting-Anbieter sowie Google als Anbieter der eingesetzten Firebase-Dienste sein.</p>
- <h2>7. Speicherdauer</h2><p>Lokal gespeicherte Daten verbleiben grundsätzlich im Browser, bis sie durch die Anwendung, den Nutzer oder die Browserfunktionen gelöscht werden. In Firebase gespeicherte Planungsdaten verbleiben dort, bis sie geändert oder gelöscht werden. Gesetzliche Aufbewahrungspflichten bleiben unberührt.</p>
- <h2>8. Rechte betroffener Personen</h2><p>Soweit die gesetzlichen Voraussetzungen vorliegen, bestehen insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch. Außerdem besteht grundsätzlich ein Beschwerderecht bei einer zuständigen Datenschutzaufsichtsbehörde.</p>
- <h2>9. Sicherheit</h2><p>Die Anwendung verwendet technische Schutzmaßnahmen und die von den eingesetzten Plattformen bereitgestellten Sicherheitsfunktionen. Ein absoluter Schutz bei der Datenübertragung im Internet kann jedoch nicht garantiert werden.</p>
- <h2>10. Änderungen</h2><p>Diese Datenschutzhinweise können angepasst werden, wenn sich Funktionen, eingesetzte Dienste oder die rechtlichen Anforderungen ändern.</p>
- <p class="legal-note">Dieser Text ist auf die derzeitige technische Ausgestaltung der LHF-2500-Web-App zugeschnitten. Vor einer öffentlichen oder dienstlichen Produktivnutzung sollte die Datenschutzerklärung anhand der tatsächlich eingesetzten Dienste, Firebase-Region, Aufbewahrungsfristen und Rechtsgrundlagen abschließend geprüft werden.</p>
+
+ <h2>1. Verantwortlicher</h2>
+ <div class="legal-card"><p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p><p><span class="legal-placeholder">Kontakt-E-Mail wird nach Einrichtung der Domain ergänzt.</span></p></div>
+
+ <h2>2. Zweck der Anwendung</h2>
+ <p>Die Web-Anwendung „Lehrfeuerwehr 2500 / LHF 2500/9“ dient der internen Dienst- und Fahrzeugbesetzungsplanung. Verarbeitet werden nur Daten, die für diese organisatorischen Funktionen benötigt werden.</p>
+
+ <h2>3. Verarbeitete Daten</h2>
+ <p>Je nach Nutzung können insbesondere folgende Daten verarbeitet werden:</p>
+ <ul><li>Name der eingetragenen Person</li><li>Zugehörigkeit zur Wachabteilung</li><li>Verfügbarkeitsstatus für einen Dienst</li><li>zugeteilte Fahrzeugfunktion bzw. Besetzung</li><li>Dienst-, Planungs-, Historien- und Statistikdaten</li><li>technische Verbindungsdaten, die beim Aufruf oder bei der Authentifizierung anfallen</li></ul>
+ <p>Die Anwendung ist nicht dafür vorgesehen, besondere Kategorien personenbezogener Daten nach Art. 9 DSGVO zu erfassen. Insbesondere sollen keine Diagnosen oder sonstigen Gesundheitsdetails eingetragen werden. Für die Planung genügt ein neutraler Verfügbarkeitsstatus.</p>
+
+ <h2>4. Lokaler Browser-Speicher</h2>
+ <p>Die Anwendung verwendet LocalStorage und SessionStorage des Browsers, um technisch notwendige Zustände wie die gewählte Wachabteilung, Planungsstände, lokale Einstellungen und Sitzungsinformationen zu speichern. Diese Speicherung dient der vom Nutzer aufgerufenen App-Funktion. Es werden derzeit keine Werbe- oder Tracking-Cookies eingesetzt.</p>
+
+ <h2>5. Firebase / Google</h2>
+ <p>Für die geräteübergreifende Synchronisierung werden Google Firebase, insbesondere Cloud Firestore und Firebase Authentication, eingesetzt. Die Firebase-Anmeldung erfolgt derzeit anonym; Nutzer müssen dafür keine persönliche E-Mail-Adresse hinterlegen. In Cloud Firestore können die für die Anwendung benötigten Personal-, Dienst-, Besetzungs-, Historien- und Statistikdaten gespeichert werden.</p>
+ <p>Bei Firebase Authentication können insbesondere IP-Adresse und User-Agent zur Absicherung und Missbrauchsvermeidung verarbeitet werden. Firebase Authentication wird nach Angaben von Google aus Rechenzentren in den USA betrieben. Cloud Firestore nutzt Google-Infrastruktur und kann abhängig von der gewählten Projektregion verarbeitet werden.</p>
+
+ <h2>6. Hosting über GitHub Pages</h2>
+ <p>Die Web-Anwendung wird derzeit über GitHub Pages bereitgestellt. GitHub protokolliert beim Besuch einer GitHub-Pages-Website die IP-Adresse des Besuchers zu Sicherheitszwecken. Dabei können darüber hinaus technisch notwendige Verbindungsdaten verarbeitet werden.</p>
+
+ <h2>7. Empfänger und Dienstleister</h2>
+ <p>Empfänger bzw. Auftragsverarbeiter können im Rahmen des technischen Betriebs insbesondere GitHub für das Hosting sowie Google für Firebase-Dienste sein. Eine Weitergabe an Werbenetzwerke oder Datenhändler ist durch die Anwendung nicht vorgesehen.</p>
+
+ <h2>8. Drittlandübermittlung</h2>
+ <p>Beim Einsatz von Firebase können Daten in den Vereinigten Staaten verarbeitet werden. Soweit hierfür erforderlich, stützt sich die Verarbeitung auf die von Google für seine Dienste vorgesehenen datenschutzrechtlichen Garantien. Welche Garantie im Einzelfall einschlägig ist, richtet sich nach dem für das Firebase-Projekt geltenden Vertrags- und Produktstatus.</p>
+
+ <h2>9. Rechtsgrundlage</h2>
+ <p>Die zutreffende Rechtsgrundlage hängt davon ab, in wessen Verantwortung und in welchem organisatorischen Rahmen die Anwendung tatsächlich betrieben wird. Bei einer rein privaten, freiwilligen Organisationsnutzung kann eine Verarbeitung insbesondere auf berechtigten Interessen nach Art. 6 Abs. 1 lit. f DSGVO beruhen. Wird die Anwendung offiziell oder dienstlich durch eine öffentliche Stelle eingesetzt, muss die dafür maßgebliche Rechtsgrundlage von dieser Stelle festgelegt und dieser Abschnitt entsprechend angepasst werden.</p>
+ <p class="legal-note">Vor einer offiziellen dienstlichen Einführung sollte daher geklärt werden, ob Maurice Klose oder die zuständige Stelle der Berliner Feuerwehr datenschutzrechtlich Verantwortlicher ist. Dieser Punkt kann nicht allein durch den App-Code bestimmt werden.</p>
+
+ <h2>10. Speicherdauer und Löschung</h2>
+ <p>Lokale Daten verbleiben grundsätzlich auf dem jeweiligen Gerät, bis sie durch die Anwendung, den Nutzer oder die Browserfunktionen gelöscht werden. In Firebase gespeicherte Planungs- und Besetzungsdaten verbleiben dort, bis sie innerhalb der Anwendung geändert oder gelöscht werden oder eine festgelegte Löschfrist greift. Für eine produktive Nutzung sollte eine konkrete Löschfrist für Historien- und Statistikdaten festgelegt werden.</p>
+
+ <h2>11. Zugriffsberechtigung und Datensicherheit</h2>
+ <p>Der Zugriff auf die Anwendung wird über die in der App vorgesehenen Wachabteilungs-Codes gesteuert. Zusätzlich sollten die serverseitigen Firebase-Sicherheitsregeln so konfiguriert werden, dass nur berechtigte Zugriffe auf die jeweils erforderlichen Daten möglich sind. Die Übertragung zu GitHub und Firebase erfolgt über verschlüsselte HTTPS-Verbindungen.</p>
+
+ <h2>12. Rechte betroffener Personen</h2>
+ <p>Betroffene Personen haben im Rahmen der gesetzlichen Voraussetzungen insbesondere das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Außerdem besteht ein Recht auf Beschwerde bei einer zuständigen Datenschutzaufsichtsbehörde.</p>
+
+ <h2>13. Pflicht zur Bereitstellung</h2>
+ <p>Eine gesetzliche Pflicht, personenbezogene Daten über diese Web-Anwendung bereitzustellen, besteht durch die Anwendung selbst nicht. Ohne die für die Dienst- und Besetzungsplanung erforderlichen Angaben können einzelne Funktionen jedoch nicht sinnvoll genutzt werden.</p>
+
+ <h2>14. Automatisierte Entscheidungen</h2>
+ <p>Es findet keine automatisierte Entscheidungsfindung im Sinne von Art. 22 DSGVO statt. Die Auslosungs- und Besetzungsfunktionen dienen ausschließlich der organisatorischen Unterstützung und treffen keine rechtlich erheblichen Entscheidungen über Personen.</p>
+
+ <h2>15. Änderungen dieser Datenschutzhinweise</h2>
+ <p>Diese Hinweise werden angepasst, wenn sich Funktionen, eingesetzte Dienste, Hosting, Speicherorte oder der organisatorische Verantwortliche ändern.</p>
+ <p class="legal-note">Vor der endgültigen Veröffentlichung müssen noch die Kontakt-E-Mail, die tatsächliche Firebase-/Firestore-Region, eine konkrete Löschfrist und – bei offizieller dienstlicher Nutzung – die zuständige verantwortliche Stelle und Rechtsgrundlage ergänzt bzw. bestätigt werden.</p>
  </div>
 </section>
 <script>
