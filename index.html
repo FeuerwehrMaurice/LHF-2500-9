@@ -1790,235 +1790,183 @@ button,.btn,.card,.panel,.shift-card,.seat{transition:background-color .15s ease
 .legal-close{border-radius:6px!important}
 </style>
 
-<style id="officialWAColors">
-/* Offizielle Wachabteilungsfarben: 1 Gelb, 2 Blau, 3 Grün, 4 Rot */
-#waGate .wa-buttons button[data-wa="1"]{--wa:#f2cc2f;--wa-rgb:242,204,47}
-#waGate .wa-buttons button[data-wa="2"]{--wa:#2f80ed;--wa-rgb:47,128,237}
-#waGate .wa-buttons button[data-wa="3"]{--wa:#27ae60;--wa-rgb:39,174,96}
-#waGate .wa-buttons button[data-wa="4"]{--wa:#e53935;--wa-rgb:229,57,53}
-
-#waGate .wa-buttons button[data-wa]{
-  border-color:rgba(var(--wa-rgb),.42)!important;
-  background:linear-gradient(90deg,rgba(var(--wa-rgb),.07),#101216 38%)!important;
-}
-#waGate .wa-buttons button[data-wa]::before{
-  background:var(--wa)!important;
-  color:#0b0d0f!important;
-  border-color:var(--wa)!important;
-}
-#waGate .wa-buttons button[data-wa] strong{color:var(--wa)!important}
-#waGate .wa-buttons button[data-wa].selected{
-  border-color:var(--wa)!important;
-  background:linear-gradient(90deg,rgba(var(--wa-rgb),.12),#101216 42%)!important;
-  box-shadow:inset 3px 0 0 var(--wa)!important;
-}
-#waGate .wa-buttons button[data-wa].selected::after{color:var(--wa)!important}
-</style>
 
 
-<style id="lfwFlatNoGlowV2">
-/* LFW 2500/9 – konsequent flaches, eigenständiges Design ohne Glow */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- LFW 2500/9 typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+
+
+
+<style id="lfwFinalFlatSystem">
 :root{
-  --shadow:none!important;
+  --bg:#080a0c;
+  --panel:#101317;
+  --panel-2:#14181c;
+  --line:#30363d;
+  --line-soft:#242a30;
+  --text:#f2f4f5;
+  --muted:#9ca4ab;
+  --wa1:#f2cc2f;
+  --wa2:#2f80ed;
+  --wa3:#27ae60;
+  --wa4:#e53935;
+  --active-wa:#c9cdd1;
 }
 
-/* Keine Leucht-, Blur- oder Neon-Effekte */
+/* Base */
+html,body{
+  background:var(--bg)!important;
+  color:var(--text)!important;
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
 *,*::before,*::after{
   text-shadow:none!important;
-  filter:none!important;
-}
-body,
-.app-shell,
-main,
-section,
-.card,
-.panel,
-.shift-card,
-.seat,
-.vehicle,
-.cab,
-.crew-cabin,
-.admin-hub,
-.wa-card,
-.status-chip,
-.cloud-status,
-.love-footer,
-.legal-card,
-button,
-input,
-select{
-  box-shadow:none!important;
-}
-
-/* Leuchtende Radialverläufe entfernen, Flächen ruhig und technisch halten */
-body,
-.app-shell,
-.hero,
-.hero-card,
-.card,
-.panel,
-.vehicle,
-.cab,
-.crew-cabin,
-.seat,
-.shift-card,
-.admin-hub,
-.wa-card,
-.legal-card{
-  background-image:none!important;
-}
-
-/* Fahrzeug: klare Linien statt Lichtschein */
-.vehicle{
-  background:#0c0e10!important;
-}
-.cab,
-.crew-cabin{
-  background:#111315!important;
-}
-.seat{
-  background:#101214!important;
-}
-
-/* Blaulichter bleiben als erkennbare Punkte, aber ohne Leuchten */
-.beacon,
-.blue-light,
-.light{
   box-shadow:none!important;
   filter:none!important;
-  opacity:1!important;
-}
-
-/* Initialen ohne gelben Lichtkranz */
-.avatar,
-.initials,
-.person-avatar,
-.seat .avatar,
-.seat .initials{
-  box-shadow:none!important;
-  filter:none!important;
-}
-
-/* Buttons und Statusflächen: keine schwebenden Schatten */
-button,
-.btn,
-.primary-btn,
-.secondary-btn,
-#shareAssignmentBtn,
-#waEnterBtn{
-  box-shadow:none!important;
-  transform:none;
-}
-
-/* WA-Anmeldung: komplett flach, keine roten/blauen Hintergrundlichter */
-#waGate,
-.wa-gate{
-  background:#090b0d!important;
-  background-image:none!important;
-}
-#waGate::before,
-#waGate::after,
-.wa-gate::before,
-.wa-gate::after{
-  display:none!important;
-  content:none!important;
-}
-#waGate .wa-card,
-#waGate .wa-login-card,
-#waGate .wa-buttons button{
-  box-shadow:none!important;
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
 }
 
-/* WA-Farben bleiben nur als klare Akzentlinien/Textfarben */
-#waGate .wa-buttons button[data-wa="1"]{--wa:#f2cc2f;--wa-rgb:242,204,47}
-#waGate .wa-buttons button[data-wa="2"]{--wa:#2f80ed;--wa-rgb:47,128,237}
-#waGate .wa-buttons button[data-wa="3"]{--wa:#27ae60;--wa-rgb:39,174,96}
-#waGate .wa-buttons button[data-wa="4"]{--wa:#e53935;--wa-rgb:229,57,53}
-#waGate .wa-buttons button[data-wa]{
-  background:#101216!important;
-  border-color:#30343a!important;
-}
-#waGate .wa-buttons button[data-wa].selected{
-  border-color:var(--wa)!important;
-  background:#101216!important;
-  box-shadow:inset 4px 0 0 var(--wa)!important;
-}
-
-/* Karten in der App ebenfalls ohne Glow, mit klaren Konturen */
+/* Kill decorative glows, gradients and pseudo-lighting everywhere */
+body,
+body::before,
+body::after,
+.app-shell,
+.app-shell::before,
+.app-shell::after,
+.hero,
+.hero::before,
+.hero::after,
+#waGate,
+#waGate::before,
+#waGate::after,
+.wa-gate,
+.wa-gate::before,
+.wa-gate::after,
+.vehicle,
+.vehicle::before,
+.vehicle::after,
+.cab,
+.crew-cabin,
+.seat,
+.card,
+.panel,
+.shift-card,
+.next-shift-card,
+.availability-card,
 .person-card,
 .staff-card,
-.assignment-card,
-.availability-card,
-.next-shift-card{
-  box-shadow:none!important;
+.admin-hub,
+.legal-card,
+.lfw-v1-card,
+.status-chip,
+.cloud-status,
+button,
+input,
+select,
+textarea{
   background-image:none!important;
 }
 
-/* Fußbereich ebenfalls neutral */
-.love-footer-line{
-  background:#34383d!important;
-  box-shadow:none!important;
+/* Neutral brand */
+.hero h1,
+.hero h1 span,
+.wa-login-logo,
+.wa-login-logo span,
+#waGate h1,
+#waGate h1 span,
+.brand-title,
+.brand-title span{
+  color:var(--text)!important;
 }
-</style>
-
-
-<style id="lfwTerminalDesign">
-/* LHF 2500/9 – eigenständiger Fahrzeugterminal-/Diensttafel-Look */
-:root{
-  --terminal-bg:#080a0c;
-  --terminal-panel:#0f1215;
-  --terminal-panel2:#13171b;
-  --terminal-line:#2a3036;
-  --terminal-text:#f2f4f5;
-  --terminal-muted:#899199;
+.hero h1,
+.wa-login-logo,
+#waGate h1{
+  font-weight:800!important;
+  letter-spacing:-.025em!important;
 }
-body{background:var(--terminal-bg)!important;color:var(--terminal-text)!important}
 
-/* Technische, flachere Geometrie */
-.card,.panel,.shift-card,.seat,.admin-hub,.legal-card,
-.person-card,.staff-card,.assignment-card,.availability-card,.next-shift-card{
+/* Typography */
+h1,h2,h3,
+.section-title,
+.lfw-v1-title{
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+.vehicle-designation,
+.eyebrow,.kicker,
+.status-chip,.cloud-status,
+.date,.shift-date,.shift-type,
+.seat .role,.seat .seat-role,
+code,.mono,
+#waGate .wa-buttons button[data-wa]::before{
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+}
+
+/* WA colors only as flat accent */
+body[data-active-wa="1"]{--active-wa:var(--wa1)}
+body[data-active-wa="2"]{--active-wa:var(--wa2)}
+body[data-active-wa="3"]{--active-wa:var(--wa3)}
+body[data-active-wa="4"]{--active-wa:var(--wa4)}
+
+/* Panels */
+.card,.panel,.shift-card,.next-shift-card,.availability-card,
+.person-card,.staff-card,.admin-hub,.legal-card,.lfw-v1-card{
+  background:var(--panel)!important;
+  border:1px solid var(--line)!important;
   border-radius:8px!important;
-  border:1px solid var(--terminal-line)!important;
-  background:var(--terminal-panel)!important;
-  box-shadow:none!important;
 }
-button,.btn,input,select{border-radius:7px!important;box-shadow:none!important}
-
-/* Header / Hero wie Fahrzeugterminal */
-.hero{
-  border-bottom:1px solid var(--terminal-line)!important;
-  padding-bottom:18px!important;
-}
-.hero h1{
-  letter-spacing:.045em!important;
-  text-transform:uppercase!important;
-  text-shadow:none!important;
-}
-.vehicle-designation,.eyebrow,.kicker{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace!important;
-  letter-spacing:.10em!important;
-  text-transform:uppercase!important;
+.card.accent,.panel.accent,.next-shift-card,.availability-card{
+  border-color:var(--active-wa)!important;
 }
 
-/* WA-Auswahl: Diensttafel statt App-Kacheln */
+/* WA login as flat service table */
+#waGate,.wa-gate{
+  background:var(--bg)!important;
+}
 #waGate .wa-buttons{
   display:flex!important;
   flex-direction:column!important;
   gap:8px!important;
 }
 #waGate .wa-buttons button[data-wa]{
-  min-height:58px!important;
-  width:100%!important;
-  border-radius:6px!important;
-  border:1px solid #30363c!important;
-  background:#0f1215!important;
-  box-shadow:none!important;
-  text-align:left!important;
-  padding:10px 14px 10px 62px!important;
+  --wa:var(--muted);
   position:relative!important;
+  width:100%!important;
+  min-height:58px!important;
+  padding:10px 14px 10px 62px!important;
+  text-align:left!important;
+  background:var(--panel)!important;
+  border:1px solid var(--line)!important;
+  border-radius:6px!important;
 }
+#waGate .wa-buttons button[data-wa="1"]{--wa:var(--wa1)}
+#waGate .wa-buttons button[data-wa="2"]{--wa:var(--wa2)}
+#waGate .wa-buttons button[data-wa="3"]{--wa:var(--wa3)}
+#waGate .wa-buttons button[data-wa="4"]{--wa:var(--wa4)}
 #waGate .wa-buttons button[data-wa]::before{
   position:absolute!important;
   left:12px!important;
@@ -2026,486 +1974,133 @@ button,.btn,input,select{border-radius:7px!important;box-shadow:none!important}
   transform:translateY(-50%)!important;
   width:34px!important;
   height:34px!important;
-  border-radius:4px!important;
   display:grid!important;
   place-items:center!important;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important;
-  font-weight:900!important;
-  background:transparent!important;
   border:1px solid var(--wa)!important;
+  border-radius:4px!important;
+  background:transparent!important;
   color:var(--wa)!important;
+  font-weight:700!important;
 }
 #waGate .wa-buttons button[data-wa="1"]::before{content:"01"!important}
 #waGate .wa-buttons button[data-wa="2"]::before{content:"02"!important}
 #waGate .wa-buttons button[data-wa="3"]::before{content:"03"!important}
 #waGate .wa-buttons button[data-wa="4"]::before{content:"04"!important}
-#waGate .wa-buttons button[data-wa] strong{
-  font-size:15px!important;
-  letter-spacing:.04em!important;
-}
+#waGate .wa-buttons button[data-wa] strong{color:var(--wa)!important}
 #waGate .wa-buttons button[data-wa].selected{
-  background:#15191d!important;
   border-color:var(--wa)!important;
+  background:var(--panel-2)!important;
   box-shadow:inset 4px 0 0 var(--wa)!important;
 }
 
-/* Initialen: kantige Kennzeichnungsfelder statt runder Avatare */
-.avatar,.initials,.person-avatar,.seat .avatar,.seat .initials{
-  border-radius:5px!important;
-  width:42px!important;
-  height:34px!important;
-  min-width:42px!important;
-  display:grid!important;
-  place-items:center!important;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace!important;
-  font-weight:800!important;
-  letter-spacing:.04em!important;
-  box-shadow:none!important;
-  border:1px solid #424950!important;
-  background:#171b1f!important;
-}
-
-/* Fahrzeugdarstellung stärker als eigenes Kernelement */
-.vehicle{
-  border:1px solid #3a4046!important;
-  border-radius:8px!important;
-  background:#0b0e10!important;
-  box-shadow:none!important;
-}
-.cab,.crew-cabin{
-  border-radius:6px!important;
-  border:1px solid #343a40!important;
-  background:#111519!important;
-}
-.seat{
-  border-radius:5px!important;
-  background:#101418!important;
-}
-
-/* Statusinformationen wie Instrumententafel */
-.status-chip,.cloud-status{
-  border-radius:4px!important;
-  background:#111519!important;
-  border:1px solid #343a40!important;
-  box-shadow:none!important;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important;
-  letter-spacing:.035em!important;
-}
-
-/* Normale UI überwiegend neutral; WA-Farbe nur als Information */
-.section-title,h2,h3{color:#f2f4f5!important;text-shadow:none!important}
-.muted,.subtle{color:var(--terminal-muted)!important}
-
-/* Footer / Rechtliches */
-.love-footer{box-shadow:none!important}
-.love-footer-line{height:1px!important;background:#30363c!important}
-</style>
-
-
-<style id="lfwFinalPolish">
-/* Letzter UI-Feinschliff – Funktionen bleiben unverändert */
-.hero{padding-top:18px!important;padding-bottom:14px!important}
-.hero h1{margin-bottom:5px!important;line-height:1.02!important}
-.vehicle-designation{margin-top:2px!important;margin-bottom:8px!important}
-
-/* Hauptaktion deutlich, Nebenaktionen ruhiger */
-#drawBtn,.draw-btn,.primary-btn{
-  min-height:48px!important;
-  font-weight:850!important;
-  letter-spacing:.025em!important;
-}
-.secondary-btn,.admin-hub button:not(.primary-btn){
-  min-height:40px!important;
-}
-
-/* Kompaktere technische Bereiche */
-.statistics-card,.stats-card,.personnel-card,.admin-hub{
+/* Buttons: flat, no luminous fill */
+button,.btn,.primary-btn,.secondary-btn,
+#shareAssignmentBtn,#waEnterBtn,#drawBtn{
+  background:var(--panel-2)!important;
+  border:1px solid var(--line)!important;
+  color:var(--text)!important;
   border-radius:7px!important;
-}
-table{border-collapse:collapse!important;width:100%!important}
-th,td{border-bottom:1px solid #292f35!important;padding:9px 7px!important}
-
-/* Touch-Ziele mobil zuverlässig, ohne riesige Karten */
-@media (max-width:700px){
-  button,.btn,select,input{min-height:44px}
-  .card,.panel,.shift-card{padding:12px!important}
-  .seat{padding:9px!important}
-  .hero{padding-top:12px!important}
-}
-</style>
-
-
-<style id="lfwWADynamicColors">
-/* Grundbranding neutral; WA-Farbe erst nach Anmeldung */
-.hero h1,
-.hero h1 *,
-#waGate h1,
-#waGate .brand-title,
-#waGate .brand-title *{
-  color:#f2f4f5!important;
-}
-#waGate .brand-title .accent,
-#waGate h1 .accent{
-  color:#f2f4f5!important;
-}
-
-/* App-Akzent je angemeldeter Wachabteilung */
-body[data-active-wa="1"]{--active-wa:#f2cc2f;--active-wa-rgb:242,204,47}
-body[data-active-wa="2"]{--active-wa:#2f80ed;--active-wa-rgb:47,128,237}
-body[data-active-wa="3"]{--active-wa:#27ae60;--active-wa-rgb:39,174,96}
-body[data-active-wa="4"]{--active-wa:#e53935;--active-wa-rgb:229,57,53}
-
-body[data-active-wa] .section-title,
-body[data-active-wa] .next-shift-card strong,
-body[data-active-wa] .status-chip,
-body[data-active-wa] .person-name,
-body[data-active-wa] .seat .name,
-body[data-active-wa] .accent-text{
-  color:var(--active-wa)!important;
-}
-body[data-active-wa] .card.accent,
-body[data-active-wa] .panel.accent,
-body[data-active-wa] .next-shift-card,
-body[data-active-wa] .availability-card{
-  border-color:var(--active-wa)!important;
-}
-body[data-active-wa] input[type="checkbox"]:checked{
-  accent-color:var(--active-wa)!important;
 }
 body[data-active-wa] .primary-btn,
 body[data-active-wa] #drawBtn{
   border-color:var(--active-wa)!important;
-}
-
-/* Kein Glow */
-body[data-active-wa] *{text-shadow:none!important}
-</style>
-
-
-<style id="lfwNeutralBrandFix">
-/* EXAKTE vorhandene Elemente: Branding auf der Startseite komplett neutral */
-.wa-login-logo,
-.wa-login-logo span,
-.hero h1,
-.hero h1 span,
-.vehicle-designation{
-  color:#f2f4f5!important;
-  text-shadow:none!important;
-  filter:none!important;
-}
-
-/* Auch der kleine Grundtitel bleibt vor Login neutral */
-.status{
-  box-shadow:none!important;
-}
-
-/* Nach Login übernimmt nur die jeweilige WA ihre offizielle Akzentfarbe */
-body[data-active-wa="1"]{--active-wa:#f2cc2f}
-body[data-active-wa="2"]{--active-wa:#2f80ed}
-body[data-active-wa="3"]{--active-wa:#27ae60}
-body[data-active-wa="4"]{--active-wa:#e53935}
-
-/* WA-bezogene Bereiche in der eigentlichen App */
-body[data-active-wa] #availabilitySection,
-body[data-active-wa] #nextShiftCard,
-body[data-active-wa] .availability-card,
-body[data-active-wa] .next-shift-card,
-body[data-active-wa] .staff-card,
-body[data-active-wa] .person-card{
-  border-color:var(--active-wa)!important;
-}
-
-body[data-active-wa] #availabilitySection h2,
-body[data-active-wa] #availabilitySection h3,
-body[data-active-wa] #nextShiftCard,
-body[data-active-wa] .next-shift-card strong,
-body[data-active-wa] .person-name,
-body[data-active-wa] .staff-card .name{
   color:var(--active-wa)!important;
 }
 
+/* Checkboxes */
 body[data-active-wa] input[type="checkbox"]{
   accent-color:var(--active-wa)!important;
 }
 
-/* Keine WA-Farbe als Glow */
-body[data-active-wa] .staff-card,
-body[data-active-wa] .person-card,
-body[data-active-wa] .availability-card,
-body[data-active-wa] .next-shift-card{
-  box-shadow:none!important;
-  background-image:none!important;
+/* Header and status use flat WA accent */
+body[data-active-wa] .section-title,
+body[data-active-wa] .next-shift-card strong,
+body[data-active-wa] .accent-text,
+body[data-active-wa] #availabilitySection h2,
+body[data-active-wa] #availabilitySection h3{
+  color:var(--active-wa)!important;
 }
-</style>
+body[data-active-wa] .status-chip{
+  color:var(--active-wa)!important;
+  border-color:var(--active-wa)!important;
+}
 
-
-<style id="lfwBesatzungPolish">
-/* Besetzungsansicht ruhiger und eigenständiger */
+/* Vehicle */
 .vehicle{
-  border-color:#3b4147!important;
   background:#0b0e10!important;
+  border:1px solid #3b4147!important;
+  border-radius:8px!important;
 }
 .cab,.crew-cabin{
-  border-color:#30363b!important;
-  background:#101417!important;
+  background:#111519!important;
+  border:1px solid #343a40!important;
+  border-radius:6px!important;
 }
 .seat{
-  border-color:#343a40!important;
-  background:#111519!important;
+  background:#101418!important;
+  border:1px solid #343a40!important;
+  border-radius:5px!important;
   padding:10px!important;
 }
-.seat .role,
-.seat .seat-role{
+.seat .role,.seat .seat-role{
   color:#aab0b6!important;
   font-size:.78rem!important;
   letter-spacing:.07em!important;
 }
-.seat .name,
-.seat .person-name{
-  color:#f3f5f6!important;
+.seat .name,.seat .person-name{
+  color:var(--text)!important;
   font-weight:800!important;
 }
-.seat .avatar,
-.seat .initials{
-  width:38px!important;
-  height:32px!important;
-  min-width:38px!important;
-  border-radius:4px!important;
-  background:#171b1f!important;
-  border:1px solid #4a5158!important;
-  color:#f3f5f6!important;
-  box-shadow:none!important;
-}
-
-/* Weniger gleichzeitig rote Rahmen */
-body[data-active-wa] .seat,
-body[data-active-wa] .cab,
-body[data-active-wa] .crew-cabin{
-  border-color:#343a40!important;
-}
-body[data-active-wa] .seat.is-active,
-body[data-active-wa] .seat.selected{
+.seat.is-active,.seat.selected{
   border-color:var(--active-wa)!important;
   box-shadow:inset 3px 0 0 var(--active-wa)!important;
 }
 
-/* Trupp-Gruppen klar, aber nicht leuchtend */
-.crew-section-title,
-.cab-title,
-.group-title{
-  color:#c5c9cd!important;
-  letter-spacing:.12em!important;
-  font-size:.76rem!important;
-  text-shadow:none!important;
-}
-.vehicle::before,
-.vehicle::after{
-  box-shadow:none!important;
-  filter:none!important;
-}
-
-/* Weniger visuelles Gewicht bei leeren Sitzen */
-</style>
-
-
-<!-- LFW 2500/9 typography -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style id="lfwTypographyV2">
-/* Hauptschrift */
-html,body,button,input,select,textarea,
-.card,.panel,.seat,.person-card,.staff-card,.admin-hub,.legal-card{
-  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-}
-
-/* Überschriften */
-h1,h2,h3,
-.hero h1,
-.section-title,
-.wa-login-logo{
-  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-  font-weight:800!important;
-  letter-spacing:-.025em!important;
-}
-
-/* Technische Informationen */
-.vehicle-designation,
-.status-chip,
-.cloud-status,
-.eyebrow,.kicker,
-.seat .role,.seat .seat-role,
-#waGate .wa-buttons button[data-wa]::before,
-.date,.shift-date,.shift-type,
-code,.mono{
-  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
-  letter-spacing:.025em!important;
-}
-
-/* Namen bleiben angenehm lesbar */
-.person-name,
-.seat .name,
-.staff-card .name{
-  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-  font-weight:700!important;
-  letter-spacing:-.01em!important;
-}
-
-/* Initialen technisch, aber kompakt */
+/* Initials: rectangular ID tags, no circles/no glow */
 .avatar,.initials,.person-avatar,.seat .avatar,.seat .initials{
+  width:42px!important;
+  height:34px!important;
+  min-width:42px!important;
+  border-radius:4px!important;
+  background:#171b1f!important;
+  border:1px solid #4a5158!important;
+  color:var(--text)!important;
+  display:grid!important;
+  place-items:center!important;
   font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
   font-weight:700!important;
-  letter-spacing:0!important;
-}
-</style>
-
-
-<style id="lfwV1CompleteStyles">
-:root{
-  --surface:#0f1215;
-  --surface-2:#14181c;
-  --line:#2c3238;
-  --text:#f3f5f6;
-  --muted:#9aa2aa;
 }
 
-/* Compact info cards */
-.lfw-v1-card{
-  background:var(--surface)!important;
-  border:1px solid var(--line)!important;
-  border-radius:8px!important;
-  box-shadow:none!important;
-  padding:14px!important;
-}
-.lfw-v1-eyebrow{
-  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  font-size:.72rem;
-  color:var(--muted);
-  margin-bottom:7px;
-}
-.lfw-v1-title{
-  margin:0 0 5px;
-  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-  font-weight:800;
-  font-size:1rem;
-  color:var(--text);
-}
-.lfw-v1-text{margin:0;color:#d9dde0;line-height:1.45}
-.lfw-v1-meta{
-  margin-top:9px;
-  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
-  font-size:.72rem;color:var(--muted)
-}
-
-/* Announcement panel */
-#announcementPanel{
-  margin:12px 0 14px;
-  display:none;
-  position:relative;
-}
-#announcementPanel.show{display:block}
-#announcementPanel::before{
-  content:"";
-  position:absolute;
-  left:0;top:10px;bottom:10px;width:3px;
-  border-radius:2px;
-  background:var(--active-wa,#c9cdd1);
-}
-#announcementPanel .lfw-v1-card{padding-left:17px!important}
-#announcementDismiss{
-  float:right;
-  min-height:34px!important;
-  padding:6px 10px!important;
-  border:1px solid var(--line)!important;
-  background:#101418!important;
-  color:#cfd4d8!important;
-  font-size:.78rem!important;
-}
-
-/* Info panel */
-#appInfoPanel{margin:18px 0 10px}
-#appInfoGrid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:8px;
-  margin-top:10px
-}
-#appInfoGrid .mini{
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:6px;
-  background:#111519;
-}
-#appInfoGrid strong{display:block;color:#f1f3f4;margin-bottom:3px}
-#appInfoGrid span{
-  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
-  font-size:.72rem;color:var(--muted)
-}
-
-/* Footer navigation */
-#lfwLegalNav{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-  padding:14px 8px 4px;
-}
-#lfwLegalNav button{
-  appearance:none;
+/* Blue lights remain as simple flat markers */
+.beacon,.blue-light,.light{
+  background:#2f80ed!important;
   border:0!important;
+  opacity:1!important;
+}
+
+/* Info/legal */
+#lfwLegalNav button{
   background:transparent!important;
+  border:0!important;
   color:#aeb5bb!important;
-  padding:4px 3px!important;
-  min-height:32px!important;
-  font-size:.78rem!important;
-  text-decoration:underline;
-  text-underline-offset:3px;
 }
-#lfwLegalNav button:hover{color:#f3f5f6!important}
-
-/* Modal */
 .lfw-modal{
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  display:none;
-  background:rgba(0,0,0,.72);
-  padding:18px;
-  overflow:auto;
+  background:rgba(0,0,0,.72)!important;
 }
-.lfw-modal.show{display:block}
 .lfw-modal-dialog{
-  max-width:760px;
-  margin:28px auto;
-  background:#0d1013;
-  border:1px solid #363d44;
-  border-radius:9px;
-  padding:18px;
+  background:#0d1013!important;
+  border:1px solid #363d44!important;
 }
-.lfw-modal-head{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  border-bottom:1px solid #2d3339;padding-bottom:10px;margin-bottom:14px
-}
-.lfw-modal-head h2{margin:0;font-size:1.15rem}
-.lfw-modal-close{
-  min-height:36px!important;padding:6px 10px!important;
-  background:#14191d!important;border:1px solid #343b42!important;color:#fff!important
-}
-.lfw-modal h3{font-size:1rem;margin-top:18px}
-.lfw-modal p,.lfw-modal li{color:#d7dbde;line-height:1.5}
-.lfw-modal ul{padding-left:20px}
-.lfw-modal .note{
-  border:1px solid #3b4249;background:#12171b;border-radius:6px;padding:10px;margin:12px 0;
-  color:#bfc6cc
+.love-footer-line{
+  background:#30363c!important;
+  height:1px!important;
 }
 
-/* Keep layout mobile friendly */
-@media(max-width:640px){
-  #appInfoGrid{grid-template-columns:1fr}
-  .lfw-modal{padding:10px}
-  .lfw-modal-dialog{margin:10px auto;padding:14px}
+/* Mobile */
+@media(max-width:700px){
+  button,.btn,select,input{min-height:44px!important}
+  .card,.panel,.shift-card{padding:12px!important}
+  .seat{padding:9px!important}
 }
 </style>
 
@@ -4869,6 +4464,36 @@ body.legal-open{overflow:hidden}
   document.addEventListener('DOMContentLoaded', function(){
     observer.observe(document.body, {childList:true, subtree:true});
   });
+})();
+</script>
+
+
+<script id="lfwActiveWAColorScript">
+(function(){
+  function applyWA(wa){
+    wa = String(wa || sessionStorage.getItem('lf2500_wa') || '');
+    if(/^[1-4]$/.test(wa)) document.body.setAttribute('data-active-wa',wa);
+    else document.body.removeAttribute('data-active-wa');
+  }
+  window.applyActiveWAColor = applyWA;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    applyWA();
+  });
+
+  document.addEventListener('click', function(e){
+    const b = e.target.closest && e.target.closest('#waGate .wa-buttons button[data-wa]');
+    if(b) setTimeout(function(){ applyWA(b.getAttribute('data-wa')); },0);
+  });
+
+  const oldLoad = window.loadWAData;
+  if(typeof oldLoad === 'function'){
+    window.loadWAData = function(wa){
+      const r = oldLoad.apply(this, arguments);
+      applyWA(wa);
+      return r;
+    };
+  }
 })();
 </script>
 
