@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="theme-color" content="#0b0b0b" />
-<title>Lehrfeuerwehr 2500 · Dienstplan</title>
+<title>Lehrfeuerwehr 2500 · LHF 2500/9</title>
 
 <style>
 :root{
@@ -1648,6 +1648,42 @@ body.role-admin #statsSection{
 }
 /* ===== END BRANDING FINAL ===== */
 
+
+/* ===== KORREKTES LFW BRANDING IN DER WEB-APP ===== */
+.vehicle-designation{
+  margin:7px 0 9px;
+  text-align:center;
+  color:#f3f3f3;
+  font-size:clamp(.95rem,3.5vw,1.35rem);
+  font-weight:950;
+  letter-spacing:.20em;
+  text-indent:.20em;
+  text-transform:uppercase;
+}
+.love-footer{
+  width:100%;
+  box-sizing:border-box;
+  margin:28px auto 8px;
+  padding:18px 16px calc(18px + env(safe-area-inset-bottom));
+  text-align:center;
+  color:#ffe13c;
+  font-size:clamp(.92rem,3vw,1.1rem);
+  font-weight:850;
+  letter-spacing:.04em;
+  text-shadow:0 0 10px rgba(255,225,60,.4);
+}
+.love-footer::before,.love-footer::after{
+  content:"";
+  display:inline-block;
+  width:min(18vw,130px);
+  height:1px;
+  margin:0 13px 4px;
+  vertical-align:middle;
+  background:linear-gradient(90deg,transparent,#ffe13c);
+}
+.love-footer::after{background:linear-gradient(90deg,#ffe13c,transparent)}
+.love-heart{margin-top:4px;font-size:1.25rem;color:#ffe13c}
+
 </style>
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -1802,6 +1838,7 @@ body.role-admin #statsSection{
       <div class="badge-inner">2500</div>
     </div>
     <h1>Feuerwache <span>2500</span></h1>
+<div class="vehicle-designation">LHF 2500/9</div>
     <span class="ghost">LHF</span>
     <p>Besetzung auswählen</p>
     <div class="status"><span class="dot"></span> Lehrfeuerwehr 2500 · </div>
