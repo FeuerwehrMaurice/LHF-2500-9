@@ -2471,6 +2471,293 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
 }
 </style>
 
+
+<style id="lfwAdminDemoStyles">
+.demo-mode-banner{
+  display:none;
+  position:sticky;
+  top:0;
+  z-index:18000;
+  margin:0 auto 10px;
+  width:min(100%,1000px);
+  padding:9px 12px;
+  background:#15191d;
+  border:1px solid var(--active-wa,#8f969d);
+  border-left:4px solid var(--active-wa,#8f969d);
+  color:#f3f5f6;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  font-size:.74rem;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-align:center;
+}
+body.demo-mode .demo-mode-banner{display:block}
+body.demo-mode::after{
+  content:"DEMO";
+  position:fixed;
+  right:12px;
+  bottom:76px;
+  z-index:17500;
+  padding:4px 7px;
+  border:1px solid var(--active-wa,#8f969d);
+  border-radius:4px;
+  background:#0d1013;
+  color:var(--active-wa,#c9cdd1);
+  font:700 .62rem/1 "JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  letter-spacing:.08em;
+  pointer-events:none;
+}
+.demo-admin-box{
+  margin-top:10px;
+  padding:12px;
+  border:1px solid #343b42;
+  border-radius:7px;
+  background:#101317;
+}
+.demo-admin-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+.demo-admin-title{font-weight:800;color:#f2f4f5}
+.demo-admin-note{margin-top:6px;color:#9ea6ad;font-size:.78rem;line-height:1.45}
+#demoModeBtn{
+  flex:0 0 auto;
+  min-width:118px!important;
+}
+body.demo-mode #demoModeBtn{
+  border-color:var(--active-wa)!important;
+  color:var(--active-wa)!important;
+}
+.history-item{position:relative}
+.history-admin-row{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:10px;
+}
+.history-delete-btn{
+  width:auto!important;
+  min-width:0!important;
+  padding:7px 10px!important;
+  min-height:34px!important;
+  border:1px solid #694046!important;
+  background:#151113!important;
+  color:#e9a4aa!important;
+  border-radius:5px!important;
+  font-size:.72rem!important;
+}
+body.role-user .history-admin-row{display:none!important}
+.history-admin-hint{
+  display:none;
+  margin:0 0 10px;
+  color:#9ea6ad;
+  font-size:.76rem;
+  line-height:1.4;
+}
+body.role-admin .history-admin-hint{display:block}
+</style>
+
+
+<style id="lfwSolidV1Polish">
+/* === SOLID V1: final polish === */
+:root{
+  --solid-bg:#080a0c;
+  --solid-panel:#101317;
+  --solid-panel-2:#15191d;
+  --solid-line:#30363d;
+  --solid-line-soft:#252b31;
+  --solid-text:#f3f5f6;
+  --solid-muted:#98a0a8;
+}
+
+/* Consistent vertical rhythm */
+.section,
+.history,
+.stats,
+#appInfoPanel{
+  scroll-margin-top:16px;
+}
+.section{margin-top:18px!important}
+.section-title{
+  margin:0 0 11px!important;
+  text-align:left!important;
+  letter-spacing:.10em!important;
+  font-size:.70rem!important;
+  color:#a7afb7!important;
+}
+
+/* Service cards: one visual system */
+.next-shift,
+.today-status,
+.availability-box,
+.fixed-cover-box,
+.manual-box,
+.selected-shift-card,
+.personnel-admin-box,
+.stats-table-wrap,
+.admin-hub,
+.demo-admin-box,
+.lfw-v1-card{
+  border-radius:7px!important;
+  border:1px solid var(--solid-line)!important;
+  background:var(--solid-panel)!important;
+}
+body[data-active-wa] .next-shift,
+body[data-active-wa] .availability-box,
+body[data-active-wa] .admin-hub{
+  border-left:3px solid var(--active-wa)!important;
+}
+
+/* Clear hierarchy */
+.next-shift-title,
+.today-status-title,
+.availability-title,
+.fixed-cover-title,
+.manual-title{
+  font-size:.78rem!important;
+  letter-spacing:.03em!important;
+}
+.next-shift-date,
+.today-status-date{
+  font-size:1rem!important;
+}
+.next-shift-meta,
+.plan-note,
+.availability-hint,
+.demo-admin-note{
+  color:var(--solid-muted)!important;
+}
+
+/* Admin becomes one clear control centre */
+.admin-hub{
+  overflow:hidden;
+}
+.admin-hub summary{
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  padding:0 12px;
+  cursor:pointer;
+  font-weight:800;
+}
+#adminHubContent{
+  padding-top:8px;
+}
+.demo-admin-box{
+  margin:8px 0!important;
+}
+
+/* History management */
+.history-item{
+  border-radius:7px!important;
+  border:1px solid var(--solid-line)!important;
+  background:var(--solid-panel)!important;
+  padding:12px!important;
+}
+.history-head{
+  font-size:.82rem!important;
+}
+.history-body{
+  font-size:.78rem!important;
+}
+.history-admin-row{
+  padding-top:9px;
+  border-top:1px solid var(--solid-line-soft);
+}
+.history-delete-btn{
+  color:#f0a6ad!important;
+  border-color:#5b373b!important;
+  background:#151113!important;
+}
+
+/* Tables */
+.stats-table th{
+  background:#14181c!important;
+  color:#cdd2d6!important;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-size:.70rem!important;
+}
+.stats-table td{
+  background:#0f1215!important;
+}
+.stats-chip{
+  border-radius:5px!important;
+  border-color:var(--solid-line)!important;
+  background:#12161a!important;
+  color:var(--active-wa)!important;
+}
+
+/* Buttons: predictable */
+.btn,.generate,.share-assignment-btn,.logout-btn,
+#waEnterBtn,#drawBtn,.primary-btn,.secondary-btn,
+.history-delete-btn{
+  transition:background .12s ease,border-color .12s ease,color .12s ease!important;
+}
+.btn:active,.generate:active,.share-assignment-btn:active,
+#waEnterBtn:active,#drawBtn:active,.primary-btn:active{
+  transform:none!important;
+  background:#1a1f24!important;
+}
+
+/* Demo should be impossible to miss, but not flashy */
+.demo-mode-banner{
+  border-radius:6px!important;
+  background:#12161a!important;
+  color:#f2f4f5!important;
+}
+body.demo-mode #lfwBottomNav{
+  border-color:var(--active-wa)!important;
+}
+body.demo-mode #demoModeBtn{
+  background:#171b1f!important;
+}
+
+/* Bottom nav visual cleanup */
+#lfwBottomNav{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+#lfwBottomNav button.active{
+  border:1px solid #313840!important;
+}
+#lfwBottomNav button.active .nav-code{
+  color:var(--active-wa)!important;
+}
+
+/* Footer / system info quieter */
+.footer,
+.updated-at{
+  color:#7f878f!important;
+}
+#appInfoPanel{
+  margin-top:22px!important;
+}
+
+/* Accessibility: keyboard focus */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:2px solid var(--active-wa,#c9cdd1)!important;
+  outline-offset:2px!important;
+}
+
+/* Mobile spacing */
+@media(max-width:520px){
+  .section{margin-top:15px!important}
+  .history-item{padding:10px!important}
+  .history-head{align-items:flex-start!important}
+  #lfwBottomNav{bottom:calc(6px + env(safe-area-inset-bottom))!important}
+}
+</style>
+
+
+<script id="lfwDemoReloadGuard">
+/* Demo is deliberately session-temporary. A reload always returns to real data. */
+sessionStorage.removeItem("lfw2500_demo_mode");
+</script>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -2611,6 +2898,8 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
 </script>
 
 <div class="app">
+<div class="demo-mode-banner admin-only" id="demoModeBanner">DEMO-MODUS · Änderungen werden nicht in Historie, Statistik oder Firebase gespeichert.</div>
+
 
   <section class="hero">
     <div class="badge">
@@ -2836,6 +3125,17 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
     </div>
     <button class="btn unsaved-save" id="saveSwapBtn" type="button">Änderung speichern</button>
   </div>
+
+
+<div class="demo-admin-box admin-only" id="demoAdminBox">
+  <div class="demo-admin-head">
+    <div>
+      <div class="demo-admin-title">Demo-Modus</div>
+      <div class="demo-admin-note">Zum Vorführen der App. Auslosen, Tauschen und Ansichten funktionieren, aber Demo-Besetzungen verändern keine echte Historie, Statistik oder Cloud-Daten.</div>
+    </div>
+    <button class="btn" id="demoModeBtn" type="button">Demo starten</button>
+  </div>
+</div>
 
 <section class="section stats" id="statsSection">
     <h2 class="section-title">Statistik</h2>
@@ -3547,8 +3847,12 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
     if(!plans[selectedShift]) plans[selectedShift] = {};
     plans[selectedShift].availability = {...availability};
     plans[selectedShift].fixedCover = {...fixedCover};
-    savePlans();
-    setLastChanged("Verfügbarkeit / Vertretung aktualisiert");
+
+    if(!demoMode){
+      savePlans();
+      setLastChanged("Verfügbarkeit / Vertretung aktualisiert");
+    }
+
     renderPlanner();
   }
 
@@ -3639,6 +3943,88 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
     });
   }
 
+
+  let demoMode = sessionStorage.getItem("lfw2500_demo_mode")==="1";
+  let demoSnapshot = null;
+
+  function cloneJSON(value){
+    try{return JSON.parse(JSON.stringify(value));}catch(e){return value;}
+  }
+
+  function captureDemoSnapshot(){
+    demoSnapshot={
+      plans:cloneJSON(plans),
+      history:cloneJSON(history),
+      availability:cloneJSON(availability),
+      fixedCover:cloneJSON(fixedCover),
+      current:cloneJSON(current),
+      selectedShift:selectedShift
+    };
+  }
+
+  function restoreDemoSnapshot(){
+    if(!demoSnapshot) return;
+    plans=cloneJSON(demoSnapshot.plans);
+    history=cloneJSON(demoSnapshot.history);
+    availability=cloneJSON(demoSnapshot.availability);
+    fixedCover=cloneJSON(demoSnapshot.fixedCover);
+    current=cloneJSON(demoSnapshot.current);
+    selectedShift=demoSnapshot.selectedShift;
+    demoSnapshot=null;
+
+    renderPlanner();
+    renderNextShift();
+    renderAvailability();
+    renderManual();
+    initFixedCover();
+    updateFixedCards();
+    renderPeople();
+    renderResult();
+    renderHistory();
+    renderStats();
+  }
+
+  function applyDemoModeUI(){
+    document.body.classList.toggle("demo-mode", demoMode);
+    const btn=document.getElementById("demoModeBtn");
+    if(btn) btn.textContent=demoMode ? "Demo beenden" : "Demo starten";
+  }
+
+  function setDemoMode(state){
+    if(appRole!=="admin" && state){
+      requireAdmin("Der Demo-Modus kann nur im Admin-Modus gestartet werden.");
+      return;
+    }
+
+    const next=!!state;
+
+    if(next && !demoMode){
+      captureDemoSnapshot();
+    }
+
+    if(!next && demoMode){
+      restoreDemoSnapshot();
+    }
+
+    demoMode=next;
+    if(demoMode) sessionStorage.setItem("lfw2500_demo_mode","1");
+    else sessionStorage.removeItem("lfw2500_demo_mode");
+
+    applyDemoModeUI();
+
+    const msg=document.getElementById("message");
+    if(msg){
+      msg.innerHTML=demoMode
+        ? '<div class="info ok"><strong>Demo-Modus aktiv.</strong> Du kannst Auslosung, Tausch und Bedienung vorführen. Echte Historie, Statistik, Dienstplanung und Cloud-Daten bleiben unverändert.</div>'
+        : '<div class="info ok"><strong>Demo beendet.</strong> Der echte Stand der Wachabteilung wurde wiederhergestellt.</div>';
+    }
+  }
+
+  function demoSaveMessage(){
+    const msg=document.getElementById("message");
+    if(msg) msg.innerHTML='<div class="info ok"><strong>Demo:</strong> Die Besetzung wurde nur zur Vorführung angezeigt und nicht gespeichert.</div>';
+  }
+
   let history = loadHistory();
 
   function normalizeHistory(){
@@ -3693,6 +4079,7 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
     try{return JSON.parse(localStorage.getItem(PLAN_KEY)||"{}")}catch(e){return {}}
   }
   function savePlans(){
+    if(demoMode) return;
     try{localStorage.setItem(PLAN_KEY,JSON.stringify(plans))}catch(e){}
     cloudSchedulePush();
   }
@@ -3805,6 +4192,12 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
       const msg=document.getElementById("message");
       if(msg) msg.innerHTML='<div class="info">Es gibt noch keine Besetzung zum Speichern.</div>';
       return false;
+    }
+
+    if(demoMode){
+      setUnsavedSwap(false);
+      demoSaveMessage();
+      return true;
     }
 
     setLastChanged("Besetzung gespeichert");
@@ -3948,9 +4341,10 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
   }
 
   function saveHistory(){
+    if(demoMode) return;
     try{
       localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-    cloudSchedulePush();
+      cloudSchedulePush();
     }catch(e){}
   }
 
@@ -4196,6 +4590,35 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
     `;
   }
 
+  function historyEntryIsoDate(entry){
+    const m=String(entry?.date||"").match(/(\d{2})\.(\d{2})\.(\d{4})/);
+    return m ? `${m[3]}-${m[2]}-${m[1]}` : null;
+  }
+
+  function deleteHistoryEntry(index){
+    if(!requireAdmin()) return;
+
+    if(demoMode){
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Im Demo-Modus werden keine echten Historien- oder Statistikdaten gelöscht.</div>';
+      return;
+    }
+
+    const entry=history[index];
+    if(!entry) return;
+
+    const label=String(entry.date||"diesem Eintrag");
+    if(!confirm(`Diesen Eintrag aus Historie und Statistik löschen?\n\n${label}\n\nDie gespeicherte Dienstplanung bleibt erhalten.`)) return;
+
+    history.splice(index,1);
+    saveHistory();
+    renderHistory();
+    renderStats();
+
+    const msg=document.getElementById("message");
+    if(msg) msg.innerHTML=`<div class="info ok">${label} wurde aus Historie und Statistik entfernt. Die Dienstplanung wurde nicht verändert.</div>`;
+  }
+
   function renderHistory(){
     const list = document.getElementById("historyList");
     list.innerHTML = "";
@@ -4205,10 +4628,13 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
       return;
     }
 
-    history.slice(0,10).forEach(entry=>{
+    const visibleHistory = appRole==="admin" ? history : history.slice(0,10);
+
+    visibleHistory.forEach(entry=>{
+      const index=history.indexOf(entry);
       const item = document.createElement("div");
       item.className = "history-item";
-      const lines = entry.assignment.map(a=>`${a.position}: ${a.person}`).join("<br>");
+      const lines = (entry.assignment||[]).map(a=>`${a.position}: ${a.person}`).join("<br>");
       item.innerHTML = `
         <div class="history-head">
           <span>Lehrfeuerwehr 2500</span>
@@ -4219,7 +4645,12 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
           Maschinisten-Chef: ${entry.maschinistenChef || "Raik Schindler"}<br>
           ${lines}
         </div>
+        <div class="history-admin-row admin-only">
+          <button class="history-delete-btn" type="button">Aus Statistik löschen</button>
+        </div>
       `;
+      const del=item.querySelector(".history-delete-btn");
+      if(del) del.addEventListener("click",()=>deleteHistoryEntry(index));
       list.appendChild(item);
     });
   }
@@ -4229,6 +4660,11 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
 
   document.getElementById("saveBtn").addEventListener("click",()=>{
     if(!current.length) return;
+    if(demoMode){
+      setUnsavedSwap(false);
+      demoSaveMessage();
+      return;
+    }
     const now = new Date();
     const date = now.toLocaleString("de-DE",{
       day:"2-digit",month:"2-digit",year:"numeric",
@@ -4282,6 +4718,11 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
 
   function overwriteSelectedPlan(){
     if(!requireAdmin()) return;
+    if(demoMode){
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Im Demo-Modus wird keine echte Planung überschrieben.</div>';
+      return;
+    }
     if(!selectedShift){
       document.getElementById("message").innerHTML='<div class="info">Bitte zuerst einen geplanten Dienst auswählen.</div>';
       return;
@@ -4409,6 +4850,16 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
     });
   }
 
+
+  const demoModeBtn=document.getElementById("demoModeBtn");
+  if(demoModeBtn){
+    demoModeBtn.addEventListener("click",()=>{
+      if(!requireAdmin()) return;
+      setDemoMode(!demoMode);
+    });
+  }
+  applyDemoModeUI();
+
   const repairStatsBtn=document.getElementById("repairStatsBtn");
   if(repairStatsBtn){
     repairStatsBtn.addEventListener("click",()=>{
@@ -4431,6 +4882,7 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
     if(!btn) return;
     sessionStorage.removeItem("lf2500_wa");
     sessionStorage.removeItem("lf2500_role_v1");
+    sessionStorage.removeItem("lfw2500_demo_mode");
     selectedWA=null;
     const gate=document.getElementById("waGate");
     if(gate) gate.style.removeProperty("display");
@@ -4657,9 +5109,9 @@ body.legal-open{overflow:hidden}
 <div id="lfwInfo" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwInfoTitle">
   <div class="lfw-modal-dialog">
     <div class="lfw-modal-head"><h2 id="lfwInfoTitle">Über die App</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
-    <p><strong>LHF 2500/9 Dienstplaner</strong><br>Version 1.0</p>
+    <p><strong>LHF 2500/9 Dienstplaner</strong><br>Version 1.1</p>
     <p>Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
-    <h3>Änderungen in Version 1.0</h3>
+    <h3>Änderungen in Version 1.1</h3>
     <ul>
       <li>WA-spezifische Farbführung</li>
       <li>Dienst- und Besetzungsplanung</li>
@@ -4669,7 +5121,7 @@ body.legal-open{overflow:hidden}
       <li>Cloud-Synchronisierung über Firebase</li>
       <li>Eigenständiges Terminal-Design ohne Glow</li>
       <li>Impressum, Datenschutz, Kontakt und App-Info</li>
-      <li>Ankündigungsbereich für Wachabteilungen</li>
+      <li>Ankündigungsbereich für Wachabteilungen</li><li>Demo-Modus und gezielte Statistikbereinigung im Adminbereich</li>
     </ul>
   </div>
 </div>
@@ -4882,6 +5334,9 @@ body.legal-open{overflow:hidden}
   }
 
   document.addEventListener("DOMContentLoaded", function(){
+    if(sessionStorage.getItem("lfw2500_demo_mode")==="1"){
+      sessionStorage.removeItem("lfw2500_demo_mode");
+    }
     applyWA();
     setTimeout(applyWA,250);
     setTimeout(applyWA,900);
