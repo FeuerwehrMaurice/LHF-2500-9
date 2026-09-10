@@ -2101,6 +2101,39 @@ button,.btn,input,select{border-radius:7px!important;box-shadow:none!important}
 .love-footer-line{height:1px!important;background:#30363c!important}
 </style>
 
+
+<style id="lfwFinalPolish">
+/* Letzter UI-Feinschliff – Funktionen bleiben unverändert */
+.hero{padding-top:18px!important;padding-bottom:14px!important}
+.hero h1{margin-bottom:5px!important;line-height:1.02!important}
+.vehicle-designation{margin-top:2px!important;margin-bottom:8px!important}
+
+/* Hauptaktion deutlich, Nebenaktionen ruhiger */
+#drawBtn,.draw-btn,.primary-btn{
+  min-height:48px!important;
+  font-weight:850!important;
+  letter-spacing:.025em!important;
+}
+.secondary-btn,.admin-hub button:not(.primary-btn){
+  min-height:40px!important;
+}
+
+/* Kompaktere technische Bereiche */
+.statistics-card,.stats-card,.personnel-card,.admin-hub{
+  border-radius:7px!important;
+}
+table{border-collapse:collapse!important;width:100%!important}
+th,td{border-bottom:1px solid #292f35!important;padding:9px 7px!important}
+
+/* Touch-Ziele mobil zuverlässig, ohne riesige Karten */
+@media (max-width:700px){
+  button,.btn,select,input{min-height:44px}
+  .card,.panel,.shift-card{padding:12px!important}
+  .seat{padding:9px!important}
+  .hero{padding-top:12px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
