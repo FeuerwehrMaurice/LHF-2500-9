@@ -1206,161 +1206,6 @@ body.role-admin #statsSection{
 }
 
 
-/* ===== LFW 2500 PRO UI ===== */
-.lfw-splash{
-  position:fixed; inset:0; z-index:100000;
-  display:grid; place-items:center; overflow:hidden;
-  background:
-    radial-gradient(circle at 15% 85%,rgba(255,30,30,.34),transparent 32%),
-    radial-gradient(circle at 85% 82%,rgba(0,100,255,.31),transparent 32%),
-    radial-gradient(circle at 50% 38%,rgba(255,255,255,.04),transparent 42%),
-    #050607;
-  transition:opacity .5s ease,visibility .5s ease;
-}
-.lfw-splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-.lfw-splash::before,.lfw-splash::after{
-  content:"";position:absolute;border-radius:50%;filter:blur(75px);
-  width:55vw;height:55vw;max-width:560px;max-height:560px;opacity:.25;
-  animation:lfwPulse 1.2s ease-in-out infinite alternate;
-}
-.lfw-splash::before{left:-25vw;bottom:-16vw;background:#ff1717}
-.lfw-splash::after{right:-25vw;bottom:-16vw;background:#0876ff;animation-delay:.2s}
-@keyframes lfwPulse{from{transform:scale(.82);opacity:.17}to{transform:scale(1.12);opacity:.35}}
-.splash-grid{
-  position:absolute;inset:0;opacity:.10;
-  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
-  background-size:42px 42px;
-  mask-image:linear-gradient(to bottom,transparent,#000 28%,#000 78%,transparent);
-}
-.splash-beam{position:absolute;top:18%;width:4px;height:42%;border-radius:10px;background:#fff}
-.splash-beam.red{left:8%;box-shadow:0 0 18px #ff2b2b,0 0 55px #ff1c1c}
-.splash-beam.blue{right:8%;box-shadow:0 0 18px #1b86ff,0 0 55px #0574ff}
-.splash-content{position:relative;z-index:3;width:min(92vw,760px);text-align:center;padding:24px}
-.splash-small{font-size:.78rem;font-weight:850;letter-spacing:.42em;color:#bdbdbd;text-transform:uppercase;margin-bottom:18px}
-.splash-logo{
-  margin:0;font-size:clamp(3.7rem,18vw,9rem);line-height:.85;font-weight:1000;font-style:italic;
-  letter-spacing:-.055em;color:#fff;transform:skewX(-4deg);
-  text-shadow:0 0 4px #fff,0 0 12px #ff4848,0 0 30px #ff1717,0 0 70px rgba(255,0,0,.42);
-}
-.splash-logo span{margin-left:.08em}
-.splash-sub{
-  margin-top:18px;font-size:clamp(1rem,4.5vw,1.55rem);font-weight:900;letter-spacing:.28em;text-indent:.28em;
-  color:#f3f3f3;text-transform:uppercase
-}
-.splash-divider{
-  width:min(72vw,500px);height:1px;margin:26px auto 18px;
-  background:linear-gradient(90deg,transparent,#ff3636 22%,#fff 50%,#2788ff 78%,transparent);
-  box-shadow:0 0 14px rgba(255,255,255,.5)
-}
-.splash-purpose{
-  display:inline-flex;align-items:center;gap:12px;padding:10px 17px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.17);background:rgba(10,10,12,.52);backdrop-filter:blur(8px);
-  font-size:.82rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#e9e9e9
-}
-.splash-purpose::before{
-  content:"";width:8px;height:8px;border-radius:50%;background:#ff3030;
-  box-shadow:0 0 10px #ff3030,18px 0 0 #1681ff,18px 0 10px #1681ff;margin-right:18px
-}
-
-/* WA-Auswahl als App-Karten */
-.wa-gate{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(201,27,27,.17),transparent 38%),
-    radial-gradient(circle at 100% 100%,rgba(0,100,255,.10),transparent 34%),
-    #070809 !important;
-}
-.wa-card{
-  border:1px solid rgba(255,255,255,.12)!important;
-  background:linear-gradient(180deg,rgba(24,25,28,.96),rgba(10,11,13,.97))!important;
-  box-shadow:0 28px 80px rgba(0,0,0,.55),0 0 55px rgba(201,27,27,.09)!important;
-}
-.wa-card h1{font-size:clamp(1.65rem,7vw,2.5rem)!important}
-.wa-buttons{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important
-}
-.wa-buttons button{
-  min-height:92px!important;text-align:left!important;padding:17px!important;border-radius:18px!important;
-  position:relative!important;overflow:hidden!important;font-size:1.1rem!important;
-  background:linear-gradient(145deg,#17191c,#0d0e10)!important;
-  border:1px solid rgba(255,255,255,.11)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important;
-}
-.wa-buttons button::after{
-  content:"Dienstplan öffnen";display:block;margin-top:8px;font-size:.68rem;letter-spacing:.08em;
-  color:#85898f;font-weight:700
-}
-.wa-buttons button:hover,.wa-buttons button.selected{
-  transform:translateY(-1px);border-color:#ffce31!important;
-  box-shadow:0 0 0 1px rgba(255,206,49,.20),0 12px 30px rgba(0,0,0,.35),0 0 25px rgba(255,206,49,.08)!important
-}
-
-/* Hauptseite ruhiger / professioneller */
-.app{padding-bottom:32px}
-.hero{padding-top:22px!important;padding-bottom:14px!important}
-.hero .badge{transform:scale(.84)}
-.hero h1{font-size:clamp(1.65rem,7vw,2.5rem)!important;margin-top:4px!important}
-.hero p{display:none}
-.hero .ghost{opacity:.05!important}
-.status{font-size:.75rem!important;padding:7px 11px!important}
-
-/* Nächster Dienst prominent */
-.next-shift{
-  border:1px solid rgba(255,206,49,.27)!important;
-  background:linear-gradient(155deg,rgba(255,206,49,.075),rgba(17,18,20,.96) 52%)!important;
-  box-shadow:0 16px 42px rgba(0,0,0,.28),0 0 24px rgba(255,206,49,.05)!important;
-}
-.next-shift-title{letter-spacing:.08em;text-transform:uppercase}
-.next-shift-date{font-size:clamp(1.25rem,5vw,1.7rem)!important}
-.next-shift-status,.selected-shift-status{
-  display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:999px;
-  font-size:.74rem!important;font-weight:900!important;white-space:nowrap
-}
-.plan-ok{background:rgba(42,180,87,.13)!important;color:#72e49a!important;border:1px solid rgba(72,215,117,.23)}
-.plan-warn{background:rgba(255,172,38,.12)!important;color:#ffc45d!important;border:1px solid rgba(255,172,38,.24)}
-.plan-open{background:rgba(255,255,255,.06)!important;color:#c7c7c7!important;border:1px solid rgba(255,255,255,.10)}
-
-/* Admin zusammenfassen */
-.admin-hub{
-  margin:18px auto;max-width:980px;border:1px solid rgba(255,255,255,.12);border-radius:18px;
-  background:#101215;overflow:hidden
-}
-.admin-hub summary{
-  cursor:pointer;list-style:none;padding:18px 19px;font-size:1rem;font-weight:900;letter-spacing:.03em;
-  display:flex;align-items:center;justify-content:space-between
-}
-.admin-hub summary::-webkit-details-marker{display:none}
-.admin-hub summary::after{content:"›";font-size:1.5rem;transform:rotate(90deg);transition:.2s}
-.admin-hub[open] summary::after{transform:rotate(-90deg)}
-.admin-hub-content{padding:0 14px 14px}
-.admin-hub-content .section,.admin-hub-content .manual-box{margin:12px 0!important}
-.admin-tool-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
-
-/* Cloud nur noch als kleiner Status-Chip */
-.footer{
-  width:max-content!important;max-width:calc(100% - 28px)!important;margin:18px auto!important;
-  padding:7px 11px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.09)!important;
-  background:rgba(10,11,13,.75)!important;font-size:.70rem!important;color:#8e9298!important
-}
-.footer::before{content:"☁️";margin-right:6px}
-#cloudDebugHint{display:none}
-#cloudStatus{font-weight:800}
-.footer.cloud-error{border-color:rgba(255,78,78,.28)!important;background:rgba(100,15,15,.18)!important}
-.footer.cloud-error #cloudDebugHint{display:block;margin-top:5px;color:#ff9d9d}
-
-/* Verfügbarkeit kompakter */
-.availability-list{gap:8px!important}
-.availability-hint{font-size:.72rem!important;line-height:1.4!important}
-
-/* Mobil */
-@media(max-width:620px){
-  .wa-card{width:min(94vw,520px)!important;padding:22px 16px!important}
-  .wa-buttons{gap:9px!important}
-  .wa-buttons button{min-height:82px!important;padding:14px!important}
-  .next-shift-main,.selected-shift-main{gap:12px!important;align-items:flex-start!important}
-}
-
-
 /* ===== LFW 2500 PRO+ FEATURES ===== */
 .live-change-banner{
   position:fixed;
@@ -1448,6 +1293,188 @@ body.role-admin #statsSection{
   100%{opacity:0;visibility:hidden}
 }
 
+
+/* ===== LFW 2500 GLOW LOGIN ===== */
+.wa-gate{
+  position:fixed!important;
+  inset:0!important;
+  z-index:99999!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:auto!important;
+  padding:calc(24px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom))!important;
+  background:
+    radial-gradient(circle at 15% 88%,rgba(255,28,28,.34),transparent 31%),
+    radial-gradient(circle at 86% 84%,rgba(0,100,255,.31),transparent 31%),
+    radial-gradient(circle at 50% 30%,rgba(255,255,255,.045),transparent 42%),
+    #050607!important;
+}
+.wa-gate::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.10;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 20%,#000 78%,transparent 100%);
+}
+.wa-gate::after{
+  content:"";
+  position:fixed;
+  left:7%;
+  top:18%;
+  width:4px;
+  height:38%;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 0 18px #ff2b2b,0 0 58px #ff1919,
+             calc(86vw - 8px) 0 18px #1b86ff,
+             calc(86vw - 8px) 0 58px #0876ff;
+  pointer-events:none;
+}
+.wa-card{
+  position:relative!important;
+  z-index:2!important;
+  width:min(94vw,560px)!important;
+  padding:28px 20px 22px!important;
+  border-radius:24px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  background:linear-gradient(180deg,rgba(17,18,21,.90),rgba(8,9,11,.94))!important;
+  backdrop-filter:blur(14px)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.58),0 0 58px rgba(255,30,30,.07)!important;
+  text-align:center!important;
+}
+.wa-card::before{
+  content:"DIENSTPLAN";
+  display:block;
+  margin-bottom:12px;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.42em;
+  text-indent:.42em;
+  color:#aeb2b8;
+}
+.wa-card h1{
+  margin:0!important;
+  font-size:0!important;
+}
+.wa-card h1::after{
+  content:"LFW 2500";
+  display:block;
+  font-size:clamp(3rem,15vw,5.2rem)!important;
+  line-height:.9;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-.055em;
+  color:#fff;
+  text-shadow:
+    0 0 4px #fff,
+    0 0 12px #ff4a4a,
+    0 0 28px #ff1919,
+    0 0 62px rgba(255,0,0,.42);
+  transform:skewX(-4deg);
+}
+.wa-card h1::before{
+  content:"LEHRFEUERWEHR";
+  display:block;
+  order:2;
+}
+.wa-card > p:first-of-type{
+  margin:14px 0 22px!important;
+  font-size:.82rem!important;
+  font-weight:900!important;
+  letter-spacing:.24em!important;
+  text-transform:uppercase!important;
+  color:#e5e5e5!important;
+}
+.wa-buttons{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  margin-top:8px!important;
+}
+.wa-buttons button{
+  min-height:78px!important;
+  padding:14px 15px!important;
+  border-radius:17px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  background:linear-gradient(145deg,#17191c,#0d0e10)!important;
+  color:#f3f3f3!important;
+  font-size:1.05rem!important;
+  font-weight:950!important;
+  text-align:left!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important;
+  transition:.18s ease!important;
+}
+.wa-buttons button::after{
+  content:"Dienstplan öffnen";
+  display:block;
+  margin-top:7px;
+  font-size:.65rem;
+  font-weight:750;
+  letter-spacing:.06em;
+  color:#85898f;
+}
+.wa-buttons button.selected,
+.wa-buttons button:focus{
+  border-color:#ffd23f!important;
+  box-shadow:0 0 0 1px rgba(255,210,63,.18),0 0 26px rgba(255,210,63,.08)!important;
+  transform:translateY(-1px);
+}
+#waPasswordWrap{
+  margin-top:16px!important;
+  padding-top:16px!important;
+  border-top:1px solid rgba(255,255,255,.09)!important;
+}
+#waPasswordWrap input,
+#waPassword{
+  width:100%!important;
+  min-height:52px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  background:#0c0d0f!important;
+  color:#fff!important;
+  text-align:center!important;
+  font-size:1.3rem!important;
+  letter-spacing:.28em!important;
+  outline:none!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03)!important;
+}
+#waPasswordWrap input:focus,
+#waPassword:focus{
+  border-color:#ffd23f!important;
+  box-shadow:0 0 0 3px rgba(255,210,63,.08)!important;
+}
+#waEnterBtn{
+  width:100%!important;
+  min-height:50px!important;
+  margin-top:10px!important;
+  border-radius:14px!important;
+  border:0!important;
+  background:linear-gradient(180deg,#ffd84e,#e9b91f)!important;
+  color:#111!important;
+  font-weight:1000!important;
+  font-size:1rem!important;
+  box-shadow:0 10px 28px rgba(233,185,31,.18)!important;
+}
+#waError{
+  margin-top:10px!important;
+  font-size:.76rem!important;
+  color:#ff8f8f!important;
+}
+@media(max-width:520px){
+  .wa-card{padding:24px 15px 18px!important}
+  .wa-buttons{gap:8px!important}
+  .wa-buttons button{min-height:72px!important;padding:12px!important}
+  .wa-gate::after{left:5%;box-shadow:0 0 18px #ff2b2b,0 0 50px #ff1919,
+                    calc(90vw - 8px) 0 18px #1b86ff,
+                    calc(90vw - 8px) 0 50px #0876ff}
+}
+/* ===== ENDE GLOW LOGIN ===== */
+
 </style>
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -1461,9 +1488,7 @@ body.role-admin #statsSection{
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
 
 
-<div class="lfw-splash" id="lfwSplash" aria-hidden="true">
-  <div class="splash-grid"></div>
-  <div class="splash-beam red"></div>
+<div class="splash-beam red"></div>
   <div class="splash-beam blue"></div>
   <div class="splash-content">
     <div class="splash-small">Dienstplan</div>
@@ -1744,14 +1769,6 @@ body.role-admin #statsSection{
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 <script>
-
-
-  function initLFWSplash(){
-    const splash=document.getElementById("lfwSplash");
-    if(!splash) return;
-    window.setTimeout(()=>splash.classList.add("hide"),1450);
-    window.setTimeout(()=>splash.remove(),2050);
-  }
 
   function planStatusHTML(saved){
     const count=Array.isArray(saved?.assignment) ? saved.assignment.length : 0;
@@ -3303,8 +3320,7 @@ body.role-admin #statsSection{
     },0);
   },true);
 
-  window.addEventListener("DOMContentLoaded",initLFWSplash);
-  window.addEventListener("DOMContentLoaded",initProLayout);
+    window.addEventListener("DOMContentLoaded",initProLayout);
   window.addEventListener("DOMContentLoaded", bindProPlusFeatures);
   window.addEventListener("DOMContentLoaded",initWAGate);
 
