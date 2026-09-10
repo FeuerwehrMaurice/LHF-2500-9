@@ -2812,6 +2812,48 @@ body.demo-mode #demoModeBtn::before{
 }
 </style>
 
+
+<style id="lfwDemoWAStyles">
+#waButtons .wa-demo-btn{
+  grid-column:1 / -1!important;
+  min-height:68px!important;
+  border:1px dashed #69717a!important;
+  background:#101317!important;
+}
+#waButtons .wa-demo-btn strong{color:#f3f5f6!important}
+#waButtons .wa-demo-btn small{color:#9ca4ac!important}
+#waButtons .wa-demo-btn.selected{
+  border-color:#f3f5f6!important;
+  box-shadow:none!important;
+}
+.demo-wa-notice{display:none}
+body.demo-wa .demo-wa-notice{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:4px 0 14px;
+  padding:10px 12px;
+  border:1px solid #4d555e;
+  border-left:4px solid #f3f5f6;
+  border-radius:7px;
+  background:#11151a;
+  color:#f3f5f6;
+}
+body.demo-wa .demo-wa-notice strong{
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  font-size:.78rem;
+  letter-spacing:.08em;
+}
+body.demo-wa .demo-wa-notice span{
+  color:#9ca4ac;
+  font-size:.76rem;
+}
+body.demo-wa .admin-only{display:none!important}
+body.demo-wa #cloudStatus{color:#9ca4ac!important}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -2829,6 +2871,7 @@ body.demo-mode #demoModeBtn::before{
       <button type="button" data-wa="2" onclick="window.LFWSelectWA('2', this)"><strong>WA 2</strong><small>Dienstplan öffnen</small></button>
       <button type="button" data-wa="3" onclick="window.LFWSelectWA('3', this)"><strong>WA 3</strong><small>Dienstplan öffnen</small></button>
       <button type="button" data-wa="4" onclick="window.LFWSelectWA('4', this)"><strong>WA 4</strong><small>Dienstplan öffnen</small></button>
+      <button type="button" data-wa="demo" class="wa-demo-btn" onclick="window.LFWSelectWA('demo', this)"><strong>DEMO</strong><small>Ohne Passwort · Vorführung</small></button>
     </div>
 
     <div class="wa-password-wrap" id="waPasswordWrap">
@@ -2859,6 +2902,38 @@ body.demo-mode #demoModeBtn::before{
     const label=document.getElementById("waSelected");
     const input=document.getElementById("waPassword");
     const err=document.getElementById("waError");
+
+    if(chosenWA==="demo"){
+      if(err) err.textContent="";
+      if(wrap){
+        wrap.classList.remove("show");
+        wrap.style.setProperty("display","none","important");
+      }
+
+      sessionStorage.removeItem("lfw2500_demo_mode");
+      sessionStorage.setItem("lf2500_wa","demo");
+      sessionStorage.setItem("lf2500_role_v1","user");
+      window.selectedWA="demo";
+
+      document.body.dataset.wa="demo";
+      document.body.classList.remove("role-admin");
+      document.body.classList.add("role-user","demo-wa");
+
+      const gate=document.getElementById("waGate");
+      if(gate){
+        gate.classList.add("hidden");
+        gate.style.setProperty("display","none","important");
+      }
+
+      setTimeout(()=>{
+        try{
+          if(typeof window.loadWAData==="function") window.loadWAData("demo");
+        }catch(e){
+          console.error("LFW Demo-Initialisierung:",e);
+        }
+      },0);
+      return;
+    }
 
     if(label) label.textContent="WA "+chosenWA+" · Passwort";
     if(err) err.textContent="";
@@ -2901,7 +2976,7 @@ body.demo-mode #demoModeBtn::before{
     window.selectedWA=String(wa);
 
     document.body.dataset.wa=String(wa);
-    document.body.classList.remove("role-user","role-admin");
+    document.body.classList.remove("role-user","role-admin","demo-wa");
     document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
 
     const gate=document.getElementById("waGate");
@@ -2940,7 +3015,10 @@ body.demo-mode #demoModeBtn::before{
 
     const rememberedWA=sessionStorage.getItem("lf2500_wa");
     const rememberedRole=sessionStorage.getItem("lf2500_role_v1");
-    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
+    if(rememberedWA==="demo" && rememberedRole==="user"){
+      const demoBtn=document.querySelector('#waButtons button[data-wa="demo"]');
+      window.LFWSelectWA("demo",demoBtn);
+    }else if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
        (rememberedRole==="user" || rememberedRole==="admin")){
       chosenWA=rememberedWA;
       window.selectedWA=rememberedWA;
@@ -2952,10 +3030,11 @@ body.demo-mode #demoModeBtn::before{
 </script>
 
 <div class="app">
-<div class="demo-mode-banner admin-only" id="demoModeBanner">DEMO-MODUS AKTIV · Keine Änderungen an Historie, Statistik, Dienstplanung oder Firebase.</div>
-
-
-  <section class="hero">
+<div class="demo-wa-notice" id="demoWaNotice">
+  <strong>DEMO-WACHABTEILUNG</strong>
+  <span>Vorführung · ohne Passwort · keine Speicherung · keine Cloud-Synchronisierung</span>
+</div>
+<section class="hero">
     <div class="badge">
       <div class="badge-inner">2500</div>
     </div>
@@ -3180,16 +3259,6 @@ body.demo-mode #demoModeBtn::before{
     <button class="btn unsaved-save" id="saveSwapBtn" type="button">Änderung speichern</button>
   </div>
 
-
-<div class="demo-admin-box admin-only" id="demoAdminBox">
-  <div class="demo-admin-head">
-    <div>
-      <div class="demo-admin-title">Demo-Modus</div>
-      <div class="demo-admin-note">Zum Vorführen der App. Auslosen, Tauschen und Ansichten funktionieren, aber Demo-Besetzungen verändern keine echte Historie, Statistik oder Cloud-Daten.</div>
-    </div>
-    <button class="btn" id="demoModeBtn" type="button">Demo starten</button>
-  </div>
-</div>
 
 <section class="section stats" id="statsSection">
     <h2 class="section-title">Statistik</h2>
@@ -3492,7 +3561,7 @@ body.demo-mode #demoModeBtn::before{
 
 
   const ROLE_KEY = "lf2500_role_v1";
-  let appRole = null;
+  let appRole = sessionStorage.getItem(ROLE_KEY) || null;
 
   function requireAdmin(message="Diese Funktion ist nur im Admin-Modus verfügbar."){
     if(appRole === "admin") return true;
@@ -3675,6 +3744,10 @@ body.demo-mode #demoModeBtn::before{
 
   async function startCloudForWA(wa){
     wa=String(wa);
+    if(wa==="demo"){
+      setCloudStatus("Demo · offline");
+      return;
+    }
     if(!cloudAuth || !cloudDb){
       setCloudStatus("nicht verfügbar");
       return;
@@ -3772,7 +3845,7 @@ body.demo-mode #demoModeBtn::before{
 
   function fillPersonnelAdmin(){
     const waLabel=document.getElementById("personnelAdminWA");
-    if(waLabel) waLabel.textContent=`WA ${currentWA()}`;
+    if(waLabel) waLabel.textContent=currentWA()==="demo" ? "DEMO" : `WA ${currentWA()}`;
     const sf=document.getElementById("adminSfName");
     const mc=document.getElementById("adminMcName");
     if(sf) sf.value=baseFixedStaff.sf;
@@ -3817,6 +3890,86 @@ body.demo-mode #demoModeBtn::before{
 
   window.loadWAData=function(wa){
     wa=String(wa);
+    document.body.classList.toggle("demo-wa", wa==="demo");
+
+    if(wa==="demo"){
+      // Eigene Vorführ-Wachabteilung. Nutzt die vorhandene Oberfläche,
+      // schreibt aber weder Historie/Pläne noch Firebase-Daten.
+      demoMode=true;
+
+      // Stop any live listener/pending cloud write from the previously opened WA.
+      if(cloudPushTimer){
+        clearTimeout(cloudPushTimer);
+        cloudPushTimer=null;
+      }
+      if(cloudUnsubscribe){
+        try{ cloudUnsubscribe(); }catch(e){}
+        cloudUnsubscribe=null;
+      }
+      cloudReady=false;
+      cloudActiveWA=null;
+      setCloudStatus("Demo · offline");
+
+      sessionStorage.setItem("lf2500_wa","demo");
+      sessionStorage.setItem("lf2500_role_v1","user");
+
+      const today=new Date();
+      const tomorrow=new Date(today);
+      tomorrow.setDate(today.getDate()+1);
+      const iso=(d)=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+
+      shifts=[
+        {date:iso(today),type:"day"},
+        {date:iso(tomorrow),type:"night"}
+      ];
+      history=[];
+      plans={};
+      selectedShift=shifts[0].date;
+
+      baseFixedStaff={
+        sf:"Demo Staffelführer",
+        mc:"Demo Maschinisten-Chef"
+      };
+      people=[
+        "Demo Maschinist",
+        "Demo Angriffstruppführer",
+        "Demo Angriffstruppmann",
+        "Demo Wassertruppführer",
+        "Demo Wassertruppmann"
+      ];
+      availability=defaultAvailability();
+      fixedCover={sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""};
+
+      current=[
+        {position:"Maschinist",person:"Demo Maschinist"},
+        {position:"Angriffstruppführer",person:"Demo Angriffstruppführer"},
+        {position:"Angriffstruppmann",person:"Demo Angriffstruppmann"},
+        {position:"Wassertruppführer",person:"Demo Wassertruppführer"},
+        {position:"Wassertruppmann",person:"Demo Wassertruppmann"}
+      ];
+
+      setUnsavedSwap(false);
+      initFixedCover();
+      updateFixedCards();
+      renderPeople();
+      renderAvailability();
+      renderManual();
+      renderPlanner();
+      renderTodayStatus();
+      renderNextShift();
+      renderResult();
+      renderHistory();
+      renderStats();
+      fillPersonnelAdmin();
+      applyDemoModeUI();
+
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info ok"><strong>Demo-Wachabteilung geöffnet.</strong> Alle sieben Funktionen sind beispielhaft besetzt. Änderungen werden nicht gespeichert.</div>';
+      return;
+    }
+
+    demoMode=false;
+    applyDemoModeUI();
     if(wa==="1") migrateWA1LegacyData();
 
     const keys=storageKeysForWA(wa);
@@ -4046,9 +4199,7 @@ body.demo-mode #demoModeBtn::before{
   }
 
   function applyDemoModeUI(){
-    document.body.classList.toggle("demo-mode", demoMode);
-    const btn=document.getElementById("demoModeBtn");
-    if(btn){ btn.textContent=demoMode ? "Demo aktiv · Beenden" : "Demo starten"; btn.setAttribute("aria-pressed", demoMode ? "true" : "false"); }
+    document.body.classList.remove("demo-mode");
   }
 
   function setDemoMode(state){
@@ -4211,7 +4362,7 @@ body.demo-mode #demoModeBtn::before{
     const box=document.getElementById("nextShiftContent");
     if(!box) return;
     const waLabel=document.getElementById("nextShiftWA");
-    if(waLabel) waLabel.textContent=`WA ${currentWA()}`;
+    if(waLabel) waLabel.textContent=currentWA()==="demo" ? "DEMO" : `WA ${currentWA()}`;
     const next=getNextShift();
     if(!next){
       box.innerHTML='<div class="selected-shift-empty">Kein weiterer Dienst im hinterlegten Zeitraum.</div>';
@@ -4884,13 +5035,6 @@ body.demo-mode #demoModeBtn::before{
   window.savePersonnelConfig = savePersonnelConfig;
   window.repairStatistics = repairStatistics;
   window.saveCurrentAssignment = saveCurrentAssignment;
-
-  // Demo controls must be exported while still inside this application scope.
-  window.__lfwToggleDemo = function(){
-    if(!requireAdmin()) return;
-    setDemoMode(!demoMode);
-  };
-  window.__lfwApplyDemoModeUI = applyDemoModeUI;
   applyDemoModeUI();
 
   window.getLFWShareData = function(){
@@ -4964,7 +5108,7 @@ body.demo-mode #demoModeBtn::before{
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.1.1</span></div>
+    <div class="mini"><strong>Version</strong><span>1.2.1</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
@@ -5182,7 +5326,7 @@ body.legal-open{overflow:hidden}
       <li>Cloud-Synchronisierung über Firebase</li>
       <li>Eigenständiges Terminal-Design ohne Glow</li>
       <li>Impressum, Datenschutz, Kontakt und App-Info</li>
-      <li>Ankündigungsbereich für Wachabteilungen</li><li>Demo-Modus und gezielte Statistikbereinigung im Adminbereich</li>
+      <li>Ankündigungsbereich für Wachabteilungen</li><li>Passwortfreie Demo-Wachabteilung und gezielte Statistikbereinigung im Adminbereich</li>
     </ul>
   </div>
 </div>
@@ -5429,19 +5573,6 @@ body.legal-open{overflow:hidden}
 })();
 </script>
 
-
-<script id="lfwDemoButtonFallback">
-document.addEventListener("click", function(e){
-  const btn=e.target.closest && e.target.closest("#demoModeBtn");
-  if(!btn) return;
-  e.preventDefault();
-  if(typeof window.__lfwToggleDemo === "function"){
-    window.__lfwToggleDemo();
-  }else{
-    console.error("Demo-Steuerung ist noch nicht verfügbar.");
-  }
-});
-</script>
 
 </body>
 </html>
