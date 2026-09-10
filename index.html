@@ -1475,6 +1475,21 @@ body.role-admin #statsSection{
 }
 /* ===== ENDE GLOW LOGIN ===== */
 
+
+.wa-gate::before,
+.wa-gate::after,
+.wa-card::before{
+  pointer-events:none !important;
+}
+.wa-buttons,
+.wa-buttons button,
+#waPasswordWrap,
+#waPassword{
+  position:relative;
+  z-index:5;
+  pointer-events:auto !important;
+}
+
 </style>
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
