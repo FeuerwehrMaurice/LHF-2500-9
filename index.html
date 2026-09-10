@@ -2104,6 +2104,373 @@ body[data-active-wa] .status-chip{
 }
 </style>
 
+
+<style id="lfwBrandFinalV3">
+:root{
+  --brand-bg:#080a0c;
+  --brand-panel:#101317;
+  --brand-panel2:#15191d;
+  --brand-line:#30363d;
+  --brand-muted:#929aa2;
+  --brand-text:#f3f5f6;
+  --wa1:#f2cc2f;
+  --wa2:#2f80ed;
+  --wa3:#27ae60;
+  --wa4:#e53935;
+  --active-wa:#c9cdd1;
+}
+body[data-active-wa="1"]{--active-wa:var(--wa1)}
+body[data-active-wa="2"]{--active-wa:var(--wa2)}
+body[data-active-wa="3"]{--active-wa:var(--wa3)}
+body[data-active-wa="4"]{--active-wa:var(--wa4)}
+
+/* --- complete no-glow policy --- */
+*,*::before,*::after{
+  text-shadow:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+body,.app,.hero,.badge,.badge-inner,.person-card,.role-card,.vehicle-wrap,
+.lf-shell,.lf-front,.crew-cabin,.seat,.next-shift,.today-status,.availability-box,
+.fixed-cover-box,.manual-box,.selected-shift-card,.shift-card,.stats-table-wrap,
+.stats-chip,.personnel-admin-box,.admin-hub,.lfw-v1-card,.wa-card,.wa-gate,
+button,input,select,textarea{
+  background-image:none!important;
+}
+
+/* --- app foundation --- */
+html,body{
+  background:var(--brand-bg)!important;
+  color:var(--brand-text)!important;
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+.app{padding-bottom:92px!important}
+
+/* --- compact identity / hero --- */
+.hero{
+  padding:20px 12px 14px!important;
+  border-bottom:1px solid var(--brand-line)!important;
+}
+.badge{
+  width:74px!important;
+  height:74px!important;
+  margin:0 auto 12px!important;
+  border:1px solid var(--active-wa)!important;
+  border-radius:10px!important;
+  background:var(--brand-panel)!important;
+}
+.badge-inner{
+  width:50px!important;
+  height:50px!important;
+  border-radius:6px!important;
+  background:var(--brand-panel2)!important;
+  border:1px solid var(--active-wa)!important;
+  color:var(--active-wa)!important;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-size:18px!important;
+}
+.hero h1{
+  margin:0!important;
+  color:var(--brand-text)!important;
+  font-size:clamp(1.5rem,6vw,2.5rem)!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:-.035em!important;
+  text-transform:uppercase!important;
+}
+.hero h1 span{color:var(--brand-text)!important}
+.vehicle-designation{
+  margin:7px 0 1px!important;
+  color:var(--brand-muted)!important;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  letter-spacing:.12em!important;
+  font-size:.72rem!important;
+}
+/* LHF stays as the visual trademark */
+.hero .ghost{
+  display:block!important;
+  margin-top:4px!important;
+  color:transparent!important;
+  -webkit-text-stroke:2px var(--active-wa)!important;
+  opacity:.82!important;
+  font-size:clamp(3.2rem,13vw,6.3rem)!important;
+  line-height:.86!important;
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-weight:800!important;
+  letter-spacing:-.07em!important;
+}
+.hero p{
+  margin:10px 0 8px!important;
+  color:var(--brand-muted)!important;
+  letter-spacing:.18em!important;
+  font-size:.66rem!important;
+}
+.status{
+  border:1px solid var(--active-wa)!important;
+  background:var(--brand-panel)!important;
+  color:var(--active-wa)!important;
+  border-radius:6px!important;
+  padding:6px 10px!important;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-size:.72rem!important;
+}
+.status .dot{
+  background:var(--active-wa)!important;
+  box-shadow:none!important;
+}
+
+/* --- consistent cards --- */
+.next-shift,.today-status,.availability-box,.fixed-cover-box,.manual-box,
+.selected-shift-card,.personnel-admin-box,.admin-hub,.lfw-v1-card,.stats-table-wrap{
+  background:var(--brand-panel)!important;
+  border:1px solid var(--brand-line)!important;
+  border-radius:8px!important;
+}
+body[data-active-wa] .next-shift,
+body[data-active-wa] .availability-box{
+  border-left:3px solid var(--active-wa)!important;
+}
+.next-shift-title,.today-status-title,.availability-title,
+.fixed-cover-title,.manual-title,.section-title{
+  color:var(--brand-text)!important;
+}
+body[data-active-wa] .next-shift-title,
+body[data-active-wa] .today-status-title,
+body[data-active-wa] .availability-title{
+  color:var(--active-wa)!important;
+}
+.section-title{
+  letter-spacing:.13em!important;
+  font-size:.72rem!important;
+}
+
+/* --- vehicle / crew: clear technical plan --- */
+.vehicle-wrap,.lf-shell{
+  background:var(--brand-panel)!important;
+  border:1px solid var(--brand-line)!important;
+  border-radius:9px!important;
+}
+.lf-front,.crew-cabin{
+  background:#0e1215!important;
+  border:1px solid #343a40!important;
+  border-radius:7px!important;
+}
+.windscreen{
+  background:#10161b!important;
+  border:1px solid #3c444b!important;
+}
+.lf-front::before,.lf-front::after{
+  background:#2f80ed!important;
+  box-shadow:none!important;
+}
+.seat{
+  background:#111519!important;
+  border:1px solid #343a40!important;
+  border-radius:6px!important;
+}
+.seat.fixed{border-color:#4a5158!important}
+.seat .seat-role{
+  color:var(--brand-muted)!important;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-size:.64rem!important;
+  letter-spacing:.06em!important;
+}
+.seat .seat-name{
+  color:var(--brand-text)!important;
+  font-weight:700!important;
+  font-size:.96rem!important;
+}
+.seat .seat-initials,.avatar,.initial-chip,.initials,.person-avatar{
+  width:40px!important;
+  height:32px!important;
+  min-width:40px!important;
+  border-radius:4px!important;
+  background:#171b1f!important;
+  border:1px solid #495159!important;
+  color:var(--brand-text)!important;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+}
+body[data-active-wa] .seat.swap-selected,
+body[data-active-wa] .seat.selected{
+  border-color:var(--active-wa)!important;
+  box-shadow:inset 3px 0 0 var(--active-wa)!important;
+}
+.vehicle-label,.direction-label,.lf-front-label{
+  color:var(--active-wa)!important;
+}
+
+/* --- people/cards less reminiscent of the reference app --- */
+.people-grid{
+  grid-template-columns:1fr!important;
+  gap:8px!important;
+}
+.person-card{
+  min-height:auto!important;
+  padding:11px 12px!important;
+  border:1px solid var(--brand-line)!important;
+  border-radius:7px!important;
+  background:var(--brand-panel)!important;
+  display:grid!important;
+  grid-template-columns:46px minmax(0,1fr) auto!important;
+  gap:10px!important;
+  align-items:center!important;
+  text-align:left!important;
+}
+.person-card .avatar{
+  margin:0!important;
+}
+.person-name{
+  text-align:left!important;
+  color:var(--brand-text)!important;
+  font-weight:700!important;
+  font-size:.95rem!important;
+}
+.tag{
+  margin:0!important;
+  border:1px solid #3a4148!important;
+  color:var(--brand-muted)!important;
+  background:#12161a!important;
+  border-radius:4px!important;
+}
+
+/* --- buttons: one clear primary action, all flat --- */
+.btn,.generate,.share-assignment-btn,.logout-btn,
+#waEnterBtn,#drawBtn,.primary-btn,.secondary-btn{
+  background:var(--brand-panel2)!important;
+  border:1px solid var(--brand-line)!important;
+  color:var(--brand-text)!important;
+  border-radius:6px!important;
+}
+body[data-active-wa] .generate,
+body[data-active-wa] #drawBtn,
+body[data-active-wa] .primary-btn{
+  border-color:var(--active-wa)!important;
+  color:var(--active-wa)!important;
+}
+.generate{
+  min-height:48px!important;
+  font-size:1rem!important;
+}
+input[type="checkbox"]{accent-color:var(--active-wa)!important}
+
+/* --- WA login: neutral brand, WA colors only on each row --- */
+.wa-gate{
+  background:var(--brand-bg)!important;
+}
+.wa-gate::before,.wa-gate::after,.wa-card::before{content:none!important;display:none!important}
+.wa-card{
+  background:#0d1013!important;
+  border:1px solid #343a40!important;
+  border-radius:10px!important;
+}
+.wa-login-logo,.wa-login-logo span{
+  color:var(--brand-text)!important;
+  transform:none!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  letter-spacing:-.04em!important;
+}
+.wa-login-line{
+  height:1px!important;
+  background:#343a40!important;
+}
+#waButtons{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:8px!important;
+}
+#waButtons button{
+  --row-wa:#aeb5bb;
+  min-height:58px!important;
+  border-radius:6px!important;
+  background:var(--brand-panel)!important;
+  border:1px solid var(--brand-line)!important;
+  padding:10px 12px!important;
+}
+#waButtons button[data-wa="1"]{--row-wa:var(--wa1)}
+#waButtons button[data-wa="2"]{--row-wa:var(--wa2)}
+#waButtons button[data-wa="3"]{--row-wa:var(--wa3)}
+#waButtons button[data-wa="4"]{--row-wa:var(--wa4)}
+#waButtons button strong{color:var(--row-wa)!important}
+#waButtons button.selected{
+  border-color:var(--row-wa)!important;
+  box-shadow:inset 4px 0 0 var(--row-wa)!important;
+  transform:none!important;
+}
+#waPassword,#waPasswordWrap input{
+  border-radius:6px!important;
+  border:1px solid #414850!important;
+  background:#0a0d0f!important;
+}
+#waEnterBtn{
+  border:1px solid #4a5158!important;
+  color:var(--brand-text)!important;
+}
+
+/* --- footer / legal remains discreet --- */
+.love-footer{
+  color:#d6dade!important;
+  text-shadow:none!important;
+}
+.love-footer-main span{color:#d6dade!important}
+.love-footer-line{background:#30363d!important}
+.legal-card{background:#111519!important;border-color:#30363d!important}
+.legal-close{border-radius:6px!important}
+
+/* --- fixed bottom navigation --- */
+#lfwBottomNav{
+  position:fixed;
+  left:50%;
+  bottom:calc(8px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  z-index:19000;
+  width:min(calc(100% - 20px),680px);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:4px;
+  padding:6px;
+  background:#0c0f12;
+  border:1px solid #30363d;
+  border-radius:9px;
+}
+#lfwBottomNav button{
+  min-width:0!important;
+  min-height:48px!important;
+  padding:6px 3px!important;
+  display:flex!important;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  background:transparent!important;
+  border:0!important;
+  color:#aab1b8!important;
+  border-radius:5px!important;
+  font-size:.68rem!important;
+  font-weight:700!important;
+}
+#lfwBottomNav .nav-code{
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  font-size:.58rem;
+  color:var(--active-wa);
+}
+#lfwBottomNav button.active{
+  background:#15191d!important;
+  color:var(--brand-text)!important;
+}
+
+/* compact mobile */
+@media(max-width:520px){
+  .hero{padding-top:14px!important}
+  .badge{width:64px!important;height:64px!important}
+  .badge-inner{width:44px!important;height:44px!important;font-size:16px!important}
+  .hero .ghost{font-size:clamp(3rem,18vw,5rem)!important}
+  .next-shift,.today-status,.availability-box{padding:11px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -2249,7 +2616,7 @@ body[data-active-wa] .status-chip{
     <div class="badge">
       <div class="badge-inner">2500</div>
     </div>
-    <h1>Feuerwache <span>2500</span></h1>
+    <h1>Lehrfeuerwehr <span>2500</span></h1>
 <div class="vehicle-designation">LHF 2500/9</div>
     <span class="ghost">LHF</span>
     <p>Besetzung auswählen</p>
@@ -4494,6 +4861,58 @@ body.legal-open{overflow:hidden}
       return r;
     };
   }
+})();
+</script>
+
+
+<nav id="lfwBottomNav" aria-label="App-Navigation">
+  <button type="button" data-target="plannerSection"><span class="nav-code">01</span><span>Dienstplan</span></button>
+  <button type="button" data-target="resultSection"><span class="nav-code">02</span><span>Besetzung</span></button>
+  <button type="button" data-target="statsSection"><span class="nav-code">03</span><span>Statistik</span></button>
+  <button type="button" data-target="appInfoPanel"><span class="nav-code">04</span><span>Info</span></button>
+</nav>
+
+
+<script id="lfwBrandFinalV3Script">
+(function(){
+  function applyWA(){
+    const wa = String(sessionStorage.getItem("lf2500_wa") || "");
+    if(/^[1-4]$/.test(wa)) document.body.setAttribute("data-active-wa",wa);
+    else document.body.removeAttribute("data-active-wa");
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    applyWA();
+    setTimeout(applyWA,250);
+    setTimeout(applyWA,900);
+
+    const nav = document.getElementById("lfwBottomNav");
+    if(nav){
+      nav.addEventListener("click", function(e){
+        const btn = e.target.closest("button[data-target]");
+        if(!btn) return;
+        const target = document.getElementById(btn.dataset.target);
+        if(!target) return;
+        nav.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        target.scrollIntoView({behavior:"smooth",block:"start"});
+      });
+    }
+  });
+
+  document.addEventListener("click",function(e){
+    const waBtn = e.target.closest && e.target.closest("#waButtons button[data-wa]");
+    if(waBtn){
+      document.body.setAttribute("data-active-wa",waBtn.getAttribute("data-wa"));
+    }
+    if(e.target.closest && e.target.closest("#waEnterBtn")){
+      setTimeout(applyWA,80);
+      setTimeout(applyWA,350);
+    }
+    if(e.target.closest && e.target.closest("#logoutBtn")){
+      setTimeout(function(){ document.body.removeAttribute("data-active-wa"); },80);
+    }
+  });
 })();
 </script>
 
