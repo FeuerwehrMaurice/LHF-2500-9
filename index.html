@@ -2134,6 +2134,179 @@ th,td{border-bottom:1px solid #292f35!important;padding:9px 7px!important}
 }
 </style>
 
+
+<style id="lfwWADynamicColors">
+/* Grundbranding neutral; WA-Farbe erst nach Anmeldung */
+.hero h1,
+.hero h1 *,
+#waGate h1,
+#waGate .brand-title,
+#waGate .brand-title *{
+  color:#f2f4f5!important;
+}
+#waGate .brand-title .accent,
+#waGate h1 .accent{
+  color:#f2f4f5!important;
+}
+
+/* App-Akzent je angemeldeter Wachabteilung */
+body[data-active-wa="1"]{--active-wa:#f2cc2f;--active-wa-rgb:242,204,47}
+body[data-active-wa="2"]{--active-wa:#2f80ed;--active-wa-rgb:47,128,237}
+body[data-active-wa="3"]{--active-wa:#27ae60;--active-wa-rgb:39,174,96}
+body[data-active-wa="4"]{--active-wa:#e53935;--active-wa-rgb:229,57,53}
+
+body[data-active-wa] .section-title,
+body[data-active-wa] .next-shift-card strong,
+body[data-active-wa] .status-chip,
+body[data-active-wa] .person-name,
+body[data-active-wa] .seat .name,
+body[data-active-wa] .accent-text{
+  color:var(--active-wa)!important;
+}
+body[data-active-wa] .card.accent,
+body[data-active-wa] .panel.accent,
+body[data-active-wa] .next-shift-card,
+body[data-active-wa] .availability-card{
+  border-color:var(--active-wa)!important;
+}
+body[data-active-wa] input[type="checkbox"]:checked{
+  accent-color:var(--active-wa)!important;
+}
+body[data-active-wa] .primary-btn,
+body[data-active-wa] #drawBtn{
+  border-color:var(--active-wa)!important;
+}
+
+/* Kein Glow */
+body[data-active-wa] *{text-shadow:none!important}
+</style>
+
+
+<style id="lfwNeutralBrandFix">
+/* EXAKTE vorhandene Elemente: Branding auf der Startseite komplett neutral */
+.wa-login-logo,
+.wa-login-logo span,
+.hero h1,
+.hero h1 span,
+.vehicle-designation{
+  color:#f2f4f5!important;
+  text-shadow:none!important;
+  filter:none!important;
+}
+
+/* Auch der kleine Grundtitel bleibt vor Login neutral */
+.status{
+  box-shadow:none!important;
+}
+
+/* Nach Login übernimmt nur die jeweilige WA ihre offizielle Akzentfarbe */
+body[data-active-wa="1"]{--active-wa:#f2cc2f}
+body[data-active-wa="2"]{--active-wa:#2f80ed}
+body[data-active-wa="3"]{--active-wa:#27ae60}
+body[data-active-wa="4"]{--active-wa:#e53935}
+
+/* WA-bezogene Bereiche in der eigentlichen App */
+body[data-active-wa] #availabilitySection,
+body[data-active-wa] #nextShiftCard,
+body[data-active-wa] .availability-card,
+body[data-active-wa] .next-shift-card,
+body[data-active-wa] .staff-card,
+body[data-active-wa] .person-card{
+  border-color:var(--active-wa)!important;
+}
+
+body[data-active-wa] #availabilitySection h2,
+body[data-active-wa] #availabilitySection h3,
+body[data-active-wa] #nextShiftCard,
+body[data-active-wa] .next-shift-card strong,
+body[data-active-wa] .person-name,
+body[data-active-wa] .staff-card .name{
+  color:var(--active-wa)!important;
+}
+
+body[data-active-wa] input[type="checkbox"]{
+  accent-color:var(--active-wa)!important;
+}
+
+/* Keine WA-Farbe als Glow */
+body[data-active-wa] .staff-card,
+body[data-active-wa] .person-card,
+body[data-active-wa] .availability-card,
+body[data-active-wa] .next-shift-card{
+  box-shadow:none!important;
+  background-image:none!important;
+}
+</style>
+
+
+<style id="lfwBesatzungPolish">
+/* Besetzungsansicht ruhiger und eigenständiger */
+.vehicle{
+  border-color:#3b4147!important;
+  background:#0b0e10!important;
+}
+.cab,.crew-cabin{
+  border-color:#30363b!important;
+  background:#101417!important;
+}
+.seat{
+  border-color:#343a40!important;
+  background:#111519!important;
+  padding:10px!important;
+}
+.seat .role,
+.seat .seat-role{
+  color:#aab0b6!important;
+  font-size:.78rem!important;
+  letter-spacing:.07em!important;
+}
+.seat .name,
+.seat .person-name{
+  color:#f3f5f6!important;
+  font-weight:800!important;
+}
+.seat .avatar,
+.seat .initials{
+  width:38px!important;
+  height:32px!important;
+  min-width:38px!important;
+  border-radius:4px!important;
+  background:#171b1f!important;
+  border:1px solid #4a5158!important;
+  color:#f3f5f6!important;
+  box-shadow:none!important;
+}
+
+/* Weniger gleichzeitig rote Rahmen */
+body[data-active-wa] .seat,
+body[data-active-wa] .cab,
+body[data-active-wa] .crew-cabin{
+  border-color:#343a40!important;
+}
+body[data-active-wa] .seat.is-active,
+body[data-active-wa] .seat.selected{
+  border-color:var(--active-wa)!important;
+  box-shadow:inset 3px 0 0 var(--active-wa)!important;
+}
+
+/* Trupp-Gruppen klar, aber nicht leuchtend */
+.crew-section-title,
+.cab-title,
+.group-title{
+  color:#c5c9cd!important;
+  letter-spacing:.12em!important;
+  font-size:.76rem!important;
+  text-shadow:none!important;
+}
+.vehicle::before,
+.vehicle::after{
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/* Weniger visuelles Gewicht bei leeren Sitzen */
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -4205,6 +4378,36 @@ body.legal-open{overflow:hidden}
  document.querySelectorAll('[data-legal-open]').forEach(b=>b.addEventListener('click',()=>{closeAll();const x=map[b.dataset.legalOpen];if(x){x.classList.add('open');x.setAttribute('aria-hidden','false');document.body.classList.add('legal-open');x.scrollTop=0}}));
  document.querySelectorAll('[data-legal-close]').forEach(b=>b.addEventListener('click',closeAll));
  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+})();
+</script>
+
+
+<script id="lfwWADynamicColorScript">
+(function(){
+  function applyActiveWAColor(wa){
+    wa = String(wa || sessionStorage.getItem('lf2500_wa') || '');
+    if (/^[1-4]$/.test(wa)) document.body.setAttribute('data-active-wa', wa);
+    else document.body.removeAttribute('data-active-wa');
+  }
+  window.applyActiveWAColor = applyActiveWAColor;
+  document.addEventListener('DOMContentLoaded', function(){
+    applyActiveWAColor();
+  });
+  var oldLoad = window.loadWAData;
+  if (typeof oldLoad === 'function') {
+    window.loadWAData = function(wa){
+      var r = oldLoad.apply(this, arguments);
+      applyActiveWAColor(wa);
+      return r;
+    };
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest && e.target.closest('#waGate .wa-buttons button[data-wa]');
+    if(b) {
+      var wa=b.getAttribute('data-wa');
+      setTimeout(function(){ applyActiveWAColor(wa); },0);
+    }
+  });
 })();
 </script>
 
