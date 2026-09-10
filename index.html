@@ -1477,7 +1477,7 @@ body.role-admin #statsSection{
   </section>
 
   <div class="footer">
-    Lehrfeuerwehr 2500 · Cloud-Synchronisierung: <span id="cloudStatus">wird verbunden …</span>
+    Lehrfeuerwehr 2500 · Cloud-Synchronisierung: <span id="cloudStatus">wird verbunden …</span><br><small id="cloudDebugHint">Bei einem Fehler wird der Firebase-Code hier angezeigt.</small>
   </div>
 </div>
 
@@ -1691,7 +1691,19 @@ body.role-admin #statsSection{
     const el=document.getElementById("cloudStatus");
     if(!el) return;
     el.textContent=text;
-    el.style.color=ok ? "#ffe14d" : "";
+    el.style.color=ok ? "#ffe14d" : "#ff8a80";
+  }
+
+  function showCloudError(prefix, err){
+    const code = err && err.code ? err.code : "";
+    const msg = err && err.message ? err.message : String(err || "Unbekannter Fehler");
+    const short = code ? `${prefix}: ${code}` : `${prefix}: ${msg}`;
+    console.error(prefix, err);
+    setCloudStatus(short);
+    const box = document.getElementById("message");
+    if(box){
+      box.innerHTML = `<div class="error"><strong>Firebase-Fehler</strong><br>${short}<br><small>${msg}</small></div>`;
+    }
   }
 
   try{
@@ -1699,8 +1711,7 @@ body.role-admin #statsSection{
     cloudAuth=firebase.auth();
     cloudDb=firebase.firestore();
   }catch(err){
-    console.error("Firebase konnte nicht initialisiert werden:",err);
-    setCloudStatus("nicht verbunden");
+    showCloudError("Initialisierung", err);
   }
 
   function cloudDocRef(wa=currentWA()){
@@ -1738,8 +1749,7 @@ body.role-admin #statsSection{
       await ref.set(buildCloudState(cloudActiveWA), {merge:true});
       setCloudStatus(`online · WA ${cloudActiveWA}`, true);
     }catch(err){
-      console.error("Cloud speichern fehlgeschlagen:",err);
-      setCloudStatus("Speichern fehlgeschlagen");
+      showCloudError("Cloud speichern", err);
     }
   }
 
@@ -1822,13 +1832,11 @@ body.role-admin #statsSection{
         applyCloudState(wa,snapshot.data());
         setCloudStatus(`online · WA ${wa}`, true);
       },err=>{
-        console.error("Cloud Live-Sync fehlgeschlagen:",err);
-        setCloudStatus("Verbindung unterbrochen");
+        showCloudError("Live-Sync", err);
       });
     }catch(err){
-      console.error("Firebase Anmeldung/Synchronisierung fehlgeschlagen:",err);
       cloudReady=false;
-      setCloudStatus("offline · lokale Daten aktiv");
+      showCloudError("Anmeldung/Synchronisierung", err);
     }
   }
 
