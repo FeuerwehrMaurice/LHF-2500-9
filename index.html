@@ -2854,6 +2854,277 @@ body.demo-wa .admin-only{display:none!important}
 body.demo-wa #cloudStatus{color:#9ca4ac!important}
 </style>
 
+
+<style id="lfwNoGlowFinalOverride">
+/* ===== FINAL NO-GLOW OVERRIDE ===== */
+:root{
+  --bg:#0b0c0e!important;
+  --panel:#121417!important;
+  --panel2:#171a1e!important;
+  --text:#f2f3f5!important;
+  --muted:#8e949c!important;
+  --shadow:none!important;
+}
+
+html,body{
+  background:#0b0c0e!important;
+  color:#f2f3f5!important;
+  background-image:none!important;
+}
+
+/* absolutely no glow / blur / cinematic effects */
+*{
+  text-shadow:none!important;
+}
+.wa-gate,
+.wa-card,
+.badge,
+.badge-inner,
+.person-card,
+.avatar,
+.generate,
+.role-card,
+.initial-chip,
+.vehicle-wrap,
+.crew-cabin,
+.lf-shell,
+.lf-front,
+.windscreen,
+.seat,
+.seat.fixed,
+.seat.swap-enabled:hover,
+.seat.swap-selected,
+.shift-card.selected,
+.live-change-banner,
+.login-overlay,
+.login-card,
+.status,
+.dot,
+.love-footer,
+.bottom-nav,
+.demo-wa-notice,
+.btn,
+.share-assignment-btn,
+.stats-table-wrap,
+.history-item,
+.availability-box,
+.fixed-cover-box,
+.manual-box,
+.today-status,
+.next-shift,
+.selected-shift-card{
+  box-shadow:none!important;
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  background-image:none!important;
+}
+
+/* login becomes flat / technical */
+.wa-gate{
+  background:#0b0c0e!important;
+}
+.wa-gate::before,
+.wa-gate::after{
+  content:none!important;
+  display:none!important;
+}
+.wa-card{
+  border:1px solid #30343a!important;
+  border-radius:10px!important;
+  background:#121417!important;
+}
+.wa-login-logo{
+  color:#f2f3f5!important;
+  font-style:normal!important;
+  transform:none!important;
+  letter-spacing:.01em!important;
+}
+.wa-login-line{
+  background:#30343a!important;
+  height:1px!important;
+}
+.wa-buttons button{
+  border:1px solid #30343a!important;
+  border-radius:7px!important;
+  background:#171a1e!important;
+  color:#f2f3f5!important;
+}
+.wa-buttons button.selected{
+  border-color:var(--wa-color,#f2cc2f)!important;
+  color:var(--wa-color,#f2cc2f)!important;
+  transform:none!important;
+}
+#waEnterBtn{
+  border:1px solid var(--wa-color,#f2cc2f)!important;
+  border-radius:7px!important;
+  background:#171a1e!important;
+  color:var(--wa-color,#f2cc2f)!important;
+}
+#waPassword{
+  border:1px solid #30343a!important;
+  border-radius:7px!important;
+  background:#0d0f11!important;
+}
+
+/* flat panels */
+.section,
+.person-card,
+.role-card,
+.vehicle-wrap,
+.crew-cabin,
+.lf-shell,
+.lf-front,
+.lf-body,
+.seat,
+.availability-box,
+.fixed-cover-box,
+.manual-box,
+.stats-table-wrap,
+.history-item,
+.today-status,
+.next-shift,
+.selected-shift-card,
+.demo-wa-notice{
+  border-radius:7px!important;
+}
+
+.person-card,
+.role-card,
+.vehicle-wrap,
+.crew-cabin,
+.lf-shell,
+.lf-front,
+.lf-body,
+.seat,
+.availability-box,
+.fixed-cover-box,
+.manual-box,
+.stats-table-wrap,
+.history-item,
+.today-status,
+.next-shift,
+.selected-shift-card{
+  background:#121417!important;
+  border-color:#30343a!important;
+}
+
+/* use WA accent sparingly */
+body[data-wa="1"]{--wa-color:#f2cc2f}
+body[data-wa="2"]{--wa-color:#2f80ed}
+body[data-wa="3"]{--wa-color:#27ae60}
+body[data-wa="4"]{--wa-color:#e53935}
+body[data-wa="demo"]{--wa-color:#c7ccd1}
+
+.hero h1,
+.hero h1 span,
+.section-title,
+.vehicle-label,
+.role,
+.seat .seat-role,
+.person-name,
+.assigned,
+.seat .seat-name,
+.availability-title,
+.fixed-cover-title,
+.manual-title,
+.next-shift-title,
+.today-status-title{
+  color:#f2f3f5!important;
+}
+
+.status,
+.tag,
+.stats-chip,
+.shift-saved,
+.selected-shift-type,
+.selected-shift-status,
+.next-shift-status,
+.today-status-shift{
+  color:var(--wa-color,#c7ccd1)!important;
+  border-color:#3a3f46!important;
+  background:#111317!important;
+}
+
+.dot{
+  background:var(--wa-color,#c7ccd1)!important;
+}
+
+/* Initials remain functional but flat */
+.badge-inner,
+.avatar,
+.initial-chip,
+.seat .seat-initials,
+.initials,
+.person-avatar,
+.seat-avatar,
+.badge-initials{
+  background:#1a1d21!important;
+  color:#f2f3f5!important;
+  border:1px solid #3a3f46!important;
+  border-radius:6px!important;
+}
+
+/* Buttons */
+.generate,
+.btn,
+.share-assignment-btn,
+.logout-btn,
+.history-delete-btn{
+  border:1px solid #343941!important;
+  border-radius:7px!important;
+  background:#171a1e!important;
+  color:#f2f3f5!important;
+}
+.generate{
+  color:var(--wa-color,#f2cc2f)!important;
+  border-color:var(--wa-color,#f2cc2f)!important;
+}
+.btn.danger,
+.history-delete-btn{
+  border-color:#6b2a2d!important;
+  color:#e06c70!important;
+}
+
+/* vehicle graphic flattened */
+.lf-shell,
+.lf-front,
+.crew-cabin{
+  background:#111317!important;
+}
+.lf-front:before,
+.lf-front:after{
+  box-shadow:none!important;
+  background:#4d91ff!important;
+}
+.lf-shell:before,
+.lf-shell:after,
+.cabin-center:before,
+.cabin-center:after,
+.lf-divider{
+  background:#30343a!important;
+  border-color:#30343a!important;
+}
+.windscreen{
+  background:#101318!important;
+  border-color:#30343a!important;
+}
+
+/* bottom navigation */
+.bottom-nav{
+  background:#0f1114!important;
+  border-top:1px solid #2d3238!important;
+}
+.bottom-nav button.active{
+  color:var(--wa-color,#f2cc2f)!important;
+}
+
+/* footer */
+.love-footer{
+  color:#8e949c!important;
+}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -4812,7 +5083,7 @@ body.demo-wa #cloudStatus{color:#9ca4ac!important}
 
     if(demoMode){
       const msg=document.getElementById("message");
-      if(msg) msg.innerHTML='<div class="info">Im Demo-Modus werden keine echten Historien- oder Statistikdaten gelöscht.</div>';
+      if(msg) msg.innerHTML='<div class="info">In der Demo-Wachabteilung werden keine echten Dienste gelöscht.</div>';
       return;
     }
 
@@ -4820,15 +5091,45 @@ body.demo-wa #cloudStatus{color:#9ca4ac!important}
     if(!entry) return;
 
     const label=String(entry.date||"diesem Eintrag");
-    if(!confirm(`Diesen Eintrag aus Historie und Statistik löschen?\n\n${label}\n\nDie gespeicherte Dienstplanung bleibt erhalten.`)) return;
+    const iso=historyEntryIsoDate(entry);
+
+    if(!confirm(
+      `Diesen Dienst wirklich löschen und neu zur Planung freigeben?\n\n${label}\n\n` +
+      `Dabei werden die Besetzung aus Historie und Statistik UND die gespeicherte Dienstplanung dieses Dienstes entfernt.`
+    )) return;
 
     history.splice(index,1);
+
+    if(iso && Object.prototype.hasOwnProperty.call(plans, iso)){
+      delete plans[iso];
+    }
+
     saveHistory();
+    savePlans();
+
+    if(iso && shifts.some(s=>s.date===iso)){
+      selectedShift=iso;
+      current=[];
+      setUnsavedSwap(false);
+      availability=defaultAvailability();
+      fixedCover={...DEFAULT_COVER};
+    }
+
+    renderPlanner();
+    renderTodayStatus();
+    renderNextShift();
+    renderAvailability();
+    renderFixedCover();
+    renderManual();
+    updateFixedCards();
+    renderResult();
     renderHistory();
     renderStats();
 
     const msg=document.getElementById("message");
-    if(msg) msg.innerHTML=`<div class="info ok">${label} wurde aus Historie und Statistik entfernt. Die Dienstplanung wurde nicht verändert.</div>`;
+    if(msg){
+      msg.innerHTML=`<div class="info ok"><strong>${label} wurde gelöscht.</strong><br>Historie, Statistik und die gespeicherte Besetzung dieses Dienstes sind entfernt. Du kannst den Dienst jetzt neu auslosen oder manuell neu besetzen.</div>`;
+    }
   }
 
   function renderHistory(){
@@ -4858,7 +5159,7 @@ body.demo-wa #cloudStatus{color:#9ca4ac!important}
           ${lines}
         </div>
         <div class="history-admin-row admin-only">
-          <button class="history-delete-btn" type="button">Aus Statistik löschen</button>
+          <button class="history-delete-btn" type="button">Dienst löschen &amp; neu planen</button>
         </div>
       `;
       const del=item.querySelector(".history-delete-btn");
@@ -5108,7 +5409,7 @@ body.demo-wa #cloudStatus{color:#9ca4ac!important}
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.2.1</span></div>
+    <div class="mini"><strong>Version</strong><span>1.2.3</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
