@@ -4884,6 +4884,15 @@ body.demo-mode #demoModeBtn::before{
   window.savePersonnelConfig = savePersonnelConfig;
   window.repairStatistics = repairStatistics;
   window.saveCurrentAssignment = saveCurrentAssignment;
+
+  // Demo controls must be exported while still inside this application scope.
+  window.__lfwToggleDemo = function(){
+    if(!requireAdmin()) return;
+    setDemoMode(!demoMode);
+  };
+  window.__lfwApplyDemoModeUI = applyDemoModeUI;
+  applyDemoModeUI();
+
   window.getLFWShareData = function(){
     const shift=selectedShift ? shifts.find(x=>x.date===selectedShift) : null;
     const shiftText=selectedShift
@@ -4911,12 +4920,6 @@ body.demo-mode #demoModeBtn::before{
     });
   }
 
-
-  window.__lfwToggleDemo = function(){
-    if(!requireAdmin()) return;
-    setDemoMode(!demoMode);
-  };
-  applyDemoModeUI();
 
   const repairStatsBtn=document.getElementById("repairStatsBtn");
   if(repairStatsBtn){
@@ -4961,7 +4964,7 @@ body.demo-mode #demoModeBtn::before{
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.0</span></div>
+    <div class="mini"><strong>Version</strong><span>1.1.1</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
@@ -5431,9 +5434,11 @@ body.legal-open{overflow:hidden}
 document.addEventListener("click", function(e){
   const btn=e.target.closest && e.target.closest("#demoModeBtn");
   if(!btn) return;
+  e.preventDefault();
   if(typeof window.__lfwToggleDemo === "function"){
-    e.preventDefault();
     window.__lfwToggleDemo();
+  }else{
+    console.error("Demo-Steuerung ist noch nicht verfügbar.");
   }
 });
 </script>
