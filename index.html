@@ -2753,10 +2753,64 @@ textarea:focus-visible{
 </style>
 
 
-<script id="lfwDemoReloadGuard">
-/* Demo is deliberately session-temporary. A reload always returns to real data. */
-sessionStorage.removeItem("lfw2500_demo_mode");
-</script>
+
+<style id="lfwDemoFixStyles">
+/* Demo visibility fix */
+.demo-mode-banner{
+  display:none!important;
+}
+body.demo-mode .demo-mode-banner{
+  display:block!important;
+  position:fixed!important;
+  top:calc(8px + env(safe-area-inset-top))!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  z-index:25000!important;
+  width:min(calc(100% - 20px),720px)!important;
+  margin:0!important;
+  padding:10px 14px!important;
+  border:1px solid var(--active-wa,#c9cdd1)!important;
+  border-left:5px solid var(--active-wa,#c9cdd1)!important;
+  border-radius:6px!important;
+  background:#11161a!important;
+  color:#fff!important;
+  text-align:center!important;
+  font-weight:900!important;
+  letter-spacing:.04em!important;
+}
+body.demo-mode .app{
+  padding-top:64px!important;
+}
+body.demo-mode::after{
+  content:"DEMO AKTIV"!important;
+  position:fixed!important;
+  right:10px!important;
+  bottom:calc(78px + env(safe-area-inset-bottom))!important;
+  z-index:24000!important;
+  padding:7px 9px!important;
+  border:1px solid var(--active-wa,#c9cdd1)!important;
+  border-radius:5px!important;
+  background:#101317!important;
+  color:var(--active-wa,#c9cdd1)!important;
+  font:900 .68rem/1 "JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
+  letter-spacing:.08em!important;
+}
+#demoModeBtn{
+  border-color:#4a5158!important;
+  color:#f3f5f6!important;
+}
+body.demo-mode #demoModeBtn{
+  border-color:var(--active-wa)!important;
+  background:#171c20!important;
+  color:var(--active-wa)!important;
+}
+#demoModeBtn::before{
+  content:"";
+}
+body.demo-mode #demoModeBtn::before{
+  content:"● "!important;
+}
+</style>
 
 </head>
 <body>
@@ -2898,7 +2952,7 @@ sessionStorage.removeItem("lfw2500_demo_mode");
 </script>
 
 <div class="app">
-<div class="demo-mode-banner admin-only" id="demoModeBanner">DEMO-MODUS · Änderungen werden nicht in Historie, Statistik oder Firebase gespeichert.</div>
+<div class="demo-mode-banner admin-only" id="demoModeBanner">DEMO-MODUS AKTIV · Keine Änderungen an Historie, Statistik, Dienstplanung oder Firebase.</div>
 
 
   <section class="hero">
@@ -3945,6 +3999,13 @@ sessionStorage.removeItem("lfw2500_demo_mode");
 
 
   let demoMode = sessionStorage.getItem("lfw2500_demo_mode")==="1";
+
+  // A reload cannot restore the in-memory demo snapshot safely.
+  // Therefore an old demo flag is cleared here during initialization.
+  if(demoMode){
+    sessionStorage.removeItem("lfw2500_demo_mode");
+    demoMode=false;
+  }
   let demoSnapshot = null;
 
   function cloneJSON(value){
@@ -3987,7 +4048,7 @@ sessionStorage.removeItem("lfw2500_demo_mode");
   function applyDemoModeUI(){
     document.body.classList.toggle("demo-mode", demoMode);
     const btn=document.getElementById("demoModeBtn");
-    if(btn) btn.textContent=demoMode ? "Demo beenden" : "Demo starten";
+    if(btn){ btn.textContent=demoMode ? "Demo aktiv · Beenden" : "Demo starten"; btn.setAttribute("aria-pressed", demoMode ? "true" : "false"); }
   }
 
   function setDemoMode(state){
@@ -4851,13 +4912,10 @@ sessionStorage.removeItem("lfw2500_demo_mode");
   }
 
 
-  const demoModeBtn=document.getElementById("demoModeBtn");
-  if(demoModeBtn){
-    demoModeBtn.addEventListener("click",()=>{
-      if(!requireAdmin()) return;
-      setDemoMode(!demoMode);
-    });
-  }
+  window.__lfwToggleDemo = function(){
+    if(!requireAdmin()) return;
+    setDemoMode(!demoMode);
+  };
   applyDemoModeUI();
 
   const repairStatsBtn=document.getElementById("repairStatsBtn");
@@ -5334,9 +5392,6 @@ body.legal-open{overflow:hidden}
   }
 
   document.addEventListener("DOMContentLoaded", function(){
-    if(sessionStorage.getItem("lfw2500_demo_mode")==="1"){
-      sessionStorage.removeItem("lfw2500_demo_mode");
-    }
     applyWA();
     setTimeout(applyWA,250);
     setTimeout(applyWA,900);
@@ -5369,6 +5424,18 @@ body.legal-open{overflow:hidden}
     }
   });
 })();
+</script>
+
+
+<script id="lfwDemoButtonFallback">
+document.addEventListener("click", function(e){
+  const btn=e.target.closest && e.target.closest("#demoModeBtn");
+  if(!btn) return;
+  if(typeof window.__lfwToggleDemo === "function"){
+    e.preventDefault();
+    window.__lfwToggleDemo();
+  }
+});
 </script>
 
 </body>
