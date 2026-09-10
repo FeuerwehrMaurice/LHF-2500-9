@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="theme-color" content="#0b0b0b" />
+<title>Lehrfeuerwehr 2500 – Besetzung</title>
+
+<style>
+:root{
+  --bg:#090909;
+  --panel:#151515;
+  --panel2:#191919;
+  --line:#665300;
+  --line2:#a88400;
+  --red:#ffd43b;
+  --red-soft:#c89d00;
+  --text:#f4f4f4;
+  --muted:#8f8f8f;
+  --green:#d6aa00;
+  --shadow:0 0 28px rgba(255,212,59,.18);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+button,input{font:inherit}
+button{-webkit-tap-highlight-color:transparent}
+
+.app{
+  width:min(100%,1000px);
+  margin:0 auto;
+  padding:18px;
+}
+
+.hero{
+  text-align:center;
+  padding:34px 14px 24px;
+}
+
+.badge{
+  width:130px;
+  height:130px;
+  margin:0 auto 20px;
+  border:3px solid var(--red);
+  border-radius:28px 28px 42px 42px;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,212,59,.16), transparent 60%),
+    linear-gradient(180deg,#1b1b1b,#0d0d0d);
+  box-shadow:0 0 40px rgba(255,212,59,.30);
+  transform:rotate(0.001deg);
+}
+.badge-inner{
+  width:86px;height:86px;border-radius:50%;
+  background:
+    linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
+    #ffd43b;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #ffe36b;
+  box-shadow:0 0 22px rgba(255,212,59,.30);
+  font-weight:900;font-size:28px;letter-spacing:-1px;
+}
+.hero h1{
+  margin:0;
+  font-size:clamp(2.2rem,7vw,4.8rem);
+  line-height:.95;
+  letter-spacing:.03em;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.hero h1 span{color:var(--red)}
+.hero .ghost{
+  display:block;
+  margin-top:-8px;
+  font-size:clamp(3.6rem,12vw,8rem);
+  font-weight:950;
+  color:transparent;
+  -webkit-text-stroke:2px rgba(255,212,59,.18);
+  opacity:.8;
+  line-height:.9;
+}
+.hero p{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.28em;
+  font-size:.76rem;
+  margin-top:18px;
+}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid rgba(255,212,59,.55);
+  border-radius:999px;
+  padding:8px 14px;
+  color:#ffd43b;
+  background:rgba(255,212,59,.07);
+  font-weight:700;
+  font-size:.9rem;
+}
+.dot{
+  width:9px;height:9px;border-radius:50%;background:#ffd43b;
+  box-shadow:0 0 14px #ffd43b;
+}
+
+.section{
+  margin-top:20px;
+}
+.section-title{
+  text-align:center;
+  color:#6f6f6f;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  font-size:.8rem;
+  margin:0 0 16px;
+}
+
+.people-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.person-card{
+  border:2px solid var(--line);
+  border-radius:24px;
+  background:radial-gradient(circle at 50% 0%,rgba(255,212,59,.06),transparent 42%),linear-gradient(145deg,#171717,#111);
+  min-height:185px;
+  padding:18px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow:var(--shadow);
+}
+.avatar{
+  width:76px;height:76px;border-radius:50%;
+  background:
+    linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
+    #ffd43b;
+  display:grid;place-items:center;
+  border:2px solid #ffe36b;
+  box-shadow:0 0 20px rgba(255,212,59,.28);
+  font-size:24px;
+  font-weight:950;
+  margin-bottom:16px;
+}
+.person-name{
+  text-align:center;
+  font-weight:900;
+  font-size:1.05rem;
+  line-height:1.2;
+  color:#ffd43b;
+  text-shadow:0 0 14px rgba(255,212,59,.20);
+}
+.tag{
+  margin-top:10px;
+  border:1px solid var(--line2);
+  color:#ffd43b;
+  border-radius:7px;
+  padding:4px 8px;
+  font-size:.78rem;
+  background:rgba(255,212,59,.07);
+}
+
+.generate-wrap{
+  margin:24px 0 10px;
+}
+.generate{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:17px 18px;
+  background:linear-gradient(180deg,#ffe46a,#d7a900);
+  color:#141414;
+  font-weight:950;
+  font-size:1.12rem;
+  letter-spacing:.04em;
+  box-shadow:0 0 30px rgba(255,212,59,.30);
+}
+.generate:active{transform:scale(.99)}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+.role-card{
+  border:2px solid var(--line);
+  border-radius:22px;
+  background:radial-gradient(circle at 50% 0%,rgba(255,212,59,.06),transparent 42%),linear-gradient(145deg,#171717,#111);
+  padding:18px;
+  min-height:150px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.role-card.machine{
+  grid-column:1/-1;
+  border-color:#d8ad00;
+}
+.role{
+  color:#ffd43b;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:.78rem;
+  font-weight:900;
+}
+.assigned{
+  margin-top:8px;
+  font-size:1.25rem;
+  font-weight:900;
+  color:#ffd43b;
+  text-shadow:0 0 14px rgba(255,212,59,.22);
+}
+.initial-chip{
+  margin-top:14px;
+  width:52px;height:52px;border-radius:50%;
+  background:#ffd43b;
+  display:grid;place-items:center;
+  border:2px solid #ffe36b;
+  font-weight:950;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+.btn{
+  flex:1;
+  min-width:150px;
+  border-radius:14px;
+  padding:12px 14px;
+  font-weight:800;
+  border:1px solid #333;
+  color:#eee;
+  background:#181818;
+}
+.btn.danger{border-color:#661818;color:#e05555}
+
+.info{
+  margin-top:14px;
+  border:1px solid #2c2c2c;
+  background:#121212;
+  border-radius:14px;
+  padding:12px 14px;
+  color:#9d9d9d;
+  font-size:.9rem;
+  line-height:1.45;
+}
+.ok{
+  border-color:rgba(22,160,95,.45);
+  color:#6bd69e;
+}
+
+.history{
+  margin-top:26px;
+}
+.history-list{
+  display:grid;
+  gap:10px;
+}
+.history-item{
+  border:1px solid #292929;
+  background:#121212;
+  border-radius:16px;
+  padding:14px;
+}
+.history-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:#cfcfcf;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.history-body{
+  color:#888;
+  font-size:.86rem;
+  line-height:1.5;
+}
+
+.footer{
+  text-align:center;
+  color:#4f4f4f;
+  font-size:.78rem;
+  padding:28px 0 10px;
+}
+
+@media(min-width:760px){
+  .app{padding:28px}
+  .people-grid{grid-template-columns:repeat(3,1fr)}
+  .person-card{min-height:210px}
+  .result-grid{grid-template-columns:repeat(3,1fr)}
+  .role-card.machine{grid-column:auto}
+}
+
+@media(max-width:520px){
+  .app{padding:12px}
+  .hero{padding-top:26px}
+  .badge{width:112px;height:112px}
+  .badge-inner{width:74px;height:74px;font-size:24px}
+  .people-grid{gap:10px}
+  .person-card{min-height:165px;border-radius:20px;padding:14px 10px}
+  .avatar{width:66px;height:66px;font-size:21px}
+  .person-name{font-size:.98rem}
+  .result-grid{grid-template-columns:1fr}
+  .role-card.machine{grid-column:auto}
+}
+
+.vehicle-wrap{
+  margin-top:20px;
+  padding:18px;
+  border:2px solid var(--line);
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(255,212,59,.08),transparent 38%),
+    linear-gradient(180deg,#171717,#0d0d0d);
+  box-shadow:0 0 34px rgba(255,212,59,.14);
+}
+.vehicle-label{
+  text-align:center;
+  color:#ffd43b;
+  font-weight:950;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+.cab-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+  padding-bottom:16px;
+  border-bottom:1px solid #39320f;
+}
+.crew-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  padding-top:16px;
+}
+.seat{
+  min-height:132px;
+  border:1.5px solid #7b2428;
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(215,25,32,.08),transparent 48%),
+    #101010;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:12px;
+}
+.seat.fixed{
+  border-color:#9a7b00;
+  box-shadow:inset 0 0 22px rgba(255,212,59,.05);
+}
+.seat .seat-role{
+  color:#ffd43b;
+  text-transform:uppercase;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.07em;
+  line-height:1.25;
+}
+.seat .seat-name{
+  margin-top:9px;
+  font-weight:950;
+  font-size:1.08rem;
+  line-height:1.18;
+  color:#ffe45c;
+  text-shadow:0 1px 2px #000,0 0 7px rgba(255,212,59,.28);
+  letter-spacing:.01em;
+  overflow-wrap:anywhere;
+}
+.seat .seat-initials{
+  width:46px;height:46px;border-radius:50%;
+  margin-top:10px;
+  display:grid;place-items:center;
+  border:2px solid #ffe36b;
+  background:#ffd43b;
+  color:#111;
+  font-weight:950;
+}
+.vehicle-front{
+  text-align:center;
+  color:#5f5a3f;
+  margin-top:12px;
+  letter-spacing:.32em;
+  font-size:.7rem;
+  text-transform:uppercase;
+}
+@media(max-width:650px){
+  .cab-row{grid-template-columns:1fr 1fr 1fr;gap:7px}
+  .crew-row{grid-template-columns:repeat(2,1fr);gap:8px}
+  .seat{min-height:118px;padding:9px}
+  .seat .seat-role{font-size:.64rem}
+  .seat .seat-name{font-size:.94rem}
+  .vehicle-wrap{padding:12px}
+}
+
+
+.crew-cabin{
+  margin-top:12px;
+  border:2px solid #7f171c;
+  border-radius:14px 14px 22px 22px;
+  padding:16px;
+  background:linear-gradient(180deg,#121212,#090909);
+  box-shadow:inset 0 0 20px rgba(215,25,32,.06);
+}
+.direction-label{
+  text-align:center;
+  color:#ffd43b;
+  font-size:.7rem;
+  font-weight:900;
+  letter-spacing:.18em;
+  margin-bottom:10px;
+}
+.rear-label{
+  margin:10px 0 0;
+  color:#756928;
+}
+.crew-facing-forward,
+.crew-facing-rear{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.cabin-center{
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  color:#5f5a3f;
+  font-size:.68rem;
+  letter-spacing:.18em;
+  font-weight:800;
+}
+.cabin-center:before,
+.cabin-center:after{
+  content:"";
+  height:1px;
+  background:#39320f;
+  flex:1;
+  margin:0 10px;
+}
+.rear-seat{
+  transform:rotate(0deg);
+  border-style:dashed;
+}
+@media(max-width:650px){
+  .crew-facing-forward,.crew-facing-rear{gap:7px}
+  .crew-cabin{padding:10px}
+}
+
+
+.lf-shell{
+  position:relative;
+  max-width:760px;
+  margin:0 auto;
+  padding:22px 26px 28px;
+  border:3px solid #d71920;
+  border-radius:34px 34px 24px 24px;
+  background:
+    linear-gradient(90deg,transparent 0 3%,rgba(255,212,59,.035) 3% 4%,transparent 4% 96%,rgba(255,212,59,.035) 96% 97%,transparent 97%),
+    linear-gradient(180deg,#171717 0%,#0c0c0c 48%,#111 100%);
+  box-shadow:
+    0 0 38px rgba(215,25,32,.24),
+    inset 0 0 0 1px rgba(255,90,95,.12),
+    inset 0 0 30px rgba(0,0,0,.75);
+}
+.lf-shell:before,
+.lf-shell:after{
+  content:"";
+  position:absolute;
+  left:10%;
+  right:10%;
+  height:3px;
+  background:#5d4b00;
+  opacity:.65;
+}
+.lf-shell:before{top:8px}
+.lf-shell:after{bottom:8px}
+
+.lf-front{
+  position:relative;
+  border:2px solid #8f151a;
+  border-radius:26px 26px 14px 14px;
+  padding:16px;
+  background:linear-gradient(180deg,#1c1c1c,#0d0d0d);
+  box-shadow:inset 0 0 18px rgba(215,25,32,.08);
+}
+.lf-front:before,.lf-front:after{
+  content:"";
+  position:absolute;
+  top:18px;
+  width:11px;height:11px;
+  border-radius:50%;
+  background:#2f80ff;
+  box-shadow:0 0 10px rgba(47,128,255,.95),0 0 18px rgba(47,128,255,.55);
+}
+.lf-front:before{left:14px}
+.lf-front:after{right:14px}
+.windscreen{
+  width:72%;
+  height:32px;
+  margin:0 auto 12px;
+  border:2px solid #a61c22;
+  border-radius:15px 15px 6px 6px;
+  background:
+    linear-gradient(90deg,transparent 49.5%,#8f151a 49.5% 50.5%,transparent 50.5%),
+    linear-gradient(180deg,rgba(215,25,32,.12),rgba(255,255,255,.015)),
+    #101318;
+  box-shadow:inset 0 0 18px rgba(215,25,32,.10);
+}
+.lf-front-label{
+  text-align:center;
+  color:#ffd43b;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  margin-bottom:10px;
+}
+.lf-divider{
+  height:10px;
+  margin:8px 4%;
+  border-top:2px solid #514200;
+  border-bottom:1px solid #292000;
+}
+.lf-body{
+  margin-top:10px;
+  border:1px solid #514500;
+  border-radius:12px 12px 18px 18px;
+  padding:12px;
+  background:#111;
+}
+.locker-row{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+}
+.locker-row span{
+  border:1px solid #4c410d;
+  border-radius:8px;
+  min-height:54px;
+  display:grid;
+  place-items:center;
+  color:#6f6532;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.rear-marker{
+  text-align:center;
+  color:#6a6029;
+  font-size:.68rem;
+  letter-spacing:.24em;
+  font-weight:900;
+  margin-top:8px;
+}
+.wheel{
+  position:absolute;
+  width:14px;
+  height:64px;
+  border-radius:8px;
+  background:#252525;
+  border:2px solid #404040;
+  box-shadow:inset 0 0 0 2px #111;
+}
+.wheel-fl{left:-9px;top:16%}
+.wheel-fr{right:-9px;top:16%}
+.wheel-rl{left:-9px;bottom:17%}
+.wheel-rr{right:-9px;bottom:17%}
+
+@media(max-width:650px){
+  .lf-shell{padding:14px 14px 18px}
+  .wheel{width:10px;height:52px}
+  .wheel-fl,.wheel-rl{left:-7px}
+  .wheel-fr,.wheel-rr{right:-7px}
+  .windscreen{width:84%}
+  .locker-row span{min-height:42px;font-size:.6rem}
+}
+
+
+/* Dienstplanung */
+.planner{margin-top:18px}
+.planner-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.planner-toolbar select{background:#101010;color:#ffe45c;border:1px solid #806900;border-radius:12px;padding:10px 12px;font-weight:800}
+.shift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.shift-card{background:#101010;border:1px solid #4d430d;border-radius:16px;padding:12px;cursor:pointer}
+.shift-card.day{border-left:4px solid #ffd43b}
+.shift-card.night{border-left:4px solid #4d91c9}
+.shift-card.selected{outline:2px solid #ffe45c;box-shadow:0 0 18px rgba(255,212,59,.18)}
+.shift-date{font-weight:900;color:#fff}
+.shift-type{font-size:.82rem;margin-top:4px;color:#bdbdbd}
+.shift-saved{font-size:.75rem;margin-top:7px;color:#ffe45c;font-weight:800}
+.plan-note{font-size:.82rem;color:#aaa;margin-top:10px}
+@media(max-width:650px){.shift-grid{grid-template-columns:repeat(2,1fr)}}
+
+
+.lf-shell{
+  background:
+    linear-gradient(90deg,rgba(190,18,24,.24) 0 4%,transparent 4% 96%,rgba(190,18,24,.24) 96% 100%),
+    linear-gradient(180deg,#351114 0%,#160d0e 18%,#0c0c0c 48%,#171010 100%) !important;
+}
+.lf-front{
+  background:linear-gradient(180deg,#471317 0%,#1d0c0e 45%,#0d0d0d 100%) !important;
+}
+.crew-cabin{
+  background:linear-gradient(180deg,#2a0f12 0%,#120b0c 38%,#090909 100%) !important;
+}
+
+
+/* Klare gelbe Personenanzeige – ohne Streifen */
+.avatar,.initials,.person-avatar,.seat-avatar,.badge-initials{
+  background:#ffd43b !important;
+  background-image:none !important;
+  color:#0a0a0a !important;
+  text-shadow:none !important;
+}
+.seat .seat-name,
+.person-name,
+.assigned-name{
+  color:#ffe45c !important;
+  background:none !important;
+  background-image:none !important;
+  text-shadow:0 2px 3px #000,0 0 5px rgba(0,0,0,.75) !important;
+}
+
+
+/* Einheitliches Gelb ohne Streifen */
+.badge-inner,
+.avatar,
+.initial-chip,
+.seat .seat-initials,
+.initials,
+.person-avatar,
+.seat-avatar,
+.badge-initials{
+  background:#ffd43b !important;
+  background-image:none !important;
+  color:#0a0a0a !important;
+  text-shadow:none !important;
+}
+
+/* Namen klar und ohne Muster */
+.seat .seat-name,
+.person-name,
+.assigned,
+.assigned-name{
+  color:#ffe45c !important;
+  background:transparent !important;
+  background-image:none !important;
+  text-shadow:0 2px 3px #000 !important;
+}
+
+
+/* Personalverfügbarkeit */
+.availability-box{
+  margin-top:16px;
+  padding:14px;
+  border:1px solid #5a4b08;
+  border-radius:16px;
+  background:#0d0d0d;
+}
+.availability-title{
+  font-weight:900;
+  color:#ffe45c;
+  margin-bottom:10px;
+}
+.availability-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.availability-person{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 11px;
+  border:1px solid #3b3b3b;
+  border-radius:12px;
+  background:#121212;
+  cursor:pointer;
+  user-select:none;
+}
+.availability-person input{accent-color:#ffd43b;transform:scale(1.15)}
+.availability-person.off{
+  opacity:.52;
+  border-color:#6f1d22;
+}
+.availability-person.off .availability-name{
+  text-decoration:line-through;
+  color:#d0d0d0;
+}
+.availability-name{font-weight:800;color:#fff}
+.availability-hint{margin-top:9px;font-size:.8rem;color:#aaa}
+@media(max-width:650px){.availability-list{grid-template-columns:1fr}}
+
+
+/* Statistik */
+.stats{
+  margin-top:22px;
+}
+.stats-summary{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.stats-chip{
+  border:1px solid #6d5a00;
+  border-radius:12px;
+  padding:9px 12px;
+  background:#101010;
+  color:#ffe45c;
+  font-weight:900;
+}
+.stats-table-wrap{
+  overflow-x:auto;
+  border:1px solid #454545;
+  border-radius:16px;
+  background:#0d0d0d;
+}
+.stats-table{
+  width:100%;
+  min-width:700px;
+  border-collapse:collapse;
+}
+.stats-table th,
+.stats-table td{
+  padding:11px 10px;
+  border-bottom:1px solid #292929;
+  text-align:center;
+}
+.stats-table th{
+  color:#ffe45c;
+  font-size:.8rem;
+  background:#151515;
+}
+.stats-table th:first-child,
+.stats-table td:first-child{
+  text-align:left;
+}
+.stats-table td:first-child{
+  color:#fff;
+  font-weight:900;
+}
+.stats-table tbody tr:last-child td{
+  border-bottom:0;
+}
+.stats-empty{
+  padding:15px;
+  color:#aaa;
+}
+
+
+/* Vertretung Stammpersonal */
+.fixed-cover-box{
+  margin-top:14px;
+  padding:14px;
+  border:1px solid #6b5700;
+  border-radius:16px;
+  background:#0d0d0d;
+}
+.fixed-cover-title{font-weight:900;color:#ffe45c;margin-bottom:10px}
+.fixed-cover-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fixed-cover-item{padding:11px;border:1px solid #353535;border-radius:12px;background:#121212}
+.fixed-cover-item label{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;margin-bottom:8px}
+.fixed-cover-item input[type="checkbox"]{accent-color:#ffd43b;transform:scale(1.15)}
+.fixed-cover-item input[type="text"]{
+  width:100%;box-sizing:border-box;background:#090909;color:#ffe45c;border:1px solid #665400;
+  border-radius:10px;padding:10px;font-weight:800;
+}
+.fixed-cover-item input[type="text"]:disabled{opacity:.35}
+@media(max-width:650px){.fixed-cover-grid{grid-template-columns:1fr}}
+
+
+/* Manuelle Besetzung */
+.manual-box{
+  margin-top:14px;
+  padding:14px;
+  border:1px solid #665400;
+  border-radius:16px;
+  background:#0d0d0d;
+}
+.manual-title{font-weight:900;color:#ffe45c;margin-bottom:10px}
+.manual-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.manual-row{display:grid;grid-template-columns:1fr 1.15fr;gap:8px;align-items:center}
+.manual-row label{color:#ddd;font-size:.82rem;font-weight:800}
+.manual-row select{
+  width:100%;background:#101010;color:#ffe45c;border:1px solid #5b4c08;
+  border-radius:10px;padding:9px;font-weight:800;
+}
+.manual-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:650px){.manual-grid{grid-template-columns:1fr}}
+
+
+.edit-plan-note{
+  margin-top:8px;
+  font-size:.8rem;
+  color:#aaa;
+}
+
+
+/* Einfacher Login / Admin-Modus */
+.login-overlay{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.94);
+  backdrop-filter:blur(8px);
+}
+.login-card{
+  width:min(420px,100%);
+  border:2px solid #d71920;
+  border-radius:22px;
+  padding:24px;
+  background:#101010;
+  box-shadow:0 0 35px rgba(215,25,32,.25);
+}
+.login-card h2{
+  margin:0 0 6px;
+  color:#ffe45c;
+  font-size:1.5rem;
+}
+.login-card p{
+  margin:0 0 16px;
+  color:#aaa;
+}
+.login-card input{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px 14px;
+  border-radius:12px;
+  border:1px solid #6b5700;
+  background:#070707;
+  color:#fff;
+  font-size:1rem;
+  font-weight:800;
+}
+.login-card button{
+  width:100%;
+  margin-top:11px;
+}
+.login-error{
+  min-height:20px;
+  margin-top:10px;
+  color:#ff7a7e;
+  font-weight:800;
+  font-size:.88rem;
+}
+.role-bar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:9px;
+  margin:10px 0 14px;
+}
+.role-badge{
+  border:1px solid #665400;
+  border-radius:999px;
+  padding:7px 11px;
+  color:#ffe45c;
+  background:#101010;
+  font-size:.8rem;
+  font-weight:900;
+}
+.logout-btn{
+  border:1px solid #444;
+  border-radius:10px;
+  padding:7px 10px;
+  background:#111;
+  color:#ddd;
+  font-weight:800;
+  cursor:pointer;
+}
+body.role-user .admin-only{
+  display:none !important;
+}
+
+
+/* Rolle nicht sichtbar anzeigen, Abmelden aber sichtbar lassen */
+.role-bar{
+  display:flex !important;
+  justify-content:flex-end;
+  margin:10px 0 14px;
+}
+.role-badge{display:none !important;}
+.logout-btn{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+}
+
+
+/* Kompakte Dienstauswahl */
+#planDay{
+  min-width:210px;
+}
+.selected-shift-card{
+  margin-top:10px;
+  border:1px solid #454545;
+  border-radius:14px;
+  background:#0e0e0e;
+  padding:12px 14px;
+}
+.selected-shift-empty{
+  color:#8f8f8f;
+  font-size:.88rem;
+}
+.selected-shift-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.selected-shift-date{
+  color:#fff;
+  font-weight:900;
+}
+.selected-shift-type{
+  color:#ffe45c;
+  font-weight:800;
+}
+.selected-shift-status{
+  color:#ffe45c;
+  font-size:.82rem;
+  font-weight:900;
+}
+.shift-grid{display:none !important;}
+@media(max-width:650px){
+  .planner-toolbar{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .planner-toolbar select,
+  .planner-toolbar .btn{
+    width:100%;
+  }
+}
+
+
+/* Nächster Dienst */
+.next-shift{
+  margin-top:14px;
+  border:1px solid #5d4d09;
+  border-radius:16px;
+  background:#0e0e0e;
+  padding:14px;
+}
+.next-shift-title{
+  color:#ffe45c;
+  font-weight:900;
+  margin-bottom:8px;
+}
+.next-shift-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.next-shift-date{
+  font-weight:900;
+  color:#fff;
+  font-size:1.02rem;
+}
+.next-shift-meta{
+  color:#aaa;
+  margin-top:3px;
+  font-size:.86rem;
+}
+.next-shift-status{
+  color:#ffe45c;
+  font-weight:900;
+  font-size:.84rem;
+}
+.next-shift-btn{
+  margin-top:10px;
+}
+
+/* Direkter Tausch im Fahrzeug */
+.seat.swap-enabled{
+  cursor:pointer;
+}
+.seat.swap-enabled:hover{
+  border-color:#ffe45c;
+  box-shadow:0 0 14px rgba(255,228,92,.16);
+}
+.seat.swap-selected{
+  outline:2px solid #ffe45c;
+  box-shadow:0 0 18px rgba(255,228,92,.22);
+}
+.swap-help{
+  margin-top:10px;
+  color:#aaa;
+  font-size:.8rem;
+}
+
+
+/* Heutiger Dienst */
+.today-status{
+  margin-top:14px;
+  border:1px solid #3e3e3e;
+  border-radius:16px;
+  background:#0e0e0e;
+  padding:14px;
+}
+.today-status-title{
+  color:#ffe45c;
+  font-weight:900;
+  margin-bottom:7px;
+}
+.today-status-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.today-status-date{
+  color:#fff;
+  font-weight:900;
+  font-size:1.03rem;
+}
+.today-status-shift{
+  color:#ffe45c;
+  font-weight:900;
+}
+.today-status-free{
+  color:#aaa;
+  font-weight:800;
+}
+
+
+/* Statistik ist für Benutzer UND Admin sichtbar */
+body.role-user #statsSection,
+body.role-admin #statsSection{
+  display:block !important;
+}
+
+
+/* Ungespeicherte Änderungen nach Tausch */
+.unsaved-bar{
+  display:none;
+  margin-top:12px;
+  padding:12px 14px;
+  border:1px solid #8a6f00;
+  border-radius:14px;
+  background:#181400;
+}
+.unsaved-bar.show{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.unsaved-text{
+  color:#ffe45c;
+  font-weight:900;
+}
+.unsaved-sub{
+  color:#b9b9b9;
+  font-size:.82rem;
+  margin-top:2px;
+}
+.unsaved-save{
+  min-width:170px;
+}
+
+
+/* Wachabteilungs-Startseite */
+.wa-gate{
+  position:fixed;
+  inset:0;
+  z-index:20000;
+  background:#050505;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+}
+.wa-gate.hidden{display:none}
+.wa-card{
+  width:min(520px,100%);
+  border:1px solid #5b4a00;
+  border-radius:24px;
+  background:#0d0d0d;
+  padding:26px 20px;
+  text-align:center;
+  box-shadow:0 24px 70px rgba(0,0,0,.55);
+}
+.wa-kicker{
+  color:#ffe45c;
+  letter-spacing:.22em;
+  font-size:.76rem;
+  font-weight:900;
+}
+.wa-card h1{
+  color:#fff;
+  margin:10px 0 8px;
+  font-size:1.65rem;
+}
+.wa-card p{color:#aaa;margin:0 0 20px}
+.wa-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.wa-buttons button{
+  min-height:62px;
+  border:1px solid #444;
+  border-radius:16px;
+  background:#151515;
+  color:#fff;
+  font-size:1.08rem;
+  font-weight:900;
+}
+.wa-buttons button.selected{
+  border-color:#ffe45c;
+  color:#ffe45c;
+  box-shadow:0 0 0 1px #ffe45c inset;
+}
+.wa-password-wrap{
+  display:none;
+  margin-top:18px;
+}
+.wa-password-wrap.show{display:block}
+.wa-selected{
+  color:#ffe45c;
+  font-weight:900;
+  margin-bottom:8px;
+}
+#waPassword{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #555;
+  border-radius:14px;
+  background:#090909;
+  color:#fff;
+  padding:15px;
+  font-size:1.1rem;
+  text-align:center;
+  letter-spacing:.22em;
+}
+.wa-error{color:#ff6b6b;font-weight:800;margin-top:8px;min-height:20px}
+
+
+/* Admin: Personal je Wachabteilung verwalten */
+.personnel-admin-box{
+  border:1px solid #454545;
+  border-radius:16px;
+  background:#0e0e0e;
+  padding:14px;
+}
+.personnel-admin-note{
+  color:#aaa;
+  font-size:.85rem;
+  margin-bottom:12px;
+}
+.personnel-admin-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:12px;
+}
+.personnel-admin-grid label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  color:#ffe45c;
+  font-weight:800;
+  font-size:.82rem;
+}
+.personnel-admin-grid input{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #444;
+  border-radius:12px;
+  background:#111;
+  color:#fff;
+  padding:12px;
+  font-size:1rem;
+}
+@media(max-width:650px){
+  .personnel-admin-grid{grid-template-columns:1fr}
+}
+
+</style>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LFW 2500">
+
+</head>
+<body>
+
+<div class="wa-gate" id="waGate">
+  <div class="wa-card">
+    <div class="wa-kicker">LEHRFEUERWEHR 2500</div>
+    <h1>Wachabteilung auswählen</h1>
+    <p>Wähle deine Wachabteilung und gib anschließend das Passwort ein.</p>
+
+    <div class="wa-buttons">
+      <button type="button" data-wa="1">WA 1</button>
+      <button type="button" data-wa="2">WA 2</button>
+      <button type="button" data-wa="3">WA 3</button>
+      <button type="button" data-wa="4">WA 4</button>
+    </div>
+
+    <div class="wa-password-wrap" id="waPasswordWrap">
+      <div class="wa-selected" id="waSelected">WA auswählen</div>
+      <input id="waPassword" type="password" inputmode="numeric" pattern="[0-9]*"
+             maxlength="6" autocomplete="off" placeholder="6-stelliges Passwort">
+      <div class="wa-error" id="waError"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <h2>Lehrfeuerwehr 2500</h2>
+    <p>Passwort eingeben</p>
+    <input id="loginPassword" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password" placeholder="6-stelliges Passwort">
+    <button class="btn" id="loginBtn">Anmelden</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<div class="app">
+
+  <section class="hero">
+    <div class="badge">
+      <div class="badge-inner">2500</div>
+    </div>
+    <h1>Feuerwache <span>2500</span></h1>
+    <span class="ghost">LHF</span>
+    <p>Besetzung auswählen</p>
+    <div class="status"><span class="dot"></span> Lehrfeuerwehr 2500 · </div>
+  </section>
+
+  
+  <section class="today-status" id="todayStatusBox">
+    <div class="today-status-title">Heute</div>
+    <div id="todayStatusContent"></div>
+  </section>
+
+<section class="next-shift" id="nextShiftBox">
+    <div class="next-shift-title">Nächster Dienst · <span id="nextShiftWA"></span></div>
+    <div id="nextShiftContent"></div>
+  </section>
+
+
+  <div class="role-bar">
+    <span class="role-badge" id="roleBadge">Benutzer</span>
+    <button class="logout-btn" id="logoutBtn">Abmelden</button>
+  </div>
+
+
+
+
+  
+  <section class="section admin-only" id="personnelAdminSection">
+    <h2 class="section-title">Personal verwalten · <span id="personnelAdminWA"></span></h2>
+    <div class="personnel-admin-box">
+      <div class="personnel-admin-note">
+        Namen gelten nur für die aktuell ausgewählte Wachabteilung.
+      </div>
+
+      <div class="personnel-admin-grid">
+        <label>
+          <span>Staffelführer</span>
+          <input type="text" id="adminSfName" placeholder="Name Staffelführer">
+        </label>
+        <label>
+          <span>Maschinisten-Chef</span>
+          <input type="text" id="adminMcName" placeholder="Name Maschinisten-Chef">
+        </label>
+
+        <label><span>Mini Feuerwehrmann 1</span><input type="text" id="adminPerson1"></label>
+        <label><span>Mini Feuerwehrmann 2</span><input type="text" id="adminPerson2"></label>
+        <label><span>Mini Feuerwehrmann 3</span><input type="text" id="adminPerson3"></label>
+        <label><span>Mini Feuerwehrmann 4</span><input type="text" id="adminPerson4"></label>
+        <label><span>Mini Feuerwehrmann 5</span><input type="text" id="adminPerson5"></label>
+      </div>
+
+      <button class="btn" id="savePersonnelBtn" type="button">Namen speichern</button>
+      <div id="personnelAdminMessage"></div>
+    </div>
+  </section>
+
+<section class="availability-box" id="availabilityBox">
+    <div class="availability-title">Personal verfügbar <span id="availabilityScope" style="font-size:.75rem;color:#aaa;font-weight:700"></span></div>
+    <div class="availability-list" id="availabilityList"></div>
+    <div class="availability-hint">
+      Haken raus = krank / nicht verfügbar. Wenn ein Dienst ausgewählt ist, gilt die Auswahl nur für diesen Dienst. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
+    </div>
+  </section>
+
+  <section class="fixed-cover-box" id="fixedCoverBox">
+    <div class="fixed-cover-title">Stammpersonal / Vertretung <span id="coverScope" style="font-size:.75rem;color:#aaa;font-weight:700"></span></div>
+    <div class="fixed-cover-grid">
+      <div class="fixed-cover-item">
+        <label><input id="sfAbsent" type="checkbox"> Staffelführer nicht da</label>
+        <input id="sfGuest" type="text" placeholder="Gast / Vertretung eintragen" disabled>
+      </div>
+      <div class="fixed-cover-item">
+        <label><input id="mcAbsent" type="checkbox"> Maschinisten-Chef nicht da</label>
+        <input id="mcGuest" type="text" placeholder="Gast / Vertretung eintragen" disabled>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="section">
+    <h2 class="section-title">Staffelführer</h2>
+    <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
+      <div class="avatar">DT</div>
+      <div class="person-name" id="fixedSfName">Dennis Treite</div>
+      <div class="tag">Stammpersonal</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Maschinisten-Chef</h2>
+    <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
+      <div class="avatar">RS</div>
+      <div class="person-name" id="fixedMcName">Raik Schindler</div>
+      <div class="tag">Stammpersonal</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">LHF-Besatzung zur Auslosung</h2>
+    <div class="people-grid" id="peopleGrid"></div>
+  </section>
+
+
+  <section class="section planner" id="plannerSection">
+    <h2 class="section-title">Dienstplanung</h2>
+    <div class="planner-toolbar">
+      <select id="planMonth" aria-label="Monat">
+        <option value="2026-09">September 2026</option>
+        <option value="2026-10">Oktober 2026</option>
+        <option value="2026-11">November 2026</option>
+        <option value="2026-12">Dezember 2026</option>
+      </select>
+
+      <select id="planDay" aria-label="Dienst auswählen">
+        <option value="">Dienst auswählen</option>
+      </select>
+
+      <button class="btn" id="planSelectedBtn">Dienst auslosen</button>
+      <button class="btn admin-only" id="overwritePlanBtn">Planung ändern / überschreiben</button>
+    </div>
+
+    <div class="selected-shift-card" id="selectedShiftCard">
+      <div class="selected-shift-empty">Noch keinen Dienst ausgewählt.</div>
+    </div>
+
+    <div class="plan-note">Erst Monat wählen, dann den gewünschten Dienst. Krankmeldungen und Vertretungen werden nur für diesen Dienst gespeichert.</div>
+  </section>
+
+
+  <section class="manual-box admin-only" id="manualBox">
+    <div class="manual-title">Besetzung manuell eintragen</div>
+    <div class="manual-grid" id="manualGrid"></div>
+    <div class="manual-actions">
+      <button class="btn" id="applyManualBtn">Manuelle Besetzung übernehmen</button>
+    </div>
+  </section>
+
+  <section class="generate-wrap">
+    <button class="generate" id="generateBtn">🎲 BESATZUNG AUSLOSEN</button>
+    <div id="message"></div>
+  </section>
+
+  <section class="section" id="resultSection" style="display:none">
+    <h2 class="section-title">Aktuelle Besetzung</h2>
+    <div class="vehicle-wrap">
+      <div class="vehicle-label">Lehrfeuerwehr 2500 · Fahrzeugbesetzung</div>
+
+      <div class="lf-shell">
+        <div class="lf-front">
+          <div class="windscreen"></div>
+          <div class="lf-front-label">FAHRERKABINE · FAHRTRICHTUNG ↑</div>
+
+          <div class="cab-row">
+            <div class="seat" data-seat-position="Maschinist" id="seatMaschinist"></div>
+            <div class="seat fixed" id="seatMaschChef"></div>
+            <div class="seat fixed" id="seatStaffel"></div>
+          </div>
+        </div>
+
+        <div class="lf-divider"></div>
+
+        <div class="crew-cabin">
+          <div class="direction-label">ANGRIFFSTRUPP</div>
+
+          <div class="crew-facing-rear">
+            <div class="seat rear-seat" id="seatATF"></div>
+            <div class="seat rear-seat" id="seatATM"></div>
+          </div>
+
+          <div class="cabin-center">
+            <span>MANNSCHAFTSKABINE</span>
+          </div>
+
+          <div class="crew-facing-forward">
+            <div class="seat" data-seat-position="Angriffstruppführer" id="seatWTF"></div>
+            <div class="seat" data-seat-position="Angriffstruppmann" id="seatWTM"></div>
+          </div>
+
+          <div class="direction-label rear-label">WASSERTRUPP</div>
+        </div>
+
+
+        <div class="wheel wheel-fl"></div>
+        <div class="wheel wheel-fr"></div>
+        <div class="wheel wheel-rl"></div>
+        <div class="wheel wheel-rr"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="rerollBtn">Neu auslosen</button>
+      <button class="btn" id="saveBtn">Besetzung speichern</button>
+      <button class="btn danger admin-only" id="resetHistoryBtn">Historie löschen</button>
+    </div>
+  </section>
+
+
+
+  <div class="unsaved-bar" id="unsavedBar">
+    <div>
+      <div class="unsaved-text">Änderung noch nicht gespeichert</div>
+      <div class="unsaved-sub">Die Besetzung wurde im LHF getauscht.</div>
+    </div>
+    <button class="btn unsaved-save" id="saveSwapBtn" type="button">Änderung speichern</button>
+  </div>
+
+<section class="section stats" id="statsSection">
+    <h2 class="section-title">Statistik</h2>
+    <button class="btn admin-only" id="repairStatsBtn" type="button">Statistik reparieren</button>
+    <div class="stats-summary" id="statsSummary"></div>
+    <div class="stats-table-wrap">
+      <div id="statsContent"></div>
+    </div>
+  </section>
+
+  <section class="history" id="historySection">
+    <h2 class="section-title">Letzte Besetzungen</h2>
+    <div class="history-list" id="historyList"></div>
+  </section>
+
+  <div class="footer">
+    Lehrfeuerwehr 2500 · Cloud-Synchronisierung: <span id="cloudStatus">wird verbunden …</span><br><small id="cloudDebugHint">Bei einem Fehler wird der Firebase-Code hier angezeigt.</small>
+  </div>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+<script>
+
+  const WA_PASSWORDS = {
+    "1":"111111",
+    "2":"222222",
+    "3":"333333",
+    "4":"444444"
+  };
+  const GLOBAL_ADMIN_PASSWORD = "121212";
+  let selectedWA = null;
+
+  function showWAGate(){
+    const gate=document.getElementById("waGate");
+    if(gate) gate.classList.remove("hidden");
+  }
+
+  function enterWA(wa, role){
+    sessionStorage.setItem("lf2500_wa", wa);
+    sessionStorage.setItem("lf2500_role_v1", role);
+    selectedWA=wa;
+    appRole=role;
+    document.body.dataset.wa=wa;
+    document.body.classList.remove("role-user","role-admin");
+    document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
+
+    const gate=document.getElementById("waGate");
+    if(gate) gate.classList.add("hidden");
+
+    // Hide the old standalone login overlay because WA login replaces it.
+    const oldLogin=document.getElementById("loginOverlay");
+    if(oldLogin) oldLogin.style.display="none";
+
+    const heroPill=document.querySelector(".hero-pill");
+    if(heroPill) heroPill.textContent=`● Lehrfeuerwehr 2500 · WA ${wa}`;
+
+    if(typeof window.loadWAData==="function") window.loadWAData(wa);
+
+    if(typeof renderTodayStatus==="function") renderTodayStatus();
+    if(typeof renderNextShift==="function") renderNextShift();
+    if(typeof renderPlanner==="function") renderPlanner();
+    if(typeof renderHistory==="function") renderHistory();
+    if(typeof renderStats==="function") renderStats();
+  }
+
+  function initWAGate(){
+    const gate=document.getElementById("waGate");
+    const wrap=document.getElementById("waPasswordWrap");
+    const input=document.getElementById("waPassword");
+    const label=document.getElementById("waSelected");
+    const error=document.getElementById("waError");
+
+    document.querySelectorAll(".wa-buttons button").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        selectedWA=btn.dataset.wa;
+        document.querySelectorAll(".wa-buttons button").forEach(x=>x.classList.remove("selected"));
+        btn.classList.add("selected");
+        label.textContent=`WA ${selectedWA}`;
+        wrap.classList.add("show");
+        error.textContent="";
+        input.value="";
+        input.focus();
+      });
+    });
+
+    function tryWA(){
+      if(!selectedWA) return;
+      const pw=input.value;
+      if(pw.length<6) return;
+
+      if(pw===GLOBAL_ADMIN_PASSWORD){
+        enterWA(selectedWA,"admin");
+        return;
+      }
+      if(pw===WA_PASSWORDS[selectedWA]){
+        enterWA(selectedWA,"user");
+        return;
+      }
+      error.textContent="Passwort nicht korrekt.";
+      input.value="";
+      input.focus();
+    }
+
+    input.addEventListener("input",tryWA);
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter") tryWA();
+    });
+
+    const rememberedWA=sessionStorage.getItem("lf2500_wa");
+    const rememberedRole=sessionStorage.getItem("lf2500_role_v1");
+    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
+       (rememberedRole==="user" || rememberedRole==="admin")){
+      enterWA(rememberedWA,rememberedRole);
+    }else{
+      gate.classList.remove("hidden");
+    }
+  }
+
+
+  const NORMAL_PASSWORD = "111111";
+  const ADMIN_PASSWORD = "121212";
+  const ROLE_KEY = "lf2500_role_v1";
+  let appRole = null;
+
+  function applyRole(role){
+    appRole = role;
+    document.body.classList.remove("role-user","role-admin");
+    document.body.classList.add(role === "admin" ? "role-admin" : "role-user");
+    const badge = document.getElementById("roleBadge");
+    if(badge) badge.textContent = "";
+    const overlay = document.getElementById("loginOverlay");
+    if(overlay) overlay.style.display = "none";
+    try{ sessionStorage.setItem(ROLE_KEY, role); }catch(e){}
+  }
+
+  function showLogin(){
+    appRole = null;
+    const overlay = document.getElementById("loginOverlay");
+    if(overlay) overlay.style.display = "flex";
+    const input = document.getElementById("loginPassword");
+    if(input){ input.value=""; setTimeout(()=>input.focus(),50); }
+    const err = document.getElementById("loginError");
+    if(err) err.textContent="";
+  }
+
+  function tryLogin(){
+    const input = document.getElementById("loginPassword");
+    const value = input ? input.value.trim() : "";
+    if(value === ADMIN_PASSWORD){
+      applyRole("admin");
+    }else if(value === NORMAL_PASSWORD){
+      applyRole("user");
+    }else{
+      const err = document.getElementById("loginError");
+      if(err) err.textContent = "Passwort ist nicht korrekt.";
+    }
+  }
+
+  function requireAdmin(message="Diese Funktion ist nur im Admin-Modus verfügbar."){
+    if(appRole === "admin") return true;
+    const msg = document.getElementById("message");
+    if(msg) msg.innerHTML = `<div class="info">${message}</div>`;
+    return false;
+  }
+
+(function(){
+  let STORAGE_KEY = "lhf25009_history_wa1_v1";
+
+  const DEFAULT_PERSONNEL = {
+    "1":{
+      sf:"Dennis Treite",
+      mc:"Raik Schindler",
+      people:["Maurice Klose","Marcel Birkenhauer","Joachim Neumann","Julian Ehrlich","Aleksander Stefanovic"]
+    },
+    "2":{
+      sf:"Staffelführer",
+      mc:"Maschinisten-Chef",
+      people:["Person 1","Person 2","Person 3","Person 4","Person 5"]
+    },
+    "3":{
+      sf:"Staffelführer",
+      mc:"Maschinisten-Chef",
+      people:["Person 1","Person 2","Person 3","Person 4","Person 5"]
+    },
+    "4":{
+      sf:"Staffelführer",
+      mc:"Maschinisten-Chef",
+      people:["Person 1","Person 2","Person 3","Person 4","Person 5"]
+    }
+  };
+
+  let people = [...DEFAULT_PERSONNEL["1"].people];
+  let baseFixedStaff = {
+    sf: DEFAULT_PERSONNEL["1"].sf,
+    mc: DEFAULT_PERSONNEL["1"].mc
+  };
+
+  function currentWA(){
+    return String(selectedWA || sessionStorage.getItem("lf2500_wa") || "1");
+  }
+
+  // ---------------------------------------------------------------
+  // Firebase Cloud-Synchronisierung
+  // Ein Firestore-Dokument pro Wachabteilung: lfw2500/wa1 ... wa4
+  // ---------------------------------------------------------------
+  const firebaseConfig = {
+    apiKey: "AIzaSyBYDS1D0oCQcC7HIRVJDzsM0q8CGZMaV0g",
+    authDomain: "lfw-2500.firebaseapp.com",
+    projectId: "lfw-2500",
+    storageBucket: "lfw-2500.firebasestorage.app",
+    messagingSenderId: "579322794526",
+    appId: "1:579322794526:web:ad992f9fe9412690e1940f"
+  };
+
+  let cloudAuth=null;
+  let cloudDb=null;
+  let cloudReady=false;
+  let cloudApplying=false;
+  let cloudUnsubscribe=null;
+  let cloudPushTimer=null;
+  let cloudActiveWA=null;
+
+  function setCloudStatus(text, ok=false){
+    const el=document.getElementById("cloudStatus");
+    if(!el) return;
+    el.textContent=text;
+    el.style.color=ok ? "#ffe14d" : "#ff8a80";
+  }
+
+  function showCloudError(prefix, err){
+    const code = err && err.code ? err.code : "";
+    const msg = err && err.message ? err.message : String(err || "Unbekannter Fehler");
+    const short = code ? `${prefix}: ${code}` : `${prefix}: ${msg}`;
+    console.error(prefix, err);
+    setCloudStatus(short);
+    const box = document.getElementById("message");
+    if(box){
+      box.innerHTML = `<div class="error"><strong>Firebase-Fehler</strong><br>${short}<br><small>${msg}</small></div>`;
+    }
+  }
+
+  try{
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    cloudAuth=firebase.auth();
+    cloudDb=firebase.firestore();
+  }catch(err){
+    showCloudError("Initialisierung", err);
+  }
+
+  function cloudDocRef(wa=currentWA()){
+    if(!cloudDb) return null;
+    return cloudDb.collection("lfw2500").doc(`wa${wa}`);
+  }
+
+  function readJSON(key, fallback){
+    try{
+      const raw=localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    }catch(e){
+      return fallback;
+    }
+  }
+
+  function buildCloudState(wa=currentWA()){
+    const keys=storageKeysForWA(String(wa));
+    return {
+      schemaVersion: 1,
+      wa: String(wa),
+      personnel: readJSON(personnelStorageKey(String(wa)), DEFAULT_PERSONNEL[String(wa)] || DEFAULT_PERSONNEL["1"]),
+      history: readJSON(keys.history, []),
+      plans: readJSON(keys.plans, {}),
+      updatedBy: cloudAuth?.currentUser?.uid || null,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+  }
+
+  async function pushCloudState(){
+    if(!cloudReady || cloudApplying || !cloudAuth?.currentUser || !cloudActiveWA) return;
+    const ref=cloudDocRef(cloudActiveWA);
+    if(!ref) return;
+    try{
+      await ref.set(buildCloudState(cloudActiveWA), {merge:true});
+      setCloudStatus(`online · WA ${cloudActiveWA}`, true);
+    }catch(err){
+      showCloudError("Cloud speichern", err);
+    }
+  }
+
+  function cloudSchedulePush(){
+    if(!cloudReady || cloudApplying) return;
+    clearTimeout(cloudPushTimer);
+    cloudPushTimer=setTimeout(pushCloudState,350);
+  }
+
+  function applyCloudState(wa,data){
+    if(!data || String(wa)!==String(currentWA())) return;
+    cloudApplying=true;
+    try{
+      const keys=storageKeysForWA(String(wa));
+      if(data.personnel) localStorage.setItem(personnelStorageKey(String(wa)),JSON.stringify(data.personnel));
+      if(Array.isArray(data.history)) localStorage.setItem(keys.history,JSON.stringify(data.history));
+      if(data.plans && typeof data.plans==="object") localStorage.setItem(keys.plans,JSON.stringify(data.plans));
+
+      STORAGE_KEY=keys.history;
+      PLAN_KEY=keys.plans;
+      history=loadHistory();
+      normalizeHistory();
+      plans=loadPlans();
+      loadPersonnelConfig(String(wa));
+      loadShiftPersonnelState();
+      initFixedCover();
+      updateFixedCards();
+      renderPeople();
+      renderAvailability();
+      renderManual();
+      renderPlanner();
+      renderTodayStatus();
+      renderNextShift();
+      renderHistory();
+      renderStats();
+      fillPersonnelAdmin();
+      renderResult();
+    }finally{
+      cloudApplying=false;
+    }
+  }
+
+  async function startCloudForWA(wa){
+    wa=String(wa);
+    if(!cloudAuth || !cloudDb){
+      setCloudStatus("nicht verfügbar");
+      return;
+    }
+
+    setCloudStatus("wird verbunden …");
+    cloudReady=false;
+    cloudActiveWA=wa;
+
+    try{
+      if(!cloudAuth.currentUser){
+        await cloudAuth.signInAnonymously();
+      }
+
+      if(cloudUnsubscribe){
+        cloudUnsubscribe();
+        cloudUnsubscribe=null;
+      }
+
+      const ref=cloudDocRef(wa);
+      const first=await ref.get();
+
+      if(first.exists){
+        applyCloudState(wa,first.data());
+      }else{
+        // Beim ersten Start einer WA werden die bisherigen lokalen Daten
+        // als Ausgangsstand in die Cloud übernommen.
+        await ref.set(buildCloudState(wa),{merge:true});
+      }
+
+      cloudReady=true;
+      setCloudStatus(`online · WA ${wa}`, true);
+
+      cloudUnsubscribe=ref.onSnapshot(snapshot=>{
+        if(!snapshot.exists || String(wa)!==String(cloudActiveWA)) return;
+        applyCloudState(wa,snapshot.data());
+        setCloudStatus(`online · WA ${wa}`, true);
+      },err=>{
+        showCloudError("Live-Sync", err);
+      });
+    }catch(err){
+      cloudReady=false;
+      showCloudError("Anmeldung/Synchronisierung", err);
+    }
+  }
+
+  function personnelStorageKey(wa=currentWA()){
+    return `lhf2500_personnel_wa_${wa}`;
+  }
+
+  function loadPersonnelConfig(wa=currentWA()){
+    const fallback=DEFAULT_PERSONNEL[wa] || DEFAULT_PERSONNEL["1"];
+    let data=null;
+    try{data=JSON.parse(localStorage.getItem(personnelStorageKey(wa))||"null")}catch(e){}
+    const cfg=data && Array.isArray(data.people) ? data : fallback;
+
+    people = (cfg.people || fallback.people).map((x,i)=>String(x||`Person ${i+1}`).trim());
+    baseFixedStaff = {
+      sf:String(cfg.sf || fallback.sf).trim(),
+      mc:String(cfg.mc || fallback.mc).trim()
+    };
+    availability=defaultAvailability();
+  }
+
+  function savePersonnelConfig(){
+    const wa=currentWA();
+    const values=[1,2,3,4,5].map(i=>{
+      const el=document.getElementById(`adminPerson${i}`);
+      return String(el?.value||"").trim() || `Person ${i}`;
+    });
+    const sf=String(document.getElementById("adminSfName")?.value||"").trim() || "Staffelführer";
+    const mc=String(document.getElementById("adminMcName")?.value||"").trim() || "Maschinisten-Chef";
+
+    const data={sf,mc,people:values};
+    localStorage.setItem(personnelStorageKey(wa),JSON.stringify(data));
+    cloudSchedulePush();
+
+    people=[...values];
+    baseFixedStaff={sf,mc};
+    availability=defaultAvailability();
+
+    updateFixedCards();
+    renderPeople();
+    renderAvailability();
+    renderManual();
+    renderStats();
+    fillPersonnelAdmin();
+
+    const msg=document.getElementById("personnelAdminMessage");
+    if(msg) msg.innerHTML=`<div class="info ok">Namen für WA ${wa} gespeichert.</div>`;
+  }
+
+  function fillPersonnelAdmin(){
+    const waLabel=document.getElementById("personnelAdminWA");
+    if(waLabel) waLabel.textContent=`WA ${currentWA()}`;
+    const sf=document.getElementById("adminSfName");
+    const mc=document.getElementById("adminMcName");
+    if(sf) sf.value=baseFixedStaff.sf;
+    if(mc) mc.value=baseFixedStaff.mc;
+    people.forEach((name,i)=>{
+      const el=document.getElementById(`adminPerson${i+1}`);
+      if(el) el.value=name;
+    });
+  }
+
+  function storageKeysForWA(wa){
+    return {
+      history:`lhf25009_history_wa${wa}_v1`,
+      plans:`lhf25009_plans_wa${wa}_v1`
+    };
+  }
+
+  function migrateWA1LegacyData(){
+    // Keep existing WA1 data when moving from the earlier single-WA version.
+    const newHistoryKey="lhf25009_history_wa1_v1";
+    const newPlanKey="lhf25009_plans_wa1_v1";
+    if(!localStorage.getItem(newHistoryKey)){
+      const oldHistory=localStorage.getItem("lhf25009_history_v4");
+      if(oldHistory) localStorage.setItem(newHistoryKey,oldHistory);
+    }
+    if(!localStorage.getItem(newPlanKey)){
+      const oldPlans=localStorage.getItem("lhf25009_plans_v1");
+      if(oldPlans) localStorage.setItem(newPlanKey,oldPlans);
+    }
+  }
+
+  window.loadPersonnelForWA=function(wa){
+    loadPersonnelConfig(String(wa));
+    loadShiftPersonnelState();
+    updateFixedCards();
+    renderPeople();
+    renderAvailability();
+    renderManual();
+    renderStats();
+    fillPersonnelAdmin();
+  };
+
+  window.loadWAData=function(wa){
+    wa=String(wa);
+    if(wa==="1") migrateWA1LegacyData();
+
+    const keys=storageKeysForWA(wa);
+    STORAGE_KEY=keys.history;
+    PLAN_KEY=keys.plans;
+
+    shifts=(WA_SHIFT_SCHEDULES[wa] || []).map(x=>({...x}));
+    history=loadHistory();
+    normalizeHistory();
+    plans=loadPlans();
+    selectedShift=null;
+    current=[];
+    setUnsavedSwap(false);
+
+    loadPersonnelConfig(wa);
+    loadShiftPersonnelState();
+    initFixedCover();
+    updateFixedCards();
+    renderPeople();
+    renderAvailability();
+    renderManual();
+    renderPlanner();
+    renderTodayStatus();
+    renderNextShift();
+    renderHistory();
+    renderStats();
+    fillPersonnelAdmin();
+
+    const monthSel=document.getElementById("planMonth");
+    if(monthSel){
+      const today=getTodayIso().slice(0,7);
+      if([...monthSel.options].some(o=>o.value===today)) monthSel.value=today;
+      renderPlanner();
+    }
+
+    // Lokale Daten sind sofort sichtbar; anschließend wird der zentrale
+    // Firestore-Stand geladen und live synchronisiert.
+    startCloudForWA(wa);
+  };
+
+  const positions = [
+    "Maschinist",
+    "Angriffstruppführer",
+    "Angriffstruppmann",
+    "Wassertruppführer",
+    "Wassertruppmann"
+  ];
+
+  let current = [];
+  const DEFAULT_COVER = {sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""};
+  function defaultAvailability(){
+    const out={};
+    people.forEach(name=>out[name]=true);
+    return out;
+  }
+
+  let fixedCover = {...DEFAULT_COVER};
+  let availability = defaultAvailability();
+
+  function currentScopeLabel(){
+    return selectedShift ? `· ${formatShiftDate(selectedShift)}` : "· aktuell";
+  }
+
+  function loadShiftPersonnelState(){
+    if(selectedShift && plans[selectedShift]){
+      const p = plans[selectedShift];
+      availability = defaultAvailability();
+      if(p.availability){
+        people.forEach(name=>{
+          if(p.availability[name] === false) availability[name] = false;
+        });
+      }
+      fixedCover = Object.assign({}, DEFAULT_COVER, p.fixedCover || {});
+    }else{
+      availability = defaultAvailability();
+      fixedCover = {...DEFAULT_COVER};
+    }
+  }
+
+  function saveShiftPersonnelState(){
+    if(!selectedShift) return;
+    if(!plans[selectedShift]) plans[selectedShift] = {};
+    plans[selectedShift].availability = {...availability};
+    plans[selectedShift].fixedCover = {...fixedCover};
+    savePlans();
+    renderPlanner();
+  }
+
+  function initFixedCover(){
+    const sfAbsent=document.getElementById("sfAbsent");
+    const sfGuest=document.getElementById("sfGuest");
+    const mcAbsent=document.getElementById("mcAbsent");
+    const mcGuest=document.getElementById("mcGuest");
+
+    sfAbsent.checked=!!fixedCover.sfAbsent;
+    sfGuest.value=fixedCover.sfGuest||"";
+    sfGuest.disabled=!sfAbsent.checked;
+    mcAbsent.checked=!!fixedCover.mcAbsent;
+    mcGuest.value=fixedCover.mcGuest||"";
+    mcGuest.disabled=!mcAbsent.checked;
+
+    sfAbsent.onchange=()=>{
+      fixedCover.sfAbsent=sfAbsent.checked;
+      sfGuest.disabled=!sfAbsent.checked;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
+    mcAbsent.onchange=()=>{
+      fixedCover.mcAbsent=mcAbsent.checked;
+      mcGuest.disabled=!mcAbsent.checked;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
+    sfGuest.oninput=()=>{
+      fixedCover.sfGuest=sfGuest.value;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
+    mcGuest.oninput=()=>{
+      fixedCover.mcGuest=mcGuest.value;
+      saveShiftPersonnelState();
+      updateFixedCards();
+      renderPeople();
+      renderResult();
+    };
+  }
+
+  function fixedName(role){
+    if(role==="Staffelführer") return fixedCover.sfAbsent ? (fixedCover.sfGuest.trim()||"Vertretung fehlt") : baseFixedStaff.sf;
+    if(role==="Maschinisten-Chef") return fixedCover.mcAbsent ? (fixedCover.mcGuest.trim()||"Vertretung fehlt") : baseFixedStaff.mc;
+    return "";
+  }
+
+  function updateFixedCards(){
+    const sf = document.getElementById("fixedSfName");
+    const mc = document.getElementById("fixedMcName");
+    if(sf) sf.textContent = fixedName("Staffelführer");
+    if(mc) mc.textContent = fixedName("Maschinisten-Chef");
+    const coverScope=document.getElementById("coverScope");
+    if(coverScope) coverScope.textContent=currentScopeLabel();
+  }
+
+  function renderAvailability(){
+    const box = document.getElementById("availabilityList");
+    if(!box) return;
+    const scope=document.getElementById("availabilityScope");
+    if(scope) scope.textContent=currentScopeLabel();
+    box.innerHTML = "";
+    people.forEach(name=>{
+      const label = document.createElement("label");
+      const on = availability[name] !== false;
+      label.className = "availability-person" + (on ? "" : " off");
+      label.innerHTML = `<input type="checkbox" ${on ? "checked" : ""}>
+        <span class="availability-name">${name}</span>`;
+      const input = label.querySelector("input");
+      input.addEventListener("change", ()=>{
+        availability[name] = input.checked;
+        saveShiftPersonnelState();
+        renderAvailability();
+        renderManual();
+      });
+      box.appendChild(label);
+    });
+  }
+
+  let history = loadHistory();
+
+  function normalizeHistory(){
+    const seenDates=new Set();
+    const cleaned=[];
+
+    for(const entry of history){
+      const label=(entry.date || "").trim();
+      const m=label.match(/(\d{2}\.\d{2}\.\d{4})/);
+
+      // For every saved planned service, only the newest entry for that date counts.
+      if(m){
+        const dayKey=m[1];
+        if(seenDates.has(dayKey)) continue;
+        seenDates.add(dayKey);
+      }
+
+      cleaned.push(entry);
+    }
+
+    history=cleaned.slice(0,50);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    cloudSchedulePush();
+  }
+
+  function repairStatistics(){
+    const before=history.length;
+    normalizeHistory();
+    renderHistory();
+    renderStats();
+    renderNextShift();
+
+    const removed=before-history.length;
+    const msg=document.getElementById("message");
+    if(msg){
+      msg.innerHTML = removed>0
+        ? `<div class="info ok">${removed} doppelte gespeicherte ${removed===1?"Besetzung wurde":"Besetzungen wurden"} entfernt. Die Statistik ist neu berechnet.</div>`
+        : `<div class="info ok">Keine doppelten Dienste mehr gefunden. Die Statistik wurde neu berechnet.</div>`;
+    }
+  }
+
+
+  let PLAN_KEY = "lhf25009_plans_wa1_v1";
+  let selectedShift = null;
+  let plans = loadPlans();
+
+  // Dienstpläne WA 1–4 aus den übermittelten Kalendern (Sep–Dez 2026).
+  const WA_SHIFT_SCHEDULES = {"1":[{"date":"2026-09-01","type":"day"},{"date":"2026-09-02","type":"night"},{"date":"2026-09-04","type":"day"},{"date":"2026-09-05","type":"night"},{"date":"2026-09-09","type":"day"},{"date":"2026-09-10","type":"night"},{"date":"2026-09-12","type":"day"},{"date":"2026-09-13","type":"night"},{"date":"2026-09-17","type":"day"},{"date":"2026-09-18","type":"night"},{"date":"2026-09-20","type":"day"},{"date":"2026-09-21","type":"night"},{"date":"2026-09-25","type":"day"},{"date":"2026-09-26","type":"night"},{"date":"2026-09-28","type":"day"},{"date":"2026-09-29","type":"night"},{"date":"2026-10-03","type":"day"},{"date":"2026-10-04","type":"night"},{"date":"2026-10-06","type":"day"},{"date":"2026-10-07","type":"night"},{"date":"2026-10-11","type":"day"},{"date":"2026-10-12","type":"night"},{"date":"2026-10-14","type":"day"},{"date":"2026-10-15","type":"night"},{"date":"2026-10-19","type":"day"},{"date":"2026-10-20","type":"night"},{"date":"2026-10-22","type":"day"},{"date":"2026-10-23","type":"night"},{"date":"2026-10-27","type":"day"},{"date":"2026-10-28","type":"night"},{"date":"2026-10-30","type":"day"},{"date":"2026-10-31","type":"night"},{"date":"2026-11-04","type":"day"},{"date":"2026-11-05","type":"night"},{"date":"2026-11-07","type":"day"},{"date":"2026-11-08","type":"night"},{"date":"2026-11-12","type":"day"},{"date":"2026-11-13","type":"night"},{"date":"2026-11-15","type":"day"},{"date":"2026-11-16","type":"night"},{"date":"2026-11-20","type":"day"},{"date":"2026-11-21","type":"night"},{"date":"2026-11-23","type":"day"},{"date":"2026-11-24","type":"night"},{"date":"2026-11-28","type":"day"},{"date":"2026-11-29","type":"night"},{"date":"2026-12-01","type":"day"},{"date":"2026-12-02","type":"night"},{"date":"2026-12-06","type":"day"},{"date":"2026-12-07","type":"night"},{"date":"2026-12-09","type":"day"},{"date":"2026-12-10","type":"night"},{"date":"2026-12-14","type":"day"},{"date":"2026-12-15","type":"night"},{"date":"2026-12-17","type":"day"},{"date":"2026-12-18","type":"night"},{"date":"2026-12-22","type":"day"},{"date":"2026-12-23","type":"night"},{"date":"2026-12-25","type":"day"},{"date":"2026-12-26","type":"night"},{"date":"2026-12-30","type":"day"},{"date":"2026-12-31","type":"night"}],"2":[{"date":"2026-09-03","type":"day"},{"date":"2026-09-04","type":"night"},{"date":"2026-09-06","type":"day"},{"date":"2026-09-07","type":"night"},{"date":"2026-09-11","type":"day"},{"date":"2026-09-12","type":"night"},{"date":"2026-09-14","type":"day"},{"date":"2026-09-15","type":"night"},{"date":"2026-09-19","type":"day"},{"date":"2026-09-20","type":"night"},{"date":"2026-09-22","type":"day"},{"date":"2026-09-23","type":"night"},{"date":"2026-09-27","type":"day"},{"date":"2026-09-28","type":"night"},{"date":"2026-09-30","type":"day"},{"date":"2026-10-01","type":"night"},{"date":"2026-10-05","type":"day"},{"date":"2026-10-06","type":"night"},{"date":"2026-10-08","type":"day"},{"date":"2026-10-09","type":"night"},{"date":"2026-10-13","type":"day"},{"date":"2026-10-14","type":"night"},{"date":"2026-10-16","type":"day"},{"date":"2026-10-17","type":"night"},{"date":"2026-10-21","type":"day"},{"date":"2026-10-22","type":"night"},{"date":"2026-10-24","type":"day"},{"date":"2026-10-25","type":"night"},{"date":"2026-10-29","type":"day"},{"date":"2026-10-30","type":"night"},{"date":"2026-11-01","type":"day"},{"date":"2026-11-02","type":"night"},{"date":"2026-11-06","type":"day"},{"date":"2026-11-07","type":"night"},{"date":"2026-11-09","type":"day"},{"date":"2026-11-10","type":"night"},{"date":"2026-11-14","type":"day"},{"date":"2026-11-15","type":"night"},{"date":"2026-11-17","type":"day"},{"date":"2026-11-18","type":"night"},{"date":"2026-11-22","type":"day"},{"date":"2026-11-23","type":"night"},{"date":"2026-11-25","type":"day"},{"date":"2026-11-26","type":"night"},{"date":"2026-11-30","type":"day"},{"date":"2026-12-01","type":"night"},{"date":"2026-12-03","type":"day"},{"date":"2026-12-04","type":"night"},{"date":"2026-12-08","type":"day"},{"date":"2026-12-09","type":"night"},{"date":"2026-12-11","type":"day"},{"date":"2026-12-12","type":"night"},{"date":"2026-12-16","type":"day"},{"date":"2026-12-17","type":"night"},{"date":"2026-12-19","type":"day"},{"date":"2026-12-20","type":"night"},{"date":"2026-12-24","type":"day"},{"date":"2026-12-25","type":"night"},{"date":"2026-12-27","type":"day"},{"date":"2026-12-28","type":"night"}],"3":[{"date":"2026-09-01","type":"night"},{"date":"2026-09-05","type":"day"},{"date":"2026-09-06","type":"night"},{"date":"2026-09-08","type":"day"},{"date":"2026-09-09","type":"night"},{"date":"2026-09-13","type":"day"},{"date":"2026-09-14","type":"night"},{"date":"2026-09-16","type":"day"},{"date":"2026-09-17","type":"night"},{"date":"2026-09-21","type":"day"},{"date":"2026-09-22","type":"night"},{"date":"2026-09-24","type":"day"},{"date":"2026-09-25","type":"night"},{"date":"2026-09-29","type":"day"},{"date":"2026-09-30","type":"night"},{"date":"2026-10-02","type":"day"},{"date":"2026-10-03","type":"night"},{"date":"2026-10-07","type":"day"},{"date":"2026-10-08","type":"night"},{"date":"2026-10-10","type":"day"},{"date":"2026-10-11","type":"night"},{"date":"2026-10-15","type":"day"},{"date":"2026-10-16","type":"night"},{"date":"2026-10-18","type":"day"},{"date":"2026-10-19","type":"night"},{"date":"2026-10-23","type":"day"},{"date":"2026-10-24","type":"night"},{"date":"2026-10-26","type":"day"},{"date":"2026-10-27","type":"night"},{"date":"2026-10-31","type":"day"},{"date":"2026-11-01","type":"night"},{"date":"2026-11-03","type":"day"},{"date":"2026-11-04","type":"night"},{"date":"2026-11-08","type":"day"},{"date":"2026-11-09","type":"night"},{"date":"2026-11-11","type":"day"},{"date":"2026-11-12","type":"night"},{"date":"2026-11-16","type":"day"},{"date":"2026-11-17","type":"night"},{"date":"2026-11-19","type":"day"},{"date":"2026-11-20","type":"night"},{"date":"2026-11-24","type":"day"},{"date":"2026-11-25","type":"night"},{"date":"2026-11-27","type":"day"},{"date":"2026-11-28","type":"night"},{"date":"2026-12-02","type":"day"},{"date":"2026-12-03","type":"night"},{"date":"2026-12-05","type":"day"},{"date":"2026-12-06","type":"night"},{"date":"2026-12-10","type":"day"},{"date":"2026-12-11","type":"night"},{"date":"2026-12-13","type":"day"},{"date":"2026-12-14","type":"night"},{"date":"2026-12-18","type":"day"},{"date":"2026-12-19","type":"night"},{"date":"2026-12-21","type":"day"},{"date":"2026-12-22","type":"night"},{"date":"2026-12-26","type":"day"},{"date":"2026-12-27","type":"night"},{"date":"2026-12-29","type":"day"},{"date":"2026-12-30","type":"night"}],"4":[{"date":"2026-09-02","type":"day"},{"date":"2026-09-03","type":"night"},{"date":"2026-09-07","type":"day"},{"date":"2026-09-08","type":"night"},{"date":"2026-09-10","type":"day"},{"date":"2026-09-11","type":"night"},{"date":"2026-09-15","type":"day"},{"date":"2026-09-16","type":"night"},{"date":"2026-09-18","type":"day"},{"date":"2026-09-19","type":"night"},{"date":"2026-09-23","type":"day"},{"date":"2026-09-24","type":"night"},{"date":"2026-09-26","type":"day"},{"date":"2026-09-27","type":"night"},{"date":"2026-10-01","type":"day"},{"date":"2026-10-02","type":"night"},{"date":"2026-10-04","type":"day"},{"date":"2026-10-05","type":"night"},{"date":"2026-10-09","type":"day"},{"date":"2026-10-10","type":"night"},{"date":"2026-10-12","type":"day"},{"date":"2026-10-13","type":"night"},{"date":"2026-10-17","type":"day"},{"date":"2026-10-18","type":"night"},{"date":"2026-10-20","type":"day"},{"date":"2026-10-21","type":"night"},{"date":"2026-10-25","type":"day"},{"date":"2026-10-26","type":"night"},{"date":"2026-10-28","type":"day"},{"date":"2026-10-29","type":"night"},{"date":"2026-11-02","type":"day"},{"date":"2026-11-03","type":"night"},{"date":"2026-11-05","type":"day"},{"date":"2026-11-06","type":"night"},{"date":"2026-11-10","type":"day"},{"date":"2026-11-11","type":"night"},{"date":"2026-11-13","type":"day"},{"date":"2026-11-14","type":"night"},{"date":"2026-11-18","type":"day"},{"date":"2026-11-19","type":"night"},{"date":"2026-11-21","type":"day"},{"date":"2026-11-22","type":"night"},{"date":"2026-11-26","type":"day"},{"date":"2026-11-27","type":"night"},{"date":"2026-11-29","type":"day"},{"date":"2026-11-30","type":"night"},{"date":"2026-12-04","type":"day"},{"date":"2026-12-05","type":"night"},{"date":"2026-12-07","type":"day"},{"date":"2026-12-08","type":"night"},{"date":"2026-12-12","type":"day"},{"date":"2026-12-13","type":"night"},{"date":"2026-12-15","type":"day"},{"date":"2026-12-16","type":"night"},{"date":"2026-12-20","type":"day"},{"date":"2026-12-21","type":"night"},{"date":"2026-12-23","type":"day"},{"date":"2026-12-24","type":"night"},{"date":"2026-12-28","type":"day"},{"date":"2026-12-29","type":"night"},{"date":"2026-12-31","type":"day"}]};
+  let shifts = (WA_SHIFT_SCHEDULES[currentWA()] || []).map(x=>({...x}));
+
+  function loadPlans(){
+    try{return JSON.parse(localStorage.getItem(PLAN_KEY)||"{}")}catch(e){return {}}
+  }
+  function savePlans(){
+    try{localStorage.setItem(PLAN_KEY,JSON.stringify(plans))}catch(e){}
+    cloudSchedulePush();
+  }
+  function formatShiftDate(iso){
+    const [y,m,d]=iso.split("-");
+    return `${d}.${m}.${y}`;
+  }
+
+  function getTodayIso(){
+    const d=new Date();
+    const y=d.getFullYear();
+    const m=String(d.getMonth()+1).padStart(2,"0");
+    const day=String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${day}`;
+  }
+
+  function getNextShift(){
+    const today=getTodayIso();
+    return shifts.find(x=>x.date>=today) || null;
+  }
+
+
+  function renderTodayStatus(){
+    const box=document.getElementById("todayStatusContent");
+    if(!box) return;
+
+    const today=getTodayIso();
+    const d=new Date();
+    const weekdays=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+    const dateText=`${weekdays[d.getDay()]}, ${String(d.getDate()).padStart(2,"0")}.${String(d.getMonth()+1).padStart(2,"0")}.${d.getFullYear()}`;
+    const shift=shifts.find(x=>x.date===today);
+
+    if(shift){
+      box.innerHTML=`
+        <div class="today-status-row">
+          <div class="today-status-date">${dateText}</div>
+          <div class="today-status-shift">WA ${currentWA()} · ${shift.type==="day" ? "☀️ Tagdienst" : "🌙 Nachtdienst"}</div>
+        </div>`;
+    }else{
+      box.innerHTML=`
+        <div class="today-status-row">
+          <div class="today-status-date">${dateText}</div>
+          <div class="today-status-free">WA ${currentWA()} · heute frei</div>
+        </div>`;
+    }
+  }
+
+
+  function recoverPlanFromHistory(shiftDate){
+    if(!shiftDate || plans[shiftDate]?.assignment) return false;
+    const displayDate=formatShiftDate(shiftDate);
+    const found=history.find(e=>{
+      const label=(e.date||"");
+      return label.includes(displayDate) && Array.isArray(e.assignment) && e.assignment.length;
+    });
+    if(!found) return false;
+
+    plans[shiftDate]={
+      assignment:found.assignment.map(x=>({...x})),
+      availability:defaultAvailability(),
+      fixedCover:{...DEFAULT_COVER}
+    };
+    savePlans();
+    return true;
+  }
+
+  function renderNextShift(){
+    const box=document.getElementById("nextShiftContent");
+    if(!box) return;
+    const waLabel=document.getElementById("nextShiftWA");
+    if(waLabel) waLabel.textContent=`WA ${currentWA()}`;
+    const next=getNextShift();
+    if(!next){
+      box.innerHTML='<div class="selected-shift-empty">Kein weiterer Dienst im hinterlegten Zeitraum.</div>';
+      return;
+    }
+    recoverPlanFromHistory(next.date);
+    const saved=plans[next.date];
+    box.innerHTML=`
+      <div class="next-shift-main">
+        <div>
+          <div class="next-shift-date">${next.type==="day"?"☀️":"🌙"} ${formatShiftDate(next.date)}</div>
+          <div class="next-shift-meta">${next.type==="day"?"Tagdienst":"Nachtdienst"}</div>
+        </div>
+        <div class="next-shift-status">${saved && saved.assignment ? "✓ Besetzung geplant" : "Noch nicht geplant"}</div>
+      </div>
+`;
+}
+
+  let swapSourcePosition=null;
+
+  function refreshSeatSwapState(){
+    document.querySelectorAll("[data-seat-position]").forEach(el=>{
+      el.classList.add("swap-enabled");
+      el.classList.toggle("swap-selected", el.dataset.seatPosition===swapSourcePosition);
+    });
+  }
+
+
+  let hasUnsavedSwap=false;
+
+  function setUnsavedSwap(state){
+    hasUnsavedSwap=!!state;
+    const bar=document.getElementById("unsavedBar");
+    if(bar) bar.classList.toggle("show", hasUnsavedSwap);
+  }
+
+  function saveCurrentAssignment(){
+    if(!current || !current.length){
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Es gibt noch keine Besetzung zum Speichern.</div>';
+      return false;
+    }
+
+    const date = new Date().toLocaleString("de-DE");
+
+    if(selectedShift){
+      plans[selectedShift]={
+        assignment:current.map(x=>({...x})),
+        availability:{...availability},
+        fixedCover:{...fixedCover}
+      };
+      savePlans();
+      renderPlanner();
+      renderNextShift();
+    }
+
+    const historyEntry={
+      date: selectedShift
+        ? `${formatShiftDate(selectedShift)} · ${shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst"}`
+        : date,
+      assignment:current.map(x=>({...x})),
+      staffelfuehrer: fixedName("Staffelführer"),
+      maschinistenChef: fixedName("Maschinisten-Chef")
+    };
+
+    if(selectedShift){
+      history=history.filter(e=>e.date!==historyEntry.date);
+    }
+    history.unshift(historyEntry);
+    history=history.slice(0,50);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    cloudSchedulePush();
+
+    renderHistory();
+    renderStats();
+    setUnsavedSwap(false);
+
+    const msg=document.getElementById("message");
+    if(msg){
+      msg.innerHTML=selectedShift
+        ? `<div class="info ok">Änderung für ${formatShiftDate(selectedShift)} gespeichert.</div>`
+        : '<div class="info ok">Besetzung gespeichert.</div>';
+    }
+    return true;
+  }
+
+  function enableSeatSwapping(){
+    document.querySelectorAll("[data-seat-position]").forEach(el=>{
+      el.onclick=()=>{
+        const pos=el.dataset.seatPosition;
+        const entry=current && current.find(x=>x.position===pos);
+        if(!entry) return;
+
+        if(!swapSourcePosition){
+          swapSourcePosition=pos;
+          refreshSeatSwapState();
+          const msg=document.getElementById("message");
+          if(msg) msg.innerHTML=`<div class="info">Zum Tauschen jetzt eine zweite besetzte Funktion im LHF antippen.</div>`;
+          return;
+        }
+
+        if(swapSourcePosition===pos){
+          swapSourcePosition=null;
+          refreshSeatSwapState();
+          return;
+        }
+
+        const a=current.find(x=>x.position===swapSourcePosition);
+        const b=current.find(x=>x.position===pos);
+        if(!a || !b){
+          swapSourcePosition=null;
+          refreshSeatSwapState();
+          return;
+        }
+
+        const tmp=a.person;
+        a.person=b.person;
+        b.person=tmp;
+        swapSourcePosition=null;
+
+        renderResult();
+        setUnsavedSwap(true);
+        const msg=document.getElementById("message");
+        if(msg) msg.innerHTML='<div class="info">Besetzung getauscht – Änderung noch nicht gespeichert.</div>';
+      };
+    });
+    refreshSeatSwapState();
+  }
+
+  function renderPlanner(){
+    const month=document.getElementById("planMonth").value;
+    const daySelect=document.getElementById("planDay");
+    const selectedCard=document.getElementById("selectedShiftCard");
+
+    const monthShifts=shifts.filter(x=>x.date.startsWith(month));
+
+    const oldValue=selectedShift && selectedShift.startsWith(month) ? selectedShift : "";
+    daySelect.innerHTML='<option value="">Dienst auswählen</option>';
+
+    monthShifts.forEach(shift=>{
+      recoverPlanFromHistory(shift.date);
+      const opt=document.createElement("option");
+      opt.value=shift.date;
+      const saved=plans[shift.date];
+      opt.textContent=`${shift.type==="day"?"☀️":"🌙"} ${formatShiftDate(shift.date)}${saved && saved.assignment ? " · geplant" : ""}`;
+      daySelect.appendChild(opt);
+    });
+
+    daySelect.value=oldValue;
+
+    if(selectedShift && selectedShift.startsWith(month)){
+      const shift=shifts.find(x=>x.date===selectedShift);
+      recoverPlanFromHistory(selectedShift);
+      const saved=plans[selectedShift];
+      selectedCard.innerHTML=`
+        <div class="selected-shift-main">
+          <div>
+            <div class="selected-shift-date">${shift?.type==="day"?"☀️":"🌙"} ${formatShiftDate(selectedShift)}</div>
+            <div class="selected-shift-type">${shift?.type==="day"?"Tagdienst":"Nachtdienst"}</div>
+          </div>
+          <div class="selected-shift-status">${saved && saved.assignment ? "✓ Besetzung geplant" : "Noch nicht geplant"}</div>
+        </div>`;
+    }else{
+      selectedCard.innerHTML='<div class="selected-shift-empty">Noch keinen Dienst ausgewählt.</div>';
+    }
+  }
+
+
+  function initials(name){
+    if(!name) return "";
+    return String(name).split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase();
+  }
+
+  function loadHistory(){
+    try{
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    }catch(e){
+      return [];
+    }
+  }
+
+  function saveHistory(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    cloudSchedulePush();
+    }catch(e){}
+  }
+
+  function renderPeople(){
+    const grid = document.getElementById("peopleGrid");
+    grid.innerHTML = "";
+    people.forEach(name=>{
+      const card = document.createElement("div");
+      card.className = "person-card";
+      card.innerHTML = `
+        <div class="avatar">${initials(name)}</div>
+        <div class="person-name">${name}</div>
+        <div class="tag">Mini Feuerwehrmann</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function fairnessPenalty(person, position){
+    let score = 0;
+
+    // Strong penalty for same position in recent assignments
+    history.slice(0,8).forEach((entry,index)=>{
+      const recencyWeight = 8-index;
+      const hit = entry.assignment.find(a=>a.person===person && a.position===position);
+      if(hit) score += recencyWeight * 4;
+    });
+
+    // Small penalty for leadership repetitions
+    const leadership = ["Angriffstruppführer","Wassertruppführer"];
+    if(leadership.includes(position)){
+      history.slice(0,5).forEach((entry,index)=>{
+        const hit = entry.assignment.find(a=>a.person===person && leadership.includes(a.position));
+        if(hit) score += (5-index) * 1.25;
+      });
+    }
+
+    return score;
+  }
+
+  function shuffled(arr){
+    const copy = arr.slice();
+    for(let i=copy.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [copy[i],copy[j]]=[copy[j],copy[i]];
+    }
+    return copy;
+  }
+
+
+  function renderManual(){
+    const grid=document.getElementById("manualGrid");
+    if(!grid) return;
+    const availablePeople=people.filter(name=>availability[name]!==false);
+    grid.innerHTML="";
+    positions.forEach(position=>{
+      const row=document.createElement("div");
+      row.className="manual-row";
+      const opts=['<option value="">– auswählen –</option>']
+        .concat(availablePeople.map(name=>`<option value="${name}">${name}</option>`)).join("");
+      row.innerHTML=`<label>${position}</label><select data-position="${position}">${opts}</select>`;
+      grid.appendChild(row);
+    });
+  }
+
+  function applyManualAssignment(){
+    if(!requireAdmin()) return;
+    const selects=[...document.querySelectorAll("#manualGrid select")];
+    const chosen=selects.map(sel=>({position:sel.dataset.position,person:sel.value})).filter(x=>x.person);
+    const names=chosen.map(x=>x.person);
+    if(new Set(names).size!==names.length){
+      document.getElementById("message").innerHTML='<div class="info">Eine Person kann nicht zwei Funktionen gleichzeitig übernehmen.</div>';
+      return;
+    }
+    const required=["Maschinist","Angriffstruppführer","Angriffstruppmann"];
+    const missing=required.filter(pos=>!chosen.some(x=>x.position===pos));
+    if(missing.length){
+      document.getElementById("message").innerHTML=`<div class="info">Bitte Pflichtbesetzung vollständig eintragen: ${missing.join(", ")}.</div>`;
+      return;
+    }
+    current=chosen;
+    renderResult();
+    document.getElementById("message").innerHTML='<div class="info ok">Manuelle Besetzung übernommen. Du kannst sie jetzt speichern.</div>';
+  }
+
+  function generateAssignment(){
+    const availablePeople = people.filter(name => availability[name] !== false);
+
+    // Pflichtbesetzung: Maschinist + kompletter Angriffstrupp.
+    if(availablePeople.length < 3){
+      current = null;
+      document.getElementById("message").innerHTML =
+        '<div class="info">Auslosung nicht möglich: Für Maschinist + vollständigen Angriffstrupp werden mindestens 3 verfügbare Mini Feuerwehrmänner benötigt.</div>';
+      return;
+    }
+
+    const mandatory = ["Maschinist","Angriffstruppführer","Angriffstruppmann"];
+    const optional = ["Wassertruppführer","Wassertruppmann"];
+    const targetPositions = mandatory.concat(optional.slice(0, Math.max(0, availablePeople.length - 3)));
+
+    // Faire Zuordnung: bevorzuge Kombinationen, die in der Historie seltener vorkamen.
+    const counts = {};
+    availablePeople.forEach(person=>{
+      counts[person] = {};
+      positions.forEach(pos=>counts[person][pos]=0);
+    });
+
+    history.forEach(entry=>{
+      (entry.assignment||[]).forEach(a=>{
+        if(counts[a.person] && counts[a.person][a.position] !== undefined){
+          counts[a.person][a.position]++;
+        }
+      });
+    });
+
+    const remaining = [...availablePeople];
+    const assignment = [];
+
+    targetPositions.forEach(position=>{
+      let min = Infinity;
+      remaining.forEach(person=>{
+        min = Math.min(min, counts[person]?.[position] ?? 0);
+      });
+      const candidates = remaining.filter(person => (counts[person]?.[position] ?? 0) === min);
+      const chosen = candidates[Math.floor(Math.random()*candidates.length)];
+      assignment.push({position, person: chosen});
+      remaining.splice(remaining.indexOf(chosen),1);
+    });
+
+    // If somehow more people than positions exist, ignore extras. With current setup max is 5.
+    current = assignment;
+    renderResult();
+
+    const missing = optional.filter(pos => !assignment.some(a=>a.position===pos));
+    document.getElementById("message").innerHTML = missing.length
+      ? `<div class="info ok">Auslosung erstellt. Pflichtbesetzung vollständig. Nicht besetzt: ${missing.join(", ")}.</div>`
+      : '<div class="info ok">Auslosung erstellt. Alle Funktionen sind vollständig besetzt.</div>';
+  }
+
+  function renderSeat(id, role, person, fixed=false){
+    const el = document.getElementById(id);
+    if(!el) return;
+    const shown = person || "Nicht besetzt";
+    el.className = "seat" + (fixed ? " fixed" : "");
+    el.innerHTML = `
+      <div class="seat-role">${role}</div>
+      <div class="seat-name">${shown}</div>
+      <div class="seat-initials">${initials(person)}</div>
+    `;
+  }
+
+  function renderResult(){
+    const section = document.getElementById("resultSection");
+    section.style.display = "block";
+
+    const byPos = {};
+    (current || []).forEach(item => byPos[item.position] = item.person);
+
+    renderSeat("seatMaschinist", "Maschinist", byPos["Maschinist"]);
+    renderSeat("seatMaschChef", "Maschinisten-Chef", fixedName("Maschinisten-Chef"), true);
+    renderSeat("seatStaffel", "Staffelführer", fixedName("Staffelführer"), true);
+    renderSeat("seatATF", "Angriffstruppführer", byPos["Angriffstruppführer"]);
+    renderSeat("seatATM", "Angriffstruppmann", byPos["Angriffstruppmann"]);
+    renderSeat("seatWTF", "Wassertruppführer", byPos["Wassertruppführer"]);
+    renderSeat("seatWTM", "Wassertruppmann", byPos["Wassertruppmann"]);
+
+    section.scrollIntoView({behavior:"smooth",block:"start"});
+  
+    enableSeatSwapping();
+  }
+
+
+  function renderStats(){
+    const summary = document.getElementById("statsSummary");
+    const content = document.getElementById("statsContent");
+    if(!summary || !content) return;
+
+    const counts = {};
+    people.forEach(person=>{
+      counts[person] = {
+        "Maschinist":0,
+        "Angriffstruppführer":0,
+        "Angriffstruppmann":0,
+        "Wassertruppführer":0,
+        "Wassertruppmann":0,
+        total:0
+      };
+    });
+
+    history.forEach(entry=>{
+      (entry.assignment || []).forEach(a=>{
+        if(counts[a.person] && counts[a.person][a.position] !== undefined){
+          counts[a.person][a.position]++;
+          counts[a.person].total++;
+        }
+      });
+    });
+
+    const savedAssignments = history.length;
+    const totalFunctions = Object.values(counts).reduce((sum,c)=>sum+c.total,0);
+
+    summary.innerHTML = `
+      <div class="stats-chip">Gespeicherte Dienste: ${savedAssignments}</div>
+      <div class="stats-chip">Verteilte Funktionen: ${totalFunctions}</div>
+    `;
+
+    if(history.length === 0){
+      content.innerHTML = '<div class="stats-empty">Noch keine Statistik vorhanden. Sie entsteht automatisch aus den gespeicherten Besetzungen.</div>';
+      return;
+    }
+
+    const rows = people.map(person=>{
+      const c = counts[person];
+      return `
+        <tr>
+          <td>${person}</td>
+          <td>${c["Maschinist"]}</td>
+          <td>${c["Angriffstruppführer"]}</td>
+          <td>${c["Angriffstruppmann"]}</td>
+          <td>${c["Wassertruppführer"]}</td>
+          <td>${c["Wassertruppmann"]}</td>
+          <td><strong>${c.total}</strong></td>
+        </tr>`;
+    }).join("");
+
+    content.innerHTML = `
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Mini Feuerwehrmann</th>
+            <th>Maschi</th>
+            <th>ATF</th>
+            <th>ATM</th>
+            <th>WTF</th>
+            <th>WTM</th>
+            <th>Gesamt</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function renderHistory(){
+    const list = document.getElementById("historyList");
+    list.innerHTML = "";
+
+    if(history.length===0){
+      list.innerHTML = '<div class="info">Noch keine gespeicherten Besetzungen.</div>';
+      return;
+    }
+
+    history.slice(0,10).forEach(entry=>{
+      const item = document.createElement("div");
+      item.className = "history-item";
+      const lines = entry.assignment.map(a=>`${a.position}: ${a.person}`).join("<br>");
+      item.innerHTML = `
+        <div class="history-head">
+          <span>Lehrfeuerwehr 2500</span>
+          <span>${entry.date}</span>
+        </div>
+        <div class="history-body">
+          Staffelführer: ${entry.staffelfuehrer || "Dennis Treite"}<br>
+          Maschinisten-Chef: ${entry.maschinistenChef || "Raik Schindler"}<br>
+          ${lines}
+        </div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById("generateBtn").addEventListener("click",generateAssignment);
+  document.getElementById("rerollBtn").addEventListener("click",generateAssignment);
+
+  document.getElementById("saveBtn").addEventListener("click",()=>{
+    if(!current.length) return;
+    const now = new Date();
+    const date = now.toLocaleString("de-DE",{
+      day:"2-digit",month:"2-digit",year:"numeric",
+      hour:"2-digit",minute:"2-digit"
+    });
+
+    const historyEntry={
+      date: selectedShift ? `${formatShiftDate(selectedShift)} · ${shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst"}` : date,
+      assignment:current.map(x=>({...x})),
+      staffelfuehrer: fixedName("Staffelführer"),
+      maschinistenChef: fixedName("Maschinisten-Chef")
+    };
+
+    if(selectedShift){
+      // Exactly one statistics/history entry per planned service.
+      history = history.filter(e=>e.date!==historyEntry.date);
+    }
+    history.unshift(historyEntry);
+
+    if(selectedShift){
+      plans[selectedShift]={
+        assignment:current.map(x=>({...x})),
+        availability:{...availability},
+        fixedCover:{...fixedCover}
+      };
+      savePlans();
+      renderPlanner();
+      renderNextShift();
+    }
+
+    history = history.slice(0,50);
+    saveHistory();
+    renderHistory();
+    renderStats();
+
+    document.getElementById("message").innerHTML =
+      '<div class="info ok">Besetzung gespeichert. Die Fairness-Logik berücksichtigt sie bei zukünftigen Auslosungen.</div>';
+  });
+
+  document.getElementById("resetHistoryBtn").addEventListener("click",()=>{
+    if(confirm("Gesamte Historie wirklich löschen?")){
+      history = [];
+      saveHistory();
+      renderHistory();
+      renderStats();
+      document.getElementById("message").innerHTML =
+        '<div class="info">Historie gelöscht. Die nächste Auslosung startet ohne vorherige Verteilungen.</div>';
+    }
+  });
+
+
+  function overwriteSelectedPlan(){
+    if(!requireAdmin()) return;
+    if(!selectedShift){
+      document.getElementById("message").innerHTML='<div class="info">Bitte zuerst einen geplanten Dienst auswählen.</div>';
+      return;
+    }
+    if(!current || !current.length){
+      document.getElementById("message").innerHTML='<div class="info">Bitte zuerst eine neue Besetzung auslosen oder manuell eintragen.</div>';
+      return;
+    }
+
+    plans[selectedShift]={assignment:current.map(x=>({...x})), availability:{...availability}, fixedCover:{...fixedCover}};
+    savePlans();
+
+    // Existing history entry for this shift is replaced, not duplicated.
+    const prefix=formatShiftDate(selectedShift);
+    const existingIndex=history.findIndex(h=>String(h.date||"").startsWith(prefix));
+    const shiftType=shifts.find(x=>x.date===selectedShift)?.type==="day"?"Tagdienst":"Nachtdienst";
+    const entry={
+      date:`${formatShiftDate(selectedShift)} · ${shiftType}`,
+      assignment:current.map(x=>({...x})),
+      staffelfuehrer: fixedName("Staffelführer"),
+      maschinistenChef: fixedName("Maschinisten-Chef")
+    };
+    if(existingIndex>=0) history[existingIndex]=entry;
+    else history.unshift(entry);
+
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(history))}catch(e){}
+    cloudSchedulePush();
+    renderPlanner();
+    renderNextShift();
+    renderHistory();
+    renderStats();
+    document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(selectedShift)} wurde geändert und gespeichert.</div>`;
+  }
+
+  document.getElementById("overwritePlanBtn").addEventListener("click",overwriteSelectedPlan);
+
+  document.getElementById("planMonth").addEventListener("change",()=>{
+    selectedShift=null;
+    loadShiftPersonnelState();
+    initFixedCover();
+    updateFixedCards();
+    renderAvailability();
+    renderManual();
+    renderPlanner();
+  });
+
+  document.getElementById("planDay").addEventListener("change",(e)=>{
+    selectedShift=e.target.value || null;
+    setUnsavedSwap(false);
+    loadShiftPersonnelState();
+    initFixedCover();
+    updateFixedCards();
+    renderAvailability();
+    renderManual();
+
+    if(selectedShift){
+      recoverPlanFromHistory(selectedShift);
+      const saved=plans[selectedShift];
+      if(saved && Array.isArray(saved.assignment) && saved.assignment.length){
+        current=saved.assignment.map(x=>({...x}));
+        renderResult();
+        document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(selectedShift)} geladen.</div>`;
+      }else{
+        current=[];
+        renderResult();
+        document.getElementById("message").innerHTML=`<div class="info">Dienst ${formatShiftDate(selectedShift)} ausgewählt.</div>`;
+      }
+    }
+    renderPlanner();
+  });
+  document.getElementById("planSelectedBtn").addEventListener("click",()=>{
+    if(!selectedShift){
+      document.getElementById("message").innerHTML='<div class="info">Bitte zuerst einen Dienst auswählen.</div>';
+      document.getElementById("plannerSection").scrollIntoView({behavior:"smooth"});
+      return;
+    }
+    generateAssignment();
+    document.getElementById("message").innerHTML=`<div class="info ok">Besetzung für ${formatShiftDate(selectedShift)} ausgelost. Jetzt „Besetzung speichern“ drücken.</div>`;
+  });
+
+
+  document.getElementById("loginBtn").addEventListener("click",tryLogin);
+  document.getElementById("loginPassword").addEventListener("keydown",(e)=>{
+    if(e.key==="Enter") tryLogin();
+  });
+  document.getElementById("loginPassword").addEventListener("input",(e)=>{
+    const value=e.target.value.replace(/\D/g,"").slice(0,6);
+    if(e.target.value!==value) e.target.value=value;
+    if(value.length===6) tryLogin();
+  });
+  document.getElementById("logoutBtn").addEventListener("click",()=>{
+    try{sessionStorage.removeItem(ROLE_KEY)}catch(e){}
+    showLogin();
+  });
+
+  let savedRole=null;
+  try{savedRole=sessionStorage.getItem(ROLE_KEY)}catch(e){}
+  if(savedRole==="admin" || savedRole==="user") applyRole(savedRole);
+  else showLogin();
+
+  document.getElementById("applyManualBtn").addEventListener("click",applyManualAssignment);
+
+  loadShiftPersonnelState();
+  initFixedCover();
+  updateFixedCards();
+  renderPeople();
+  renderAvailability();
+  renderManual();
+  renderPlanner();
+  renderTodayStatus();
+  renderNextShift();
+  renderHistory();
+  renderStats();
+  fillPersonnelAdmin();
+})();
+
+
+  const savePersonnelBtn=document.getElementById("savePersonnelBtn");
+  if(savePersonnelBtn){
+    savePersonnelBtn.addEventListener("click",()=>{
+      if(!requireAdmin()) return;
+      savePersonnelConfig();
+    });
+  }
+
+  const repairStatsBtn=document.getElementById("repairStatsBtn");
+  if(repairStatsBtn){
+    repairStatsBtn.addEventListener("click",()=>{
+      if(!requireAdmin()) return;
+      repairStatistics();
+    });
+  }
+
+
+  const saveSwapBtn=document.getElementById("saveSwapBtn");
+  if(saveSwapBtn){
+    saveSwapBtn.addEventListener("click",()=>{
+      saveCurrentAssignment();
+    });
+  }
+
+
+  document.addEventListener("click",(e)=>{
+    const btn=e.target.closest(".logout-btn, #logoutBtn");
+    if(!btn) return;
+    sessionStorage.removeItem("lf2500_wa");
+    sessionStorage.removeItem("lf2500_role_v1");
+    selectedWA=null;
+    setTimeout(()=>{
+      showWAGate();
+      const oldLogin=document.getElementById("loginOverlay");
+      if(oldLogin) oldLogin.style.display="none";
+    },0);
+  },true);
+
+  window.addEventListener("DOMContentLoaded",initWAGate);
+
+</script>
+</body>
+</html>
