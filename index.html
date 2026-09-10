@@ -1684,6 +1684,30 @@ body.role-admin #statsSection{
 .love-footer::after{background:linear-gradient(90deg,#ffe13c,transparent)}
 .love-heart{margin-top:4px;font-size:1.25rem;color:#ffe13c}
 
+
+/* ===== FOOTER FINAL ===== */
+.love-footer{
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  gap:9px!important;margin:34px auto 10px!important;
+  padding:22px 16px calc(22px + env(safe-area-inset-bottom))!important;
+  color:#ffe12f!important;text-align:center!important;
+}
+.love-footer::before,.love-footer::after{content:none!important}
+.love-footer-line{
+  width:min(72vw,430px);height:1px;
+  background:linear-gradient(90deg,transparent,#ffe12f 28%,#ffe12f 72%,transparent);
+  box-shadow:0 0 12px rgba(255,225,47,.35);
+}
+.love-footer-main{
+  font-size:clamp(1.05rem,4vw,1.45rem);font-weight:750;letter-spacing:.045em;
+  text-shadow:0 0 14px rgba(255,225,47,.42);
+}
+.love-footer-main strong{font-weight:1000}
+.love-footer-main span{margin:0 8px;font-size:.82em}
+.love-footer-sub{
+  color:#85898f;font-size:.62rem;font-weight:850;letter-spacing:.30em;text-indent:.30em;
+}
+
 </style>
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -1841,7 +1865,7 @@ body.role-admin #statsSection{
 <div class="vehicle-designation">LHF 2500/9</div>
     <span class="ghost">LHF</span>
     <p>Besetzung auswählen</p>
-    <div class="status"><span class="dot"></span> Lehrfeuerwehr 2500 · </div>
+    <div class="status"><span class="dot"></span> LHF 2500/9 · </div>
   </section>
 
 <section class="next-shift" id="nextShiftBox">
@@ -3667,9 +3691,10 @@ body.role-admin #statsSection{
 </script>
 
 <div class="love-footer" id="loveFooter">
-  <span>Mit Liebe 1.WA</span>
-  <div class="love-heart">♡</div>
+  <div class="love-footer-line"></div>
+  <div class="love-footer-main"><span>♥</span> Mit Liebe <strong>1. WA</strong> <span>♥</span></div>
+  <div class="love-footer-sub">LEHRFEUERWEHR 2500</div>
+  <div class="love-footer-line"></div>
 </div>
-
 </body>
 </html>
