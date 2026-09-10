@@ -1582,6 +1582,21 @@ body.role-admin #statsSection{
   pointer-events:auto!important;
 }
 
+
+#waButtons button{
+  min-height:76px !important;
+  touch-action:manipulation !important;
+  -webkit-user-select:none;
+  user-select:none;
+  pointer-events:auto !important;
+}
+#waPasswordWrap.show{
+  display:block !important;
+}
+.wa-gate.hidden{
+  display:none !important;
+}
+
 </style>
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -1603,10 +1618,10 @@ body.role-admin #statsSection{
     <div class="wa-login-prompt">Wachabteilung auswählen</div>
 
     <div class="wa-buttons" id="waButtons">
-      <button type="button" data-wa="1"><strong>WA 1</strong><small>Dienstplan öffnen</small></button>
-      <button type="button" data-wa="2"><strong>WA 2</strong><small>Dienstplan öffnen</small></button>
-      <button type="button" data-wa="3"><strong>WA 3</strong><small>Dienstplan öffnen</small></button>
-      <button type="button" data-wa="4"><strong>WA 4</strong><small>Dienstplan öffnen</small></button>
+      <button type="button" data-wa="1" onclick="window.LFWSelectWA('1', this)"><strong>WA 1</strong><small>Dienstplan öffnen</small></button>
+      <button type="button" data-wa="2" onclick="window.LFWSelectWA('2', this)"><strong>WA 2</strong><small>Dienstplan öffnen</small></button>
+      <button type="button" data-wa="3" onclick="window.LFWSelectWA('3', this)"><strong>WA 3</strong><small>Dienstplan öffnen</small></button>
+      <button type="button" data-wa="4" onclick="window.LFWSelectWA('4', this)"><strong>WA 4</strong><small>Dienstplan öffnen</small></button>
     </div>
 
     <div class="wa-password-wrap" id="waPasswordWrap">
@@ -1616,8 +1631,119 @@ body.role-admin #statsSection{
       <button type="button" id="waEnterBtn">Anmelden</button>
       <div class="wa-error" id="waError"></div>
     </div>
-  </div>
+  
 </div>
+</div>
+
+<script>
+(function(){
+  const WA_PW={"1":"111111","2":"222222","3":"333333","4":"444444"};
+  const ADMIN_PW="121212";
+  let chosenWA=null;
+
+  window.LFWSelectWA=function(wa,btn){
+    chosenWA=String(wa);
+    window.selectedWA=chosenWA;
+
+    document.querySelectorAll("#waButtons button[data-wa]").forEach(b=>b.classList.remove("selected"));
+    if(btn) btn.classList.add("selected");
+
+    const wrap=document.getElementById("waPasswordWrap");
+    const label=document.getElementById("waSelected");
+    const input=document.getElementById("waPassword");
+    const err=document.getElementById("waError");
+
+    if(label) label.textContent="WA "+chosenWA+" · Passwort";
+    if(err) err.textContent="";
+    if(wrap){
+      wrap.classList.add("show");
+      wrap.style.setProperty("display","block","important");
+    }
+    if(input){
+      input.value="";
+      setTimeout(()=>input.focus(),30);
+    }
+  };
+
+  window.LFWDoLogin=function(){
+    const input=document.getElementById("waPassword");
+    const err=document.getElementById("waError");
+    const wa=chosenWA || window.selectedWA;
+
+    if(!wa){
+      if(err) err.textContent="Bitte zuerst eine Wachabteilung auswählen.";
+      return;
+    }
+
+    const pw=String(input?.value||"").replace(/\D/g,"").slice(0,6);
+    if(input) input.value=pw;
+    if(pw.length<6) return;
+
+    let role=null;
+    if(pw===ADMIN_PW) role="admin";
+    else if(pw===WA_PW[String(wa)]) role="user";
+
+    if(!role){
+      if(err) err.textContent="Passwort nicht korrekt.";
+      if(input){ input.value=""; input.focus(); }
+      return;
+    }
+
+    sessionStorage.setItem("lf2500_wa",String(wa));
+    sessionStorage.setItem("lf2500_role_v1",role);
+    window.selectedWA=String(wa);
+
+    document.body.dataset.wa=String(wa);
+    document.body.classList.remove("role-user","role-admin");
+    document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
+
+    const gate=document.getElementById("waGate");
+    if(gate){
+      gate.classList.add("hidden");
+      gate.style.setProperty("display","none","important");
+    }
+
+    setTimeout(()=>{
+      try{
+        if(typeof window.loadWAData==="function") window.loadWAData(String(wa));
+      }catch(e){
+        console.error("LFW App-Initialisierung:",e);
+      }
+    },0);
+  };
+
+  document.addEventListener("DOMContentLoaded",function(){
+    const input=document.getElementById("waPassword");
+    const btn=document.getElementById("waEnterBtn");
+
+    if(btn) btn.onclick=window.LFWDoLogin;
+
+    if(input){
+      input.addEventListener("input",function(){
+        this.value=this.value.replace(/\D/g,"").slice(0,6);
+        if(this.value.length===6) window.LFWDoLogin();
+      });
+      input.addEventListener("keydown",function(e){
+        if(e.key==="Enter"){
+          e.preventDefault();
+          window.LFWDoLogin();
+        }
+      });
+    }
+
+    const rememberedWA=sessionStorage.getItem("lf2500_wa");
+    const rememberedRole=sessionStorage.getItem("lf2500_role_v1");
+    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
+       (rememberedRole==="user" || rememberedRole==="admin")){
+      chosenWA=rememberedWA;
+      window.selectedWA=rememberedWA;
+      if(input) input.value=rememberedRole==="admin" ? ADMIN_PW : WA_PW[rememberedWA];
+      window.LFWDoLogin();
+    }
+  });
+})();
+</script>
+
 <div class="app">
 
   <section class="hero">
@@ -1800,8 +1926,8 @@ body.role-admin #statsSection{
           <div class="direction-label">ANGRIFFSTRUPP</div>
 
           <div class="crew-facing-rear">
-            <div class="seat rear-seat" id="seatATF"></div>
-            <div class="seat rear-seat" id="seatATM"></div>
+            <div class="seat rear-seat" data-seat-position="Angriffstruppführer" id="seatATF"></div>
+            <div class="seat rear-seat" data-seat-position="Angriffstruppmann" id="seatATM"></div>
           </div>
 
           <div class="cabin-center">
@@ -1809,8 +1935,8 @@ body.role-admin #statsSection{
           </div>
 
           <div class="crew-facing-forward">
-            <div class="seat" data-seat-position="Angriffstruppführer" id="seatWTF"></div>
-            <div class="seat" data-seat-position="Angriffstruppmann" id="seatWTM"></div>
+            <div class="seat" data-seat-position="Wassertruppführer" id="seatWTF"></div>
+            <div class="seat" data-seat-position="Wassertruppmann" id="seatWTM"></div>
           </div>
 
           <div class="direction-label rear-label">WASSERTRUPP</div>
@@ -1824,6 +1950,9 @@ body.role-admin #statsSection{
       </div>
     </div>
 
+    <div class="updated-at" id="lastUpdatedText">Zuletzt geändert: <strong>–</strong></div>
+    <button class="share-assignment-btn" id="shareAssignmentBtn" type="button">📤 Besetzung teilen</button>
+
     <div class="actions">
       <button class="btn" id="rerollBtn">Neu auslosen</button>
       <button class="btn" id="saveBtn">Besetzung speichern</button>
@@ -1836,7 +1965,7 @@ body.role-admin #statsSection{
   <div class="unsaved-bar" id="unsavedBar">
     <div>
       <div class="unsaved-text">Änderung noch nicht gespeichert</div>
-      <div class="unsaved-sub">Die Besetzung wurde im LHF getauscht.</div>
+      <div class="unsaved-sub">Die Besetzung wurde im LFW getauscht.</div>
     </div>
     <button class="btn unsaved-save" id="saveSwapBtn" type="button">Änderung speichern</button>
   </div>
@@ -1896,7 +2025,8 @@ body.role-admin #statsSection{
   let liveChangeTimer = null;
 
   function lastChangeKey(){
-    return LAST_CHANGE_KEY_PREFIX + String(currentWA ? currentWA() : "1");
+    const wa=String(selectedWA || sessionStorage.getItem("lf2500_wa") || "1");
+    return LAST_CHANGE_KEY_PREFIX + wa;
   }
 
   function formatShortDateTime(ts){
@@ -1937,9 +2067,7 @@ body.role-admin #statsSection{
 
   function animateAssignmentReveal(){
     const seatEls=[
-      ...document.querySelectorAll(".result-seat"),
-      ...document.querySelectorAll(".seat-card"),
-      ...document.querySelectorAll("[data-seat]")
+      ...document.querySelectorAll("#resultSection .seat")
     ];
     const unique=[...new Set(seatEls)].slice(0,8);
     unique.forEach((el,i)=>{
@@ -1951,37 +2079,12 @@ body.role-admin #statsSection{
   }
 
   function buildShareText(){
-    const wa = String(currentWA ? currentWA() : "1");
-    let shiftText = "";
-    try{
-      const sel = document.getElementById("shiftSelect");
-      if(sel && sel.selectedIndex>=0) shiftText = sel.options[sel.selectedIndex].textContent.trim();
-    }catch(e){}
-
-    const roleNames = [
-      ["Staffelführer", typeof fixedName==="function" ? fixedName("Staffelführer") : ""],
-      ["Maschinisten-Chef", typeof fixedName==="function" ? fixedName("Maschinisten-Chef") : ""],
-    ];
-
-    if(Array.isArray(current)){
-      current.forEach(item=>{
-        if(!item) return;
-        const role=item.role || item.position || item.seat || "";
-        const name=item.name || item.person || "";
-        if(role || name) roleNames.push([role,name]);
-      });
-    }
-
-    const lines = roleNames
-      .filter(([r,n])=>r || n)
-      .map(([r,n])=>`${r}: ${n || "Nicht besetzt"}`);
-
-    return [
-      `LFW 2500 – WA ${wa}`,
-      shiftText || "Dienstplan & Besetzung",
-      "",
-      ...lines
-    ].join("\n");
+    const data = typeof window.getLFWShareData === "function" ? window.getLFWShareData() : null;
+    const wa=String(data?.wa || selectedWA || sessionStorage.getItem("lf2500_wa") || "1");
+    const shiftText=data?.shiftText || "Dienstplan & Besetzung";
+    const roleNames=Array.isArray(data?.roles) ? data.roles : [];
+    const lines=roleNames.map(([role,name])=>`${role}: ${name || "Nicht besetzt"}`);
+    return [`LFW 2500 – WA ${wa}`,shiftText,"",...lines].join("\n");
   }
 
   async function shareAssignment(){
@@ -2342,7 +2445,8 @@ body.role-admin #statsSection{
       renderStats();
       fillPersonnelAdmin();
       renderResult();
-    window.setTimeout(animateAssignmentReveal,20);
+      window.setTimeout(animateAssignmentReveal,20);
+      loadLastChanged();
     }finally{
       cloudApplying=false;
     }
@@ -2575,10 +2679,9 @@ body.role-admin #statsSection{
     if(!selectedShift) return;
     if(!plans[selectedShift]) plans[selectedShift] = {};
     plans[selectedShift].availability = {...availability};
-    setLastChanged("Verfügbarkeit wurde geändert");
     plans[selectedShift].fixedCover = {...fixedCover};
     savePlans();
-    setLastChanged("Plan wurde aktualisiert");
+    setLastChanged("Verfügbarkeit / Vertretung aktualisiert");
     renderPlanner();
   }
 
@@ -2831,13 +2934,13 @@ body.role-admin #statsSection{
   }
 
   function saveCurrentAssignment(){
-    setLastChanged("Besetzung gespeichert");
     if(!current || !current.length){
       const msg=document.getElementById("message");
       if(msg) msg.innerHTML='<div class="info">Es gibt noch keine Besetzung zum Speichern.</div>';
       return false;
     }
 
+    setLastChanged("Besetzung gespeichert");
     const date = new Date().toLocaleString("de-DE");
 
     if(selectedShift){
@@ -2916,7 +3019,7 @@ body.role-admin #statsSection{
         swapSourcePosition=null;
 
         renderResult();
-    window.setTimeout(animateAssignmentReveal,20);
+        window.setTimeout(animateAssignmentReveal,20);
         setUnsavedSwap(true);
         const msg=document.getElementById("message");
         if(msg) msg.innerHTML='<div class="info">Besetzung getauscht – Änderung noch nicht gespeichert.</div>';
@@ -3373,12 +3476,12 @@ body.role-admin #statsSection{
       if(saved && Array.isArray(saved.assignment) && saved.assignment.length){
         current=saved.assignment.map(x=>({...x}));
         renderResult();
-    window.setTimeout(animateAssignmentReveal,20);
+        window.setTimeout(animateAssignmentReveal,20);
         document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(selectedShift)} geladen.</div>`;
       }else{
         current=[];
         renderResult();
-    window.setTimeout(animateAssignmentReveal,20);
+        window.setTimeout(animateAssignmentReveal,20);
         document.getElementById("message").innerHTML=`<div class="info">Dienst ${formatShiftDate(selectedShift)} ausgewählt.</div>`;
       }
     }
@@ -3393,15 +3496,6 @@ body.role-admin #statsSection{
     generateAssignment();
     document.getElementById("message").innerHTML=`<div class="info ok">Besetzung für ${formatShiftDate(selectedShift)} ausgelost. Jetzt „Besetzung speichern“ drücken.</div>`;
   });
-  document.getElementById("logoutBtn").addEventListener("click",()=>{
-    try{sessionStorage.removeItem(ROLE_KEY)}catch(e){}
-    showLogin();
-  });
-
-  let savedRole=null;
-  try{savedRole=sessionStorage.getItem(ROLE_KEY)}catch(e){}
-  if(savedRole==="admin" || savedRole==="user") applyRole(savedRole);
-  else showLogin();
 
   document.getElementById("applyManualBtn").addEventListener("click",applyManualAssignment);
 
@@ -3417,6 +3511,25 @@ body.role-admin #statsSection{
   renderHistory();
   renderStats();
   fillPersonnelAdmin();
+
+  window.savePersonnelConfig = savePersonnelConfig;
+  window.repairStatistics = repairStatistics;
+  window.saveCurrentAssignment = saveCurrentAssignment;
+  window.getLFWShareData = function(){
+    const shift=selectedShift ? shifts.find(x=>x.date===selectedShift) : null;
+    const shiftText=selectedShift
+      ? `${formatShiftDate(selectedShift)} · ${shift?.type==="day" ? "Tagdienst" : "Nachtdienst"}`
+      : "Aktuelle Besetzung";
+    return {
+      wa: currentWA(),
+      shiftText,
+      roles:[
+        ["Staffelführer", fixedName("Staffelführer")],
+        ["Maschinisten-Chef", fixedName("Maschinisten-Chef")],
+        ...((current||[]).map(x=>[x.position,x.person]))
+      ]
+    };
+  };
 })();
 
 
@@ -3424,8 +3537,8 @@ body.role-admin #statsSection{
   if(savePersonnelBtn){
     savePersonnelBtn.addEventListener("click",()=>{
       if(!requireAdmin()) return;
-      savePersonnelConfig();
-    setLastChanged("Plan wurde aktualisiert");
+      window.savePersonnelConfig?.();
+      setLastChanged("Personal aktualisiert");
     });
   }
 
@@ -3433,7 +3546,7 @@ body.role-admin #statsSection{
   if(repairStatsBtn){
     repairStatsBtn.addEventListener("click",()=>{
       if(!requireAdmin()) return;
-      repairStatistics();
+      window.repairStatistics?.();
     });
   }
 
@@ -3441,7 +3554,7 @@ body.role-admin #statsSection{
   const saveSwapBtn=document.getElementById("saveSwapBtn");
   if(saveSwapBtn){
     saveSwapBtn.addEventListener("click",()=>{
-      saveCurrentAssignment();
+      window.saveCurrentAssignment?.();
     });
   }
 
@@ -3461,7 +3574,7 @@ body.role-admin #statsSection{
 
     window.addEventListener("DOMContentLoaded",initProLayout);
   window.addEventListener("DOMContentLoaded", bindProPlusFeatures);
-  window.addEventListener("DOMContentLoaded",initWAGate);
+  
 
 </script>
 </body>
