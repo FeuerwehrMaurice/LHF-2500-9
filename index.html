@@ -1205,6 +1205,249 @@ body.role-admin #statsSection{
   .personnel-admin-grid{grid-template-columns:1fr}
 }
 
+
+/* ===== LFW 2500 PRO UI ===== */
+.lfw-splash{
+  position:fixed; inset:0; z-index:100000;
+  display:grid; place-items:center; overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 85%,rgba(255,30,30,.34),transparent 32%),
+    radial-gradient(circle at 85% 82%,rgba(0,100,255,.31),transparent 32%),
+    radial-gradient(circle at 50% 38%,rgba(255,255,255,.04),transparent 42%),
+    #050607;
+  transition:opacity .5s ease,visibility .5s ease;
+}
+.lfw-splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.lfw-splash::before,.lfw-splash::after{
+  content:"";position:absolute;border-radius:50%;filter:blur(75px);
+  width:55vw;height:55vw;max-width:560px;max-height:560px;opacity:.25;
+  animation:lfwPulse 1.2s ease-in-out infinite alternate;
+}
+.lfw-splash::before{left:-25vw;bottom:-16vw;background:#ff1717}
+.lfw-splash::after{right:-25vw;bottom:-16vw;background:#0876ff;animation-delay:.2s}
+@keyframes lfwPulse{from{transform:scale(.82);opacity:.17}to{transform:scale(1.12);opacity:.35}}
+.splash-grid{
+  position:absolute;inset:0;opacity:.10;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,transparent,#000 28%,#000 78%,transparent);
+}
+.splash-beam{position:absolute;top:18%;width:4px;height:42%;border-radius:10px;background:#fff}
+.splash-beam.red{left:8%;box-shadow:0 0 18px #ff2b2b,0 0 55px #ff1c1c}
+.splash-beam.blue{right:8%;box-shadow:0 0 18px #1b86ff,0 0 55px #0574ff}
+.splash-content{position:relative;z-index:3;width:min(92vw,760px);text-align:center;padding:24px}
+.splash-small{font-size:.78rem;font-weight:850;letter-spacing:.42em;color:#bdbdbd;text-transform:uppercase;margin-bottom:18px}
+.splash-logo{
+  margin:0;font-size:clamp(3.7rem,18vw,9rem);line-height:.85;font-weight:1000;font-style:italic;
+  letter-spacing:-.055em;color:#fff;transform:skewX(-4deg);
+  text-shadow:0 0 4px #fff,0 0 12px #ff4848,0 0 30px #ff1717,0 0 70px rgba(255,0,0,.42);
+}
+.splash-logo span{margin-left:.08em}
+.splash-sub{
+  margin-top:18px;font-size:clamp(1rem,4.5vw,1.55rem);font-weight:900;letter-spacing:.28em;text-indent:.28em;
+  color:#f3f3f3;text-transform:uppercase
+}
+.splash-divider{
+  width:min(72vw,500px);height:1px;margin:26px auto 18px;
+  background:linear-gradient(90deg,transparent,#ff3636 22%,#fff 50%,#2788ff 78%,transparent);
+  box-shadow:0 0 14px rgba(255,255,255,.5)
+}
+.splash-purpose{
+  display:inline-flex;align-items:center;gap:12px;padding:10px 17px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.17);background:rgba(10,10,12,.52);backdrop-filter:blur(8px);
+  font-size:.82rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#e9e9e9
+}
+.splash-purpose::before{
+  content:"";width:8px;height:8px;border-radius:50%;background:#ff3030;
+  box-shadow:0 0 10px #ff3030,18px 0 0 #1681ff,18px 0 10px #1681ff;margin-right:18px
+}
+
+/* WA-Auswahl als App-Karten */
+.wa-gate{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(201,27,27,.17),transparent 38%),
+    radial-gradient(circle at 100% 100%,rgba(0,100,255,.10),transparent 34%),
+    #070809 !important;
+}
+.wa-card{
+  border:1px solid rgba(255,255,255,.12)!important;
+  background:linear-gradient(180deg,rgba(24,25,28,.96),rgba(10,11,13,.97))!important;
+  box-shadow:0 28px 80px rgba(0,0,0,.55),0 0 55px rgba(201,27,27,.09)!important;
+}
+.wa-card h1{font-size:clamp(1.65rem,7vw,2.5rem)!important}
+.wa-buttons{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important
+}
+.wa-buttons button{
+  min-height:92px!important;text-align:left!important;padding:17px!important;border-radius:18px!important;
+  position:relative!important;overflow:hidden!important;font-size:1.1rem!important;
+  background:linear-gradient(145deg,#17191c,#0d0e10)!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important;
+}
+.wa-buttons button::after{
+  content:"Dienstplan öffnen";display:block;margin-top:8px;font-size:.68rem;letter-spacing:.08em;
+  color:#85898f;font-weight:700
+}
+.wa-buttons button:hover,.wa-buttons button.selected{
+  transform:translateY(-1px);border-color:#ffce31!important;
+  box-shadow:0 0 0 1px rgba(255,206,49,.20),0 12px 30px rgba(0,0,0,.35),0 0 25px rgba(255,206,49,.08)!important
+}
+
+/* Hauptseite ruhiger / professioneller */
+.app{padding-bottom:32px}
+.hero{padding-top:22px!important;padding-bottom:14px!important}
+.hero .badge{transform:scale(.84)}
+.hero h1{font-size:clamp(1.65rem,7vw,2.5rem)!important;margin-top:4px!important}
+.hero p{display:none}
+.hero .ghost{opacity:.05!important}
+.status{font-size:.75rem!important;padding:7px 11px!important}
+
+/* Nächster Dienst prominent */
+.next-shift{
+  border:1px solid rgba(255,206,49,.27)!important;
+  background:linear-gradient(155deg,rgba(255,206,49,.075),rgba(17,18,20,.96) 52%)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.28),0 0 24px rgba(255,206,49,.05)!important;
+}
+.next-shift-title{letter-spacing:.08em;text-transform:uppercase}
+.next-shift-date{font-size:clamp(1.25rem,5vw,1.7rem)!important}
+.next-shift-status,.selected-shift-status{
+  display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:999px;
+  font-size:.74rem!important;font-weight:900!important;white-space:nowrap
+}
+.plan-ok{background:rgba(42,180,87,.13)!important;color:#72e49a!important;border:1px solid rgba(72,215,117,.23)}
+.plan-warn{background:rgba(255,172,38,.12)!important;color:#ffc45d!important;border:1px solid rgba(255,172,38,.24)}
+.plan-open{background:rgba(255,255,255,.06)!important;color:#c7c7c7!important;border:1px solid rgba(255,255,255,.10)}
+
+/* Admin zusammenfassen */
+.admin-hub{
+  margin:18px auto;max-width:980px;border:1px solid rgba(255,255,255,.12);border-radius:18px;
+  background:#101215;overflow:hidden
+}
+.admin-hub summary{
+  cursor:pointer;list-style:none;padding:18px 19px;font-size:1rem;font-weight:900;letter-spacing:.03em;
+  display:flex;align-items:center;justify-content:space-between
+}
+.admin-hub summary::-webkit-details-marker{display:none}
+.admin-hub summary::after{content:"›";font-size:1.5rem;transform:rotate(90deg);transition:.2s}
+.admin-hub[open] summary::after{transform:rotate(-90deg)}
+.admin-hub-content{padding:0 14px 14px}
+.admin-hub-content .section,.admin-hub-content .manual-box{margin:12px 0!important}
+.admin-tool-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
+
+/* Cloud nur noch als kleiner Status-Chip */
+.footer{
+  width:max-content!important;max-width:calc(100% - 28px)!important;margin:18px auto!important;
+  padding:7px 11px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.09)!important;
+  background:rgba(10,11,13,.75)!important;font-size:.70rem!important;color:#8e9298!important
+}
+.footer::before{content:"☁️";margin-right:6px}
+#cloudDebugHint{display:none}
+#cloudStatus{font-weight:800}
+.footer.cloud-error{border-color:rgba(255,78,78,.28)!important;background:rgba(100,15,15,.18)!important}
+.footer.cloud-error #cloudDebugHint{display:block;margin-top:5px;color:#ff9d9d}
+
+/* Verfügbarkeit kompakter */
+.availability-list{gap:8px!important}
+.availability-hint{font-size:.72rem!important;line-height:1.4!important}
+
+/* Mobil */
+@media(max-width:620px){
+  .wa-card{width:min(94vw,520px)!important;padding:22px 16px!important}
+  .wa-buttons{gap:9px!important}
+  .wa-buttons button{min-height:82px!important;padding:14px!important}
+  .next-shift-main,.selected-shift-main{gap:12px!important;align-items:flex-start!important}
+}
+
+
+/* ===== LFW 2500 PRO+ FEATURES ===== */
+.live-change-banner{
+  position:fixed;
+  top:calc(10px + env(safe-area-inset-top));
+  left:50%;
+  transform:translateX(-50%) translateY(-18px);
+  z-index:99999;
+  max-width:min(92vw,620px);
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(12,13,15,.92);
+  backdrop-filter:blur(12px);
+  color:#f2f2f2;
+  font-size:.78rem;
+  font-weight:850;
+  letter-spacing:.02em;
+  box-shadow:0 14px 38px rgba(0,0,0,.36);
+  opacity:0;
+  pointer-events:none;
+  transition:.28s ease;
+}
+.live-change-banner.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+.live-change-banner::before{
+  content:"🔄";
+  margin-right:8px;
+}
+
+.updated-at{
+  margin-top:10px;
+  text-align:center;
+  font-size:.70rem;
+  color:#8f949b;
+}
+.updated-at strong{color:#c7cbd1}
+
+.result-seat.reveal-seat{
+  opacity:0;
+  transform:translateY(8px) scale(.985);
+  animation:seatReveal .36s ease forwards;
+}
+@keyframes seatReveal{
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.share-assignment-btn{
+  width:100%;
+  margin-top:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg,#17191c,#101114);
+  color:#f1f1f1;
+  border-radius:14px;
+  min-height:46px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+.share-assignment-btn:active{transform:scale(.99)}
+
+.network-banner{
+  display:none;
+  margin:10px auto 0;
+  width:min(94%,980px);
+  padding:9px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,181,58,.22);
+  background:rgba(116,70,0,.15);
+  color:#ffc86f;
+  font-size:.75rem;
+  font-weight:800;
+  text-align:center;
+}
+.network-banner.show{display:block}
+.network-banner.online{
+  display:block;
+  border-color:rgba(68,210,115,.22);
+  background:rgba(25,100,50,.12);
+  color:#79e6a1;
+  animation:fadeNet 2.2s ease forwards;
+}
+@keyframes fadeNet{
+  0%,70%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
+
 </style>
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -1215,6 +1458,22 @@ body.role-admin #statsSection{
 
 </head>
 <body>
+<div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
+
+
+<div class="lfw-splash" id="lfwSplash" aria-hidden="true">
+  <div class="splash-grid"></div>
+  <div class="splash-beam red"></div>
+  <div class="splash-beam blue"></div>
+  <div class="splash-content">
+    <div class="splash-small">Dienstplan</div>
+    <h1 class="splash-logo">LFW <span>2500</span></h1>
+    <div class="splash-sub">Lehrfeuerwehr</div>
+    <div class="splash-divider"></div>
+    <div class="splash-purpose">Dienstplan &amp; Besetzung</div>
+  </div>
+</div>
+
 
 <div class="wa-gate" id="waGate">
   <div class="wa-card">
@@ -1237,18 +1496,6 @@ body.role-admin #statsSection{
     </div>
   </div>
 </div>
-
-
-<div class="login-overlay" id="loginOverlay" style="display:none !important">
-  <div class="login-card">
-    <h2>Lehrfeuerwehr 2500</h2>
-    <p>Passwort eingeben</p>
-    <input id="loginPassword" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password" placeholder="6-stelliges Passwort">
-    <button class="btn" id="loginBtn">Anmelden</button>
-    <div class="login-error" id="loginError"></div>
-  </div>
-</div>
-
 <div class="app">
 
   <section class="hero">
@@ -1261,19 +1508,21 @@ body.role-admin #statsSection{
     <div class="status"><span class="dot"></span> Lehrfeuerwehr 2500 · </div>
   </section>
 
-  
-  <section class="today-status" id="todayStatusBox">
-    <div class="today-status-title">Heute</div>
-    <div id="todayStatusContent"></div>
-  </section>
-
 <section class="next-shift" id="nextShiftBox">
     <div class="next-shift-title">Nächster Dienst · <span id="nextShiftWA"></span></div>
     <div id="nextShiftContent"></div>
   </section>
 
 
-  <div class="role-bar">
+  
+
+  
+  <section class="today-status" id="todayStatusBox">
+    <div class="today-status-title">Heute</div>
+    <div id="todayStatusContent"></div>
+  </section>
+
+<div class="role-bar">
     <span class="role-badge" id="roleBadge">Benutzer</span>
     <button class="logout-btn" id="logoutBtn">Abmelden</button>
   </div>
@@ -1310,6 +1559,14 @@ body.role-admin #statsSection{
       <div id="personnelAdminMessage"></div>
     </div>
   </section>
+
+
+  <details class="admin-hub admin-only" id="adminHub">
+    <summary>⚙️ Adminbereich</summary>
+    <div class="admin-hub-content" id="adminHubContent">
+      <div class="admin-tool-row" id="adminToolRow"></div>
+    </div>
+  </details>
 
 <section class="availability-box" id="availabilityBox">
     <div class="availability-title">Personal verfügbar <span id="availabilityScope" style="font-size:.75rem;color:#aaa;font-weight:700"></span></div>
@@ -1477,7 +1734,7 @@ body.role-admin #statsSection{
   </section>
 
   <div class="footer">
-    Lehrfeuerwehr 2500 · Cloud-Synchronisierung: <span id="cloudStatus">wird verbunden …</span><br><small id="cloudDebugHint">Bei einem Fehler wird der Firebase-Code hier angezeigt.</small>
+    Cloud · <span id="cloudStatus">wird verbunden …</span><small id="cloudDebugHint">Synchronisierungsfehler – Details siehe Meldung oben.</small>
   </div>
 </div>
 
@@ -1487,6 +1744,181 @@ body.role-admin #statsSection{
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 <script>
+
+
+  function initLFWSplash(){
+    const splash=document.getElementById("lfwSplash");
+    if(!splash) return;
+    window.setTimeout(()=>splash.classList.add("hide"),1450);
+    window.setTimeout(()=>splash.remove(),2050);
+  }
+
+  function planStatusHTML(saved){
+    const count=Array.isArray(saved?.assignment) ? saved.assignment.length : 0;
+    if(count >= 5) return '<span class="next-shift-status plan-ok">✓ Besetzung steht</span>';
+    if(count >= 3) return '<span class="next-shift-status plan-warn">⚠ Reduzierte Besetzung</span>';
+    return '<span class="next-shift-status plan-open">Noch nicht ausgelost</span>';
+  }
+
+  function initProLayout(){
+    const hub=document.getElementById("adminHubContent");
+    const tools=document.getElementById("adminToolRow");
+    if(hub){
+      const personnel=document.getElementById("personnelAdminSection");
+      const manual=document.getElementById("manualBox");
+      if(personnel) hub.appendChild(personnel);
+      if(manual) hub.appendChild(manual);
+    }
+    if(tools){
+      ["overwritePlanBtn","repairStatsBtn","resetHistoryBtn"].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) tools.appendChild(el);
+      });
+    }
+  }
+
+
+  const LAST_CHANGE_KEY_PREFIX = "lfw2500_last_change_wa_";
+  let liveChangeTimer = null;
+
+  function lastChangeKey(){
+    return LAST_CHANGE_KEY_PREFIX + String(currentWA ? currentWA() : "1");
+  }
+
+  function formatShortDateTime(ts){
+    if(!ts) return "–";
+    const d=new Date(ts);
+    if(Number.isNaN(d.getTime())) return "–";
+    return d.toLocaleString("de-DE",{
+      day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"
+    }).replace(",", " ·");
+  }
+
+  function setLastChanged(reason="Besetzung wurde geändert", ts=Date.now(), showBanner=true){
+    try{ localStorage.setItem(lastChangeKey(), JSON.stringify({ts,reason})); }catch(e){}
+    const el=document.getElementById("lastUpdatedText");
+    if(el) el.innerHTML='Zuletzt geändert: <strong>'+formatShortDateTime(ts)+' Uhr</strong>';
+    if(showBanner) showLiveChange(reason);
+  }
+
+  function loadLastChanged(){
+    let data=null;
+    try{ data=JSON.parse(localStorage.getItem(lastChangeKey())||"null"); }catch(e){}
+    const el=document.getElementById("lastUpdatedText");
+    if(el){
+      el.innerHTML=data?.ts
+        ? 'Zuletzt geändert: <strong>'+formatShortDateTime(data.ts)+' Uhr</strong>'
+        : 'Zuletzt geändert: <strong>–</strong>';
+    }
+  }
+
+  function showLiveChange(text="Besetzung wurde geändert"){
+    const el=document.getElementById("liveChangeBanner");
+    if(!el) return;
+    el.textContent=text;
+    el.classList.add("show");
+    clearTimeout(liveChangeTimer);
+    liveChangeTimer=setTimeout(()=>el.classList.remove("show"),2600);
+  }
+
+  function animateAssignmentReveal(){
+    const seatEls=[
+      ...document.querySelectorAll(".result-seat"),
+      ...document.querySelectorAll(".seat-card"),
+      ...document.querySelectorAll("[data-seat]")
+    ];
+    const unique=[...new Set(seatEls)].slice(0,8);
+    unique.forEach((el,i)=>{
+      el.classList.remove("reveal-seat");
+      el.style.animationDelay=(i*115)+"ms";
+      void el.offsetWidth;
+      el.classList.add("reveal-seat");
+    });
+  }
+
+  function buildShareText(){
+    const wa = String(currentWA ? currentWA() : "1");
+    let shiftText = "";
+    try{
+      const sel = document.getElementById("shiftSelect");
+      if(sel && sel.selectedIndex>=0) shiftText = sel.options[sel.selectedIndex].textContent.trim();
+    }catch(e){}
+
+    const roleNames = [
+      ["Staffelführer", typeof fixedName==="function" ? fixedName("Staffelführer") : ""],
+      ["Maschinisten-Chef", typeof fixedName==="function" ? fixedName("Maschinisten-Chef") : ""],
+    ];
+
+    if(Array.isArray(current)){
+      current.forEach(item=>{
+        if(!item) return;
+        const role=item.role || item.position || item.seat || "";
+        const name=item.name || item.person || "";
+        if(role || name) roleNames.push([role,name]);
+      });
+    }
+
+    const lines = roleNames
+      .filter(([r,n])=>r || n)
+      .map(([r,n])=>`${r}: ${n || "Nicht besetzt"}`);
+
+    return [
+      `LFW 2500 – WA ${wa}`,
+      shiftText || "Dienstplan & Besetzung",
+      "",
+      ...lines
+    ].join("\n");
+  }
+
+  async function shareAssignment(){
+    const text=buildShareText();
+    try{
+      if(navigator.share){
+        await navigator.share({title:"LFW 2500 – Besetzung",text});
+        return;
+      }
+      await navigator.clipboard.writeText(text);
+      showLiveChange("Besetzung in Zwischenablage kopiert");
+    }catch(err){
+      if(err?.name!=="AbortError"){
+        try{
+          const ta=document.createElement("textarea");
+          ta.value=text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+          showLiveChange("Besetzung in Zwischenablage kopiert");
+        }catch(e){}
+      }
+    }
+  }
+
+  function updateNetworkBanner(forceOnlineFlash=false){
+    const el=document.getElementById("networkBanner");
+    if(!el) return;
+    if(!navigator.onLine){
+      el.className="network-banner show";
+      el.textContent="⚠ Offline – letzte gespeicherte Version wird angezeigt";
+      return;
+    }
+    if(forceOnlineFlash){
+      el.className="network-banner online";
+      el.textContent="✓ Wieder online – Synchronisierung läuft";
+      setTimeout(()=>{ if(navigator.onLine) el.className="network-banner"; },2200);
+    }else{
+      el.className="network-banner";
+      el.textContent="";
+    }
+  }
+
+  function bindProPlusFeatures(){
+    document.getElementById("shareAssignmentBtn")?.addEventListener("click",shareAssignment);
+    loadLastChanged();
+    updateNetworkBanner(false);
+    window.addEventListener("offline",()=>updateNetworkBanner(false));
+    window.addEventListener("online",()=>updateNetworkBanner(true));
+  }
 
   const WA_PASSWORDS = {
     "1":"111111",
@@ -1514,14 +1946,11 @@ body.role-admin #statsSection{
     const gate=document.getElementById("waGate");
     if(gate) gate.classList.add("hidden");
 
-    // Hide the old standalone login overlay because WA login replaces it.
-    const oldLogin=document.getElementById("loginOverlay");
-    if(oldLogin) oldLogin.style.display="none";
-
     const heroPill=document.querySelector(".hero-pill");
     if(heroPill) heroPill.textContent=`● Lehrfeuerwehr 2500 · WA ${wa}`;
 
     if(typeof window.loadWAData==="function") window.loadWAData(wa);
+    window.setTimeout(loadLastChanged,0);
 
     if(typeof renderTodayStatus==="function") renderTodayStatus();
     if(typeof renderNextShift==="function") renderNextShift();
@@ -1584,44 +2013,8 @@ body.role-admin #statsSection{
   }
 
 
-  const NORMAL_PASSWORD = "111111";
-  const ADMIN_PASSWORD = "121212";
   const ROLE_KEY = "lf2500_role_v1";
   let appRole = null;
-
-  function applyRole(role){
-    appRole = role;
-    document.body.classList.remove("role-user","role-admin");
-    document.body.classList.add(role === "admin" ? "role-admin" : "role-user");
-    const badge = document.getElementById("roleBadge");
-    if(badge) badge.textContent = "";
-    const overlay = document.getElementById("loginOverlay");
-    if(overlay) overlay.style.display = "none";
-    try{ sessionStorage.setItem(ROLE_KEY, role); }catch(e){}
-  }
-
-  function showLogin(){
-    appRole = null;
-    const overlay = document.getElementById("loginOverlay");
-    if(overlay) overlay.style.display = "flex";
-    const input = document.getElementById("loginPassword");
-    if(input){ input.value=""; setTimeout(()=>input.focus(),50); }
-    const err = document.getElementById("loginError");
-    if(err) err.textContent="";
-  }
-
-  function tryLogin(){
-    const input = document.getElementById("loginPassword");
-    const value = input ? input.value.trim() : "";
-    if(value === ADMIN_PASSWORD){
-      applyRole("admin");
-    }else if(value === NORMAL_PASSWORD){
-      applyRole("user");
-    }else{
-      const err = document.getElementById("loginError");
-      if(err) err.textContent = "Passwort ist nicht korrekt.";
-    }
-  }
 
   function requireAdmin(message="Diese Funktion ist nur im Admin-Modus verfügbar."){
     if(appRole === "admin") return true;
@@ -1690,8 +2083,12 @@ body.role-admin #statsSection{
   function setCloudStatus(text, ok=false){
     const el=document.getElementById("cloudStatus");
     if(!el) return;
-    el.textContent=text;
-    el.style.color=ok ? "#ffe14d" : "#ff8a80";
+    const footer=el.closest(".footer");
+    const normalized=String(text||"");
+    const isError=!ok && /(Fehler|permission|invalid|blocked|auth\/|Cloud speichern|Initialisierung)/i.test(normalized);
+    el.textContent=ok ? "online" : normalized;
+    el.style.color=ok ? "#72e49a" : (isError ? "#ff8a80" : "#b7bac0");
+    if(footer) footer.classList.toggle("cloud-error",isError);
   }
 
   function showCloudError(prefix, err){
@@ -1760,6 +2157,10 @@ body.role-admin #statsSection{
   }
 
   function applyCloudState(wa,data){
+    const cloudRemoteApplySeenKey="lfw2500_cloud_seen_"+wa;
+    const alreadySeen=sessionStorage.getItem(cloudRemoteApplySeenKey)==="1";
+    sessionStorage.setItem(cloudRemoteApplySeenKey,"1");
+
     if(!data || String(wa)!==String(currentWA())) return;
     cloudApplying=true;
     try{
@@ -1787,6 +2188,7 @@ body.role-admin #statsSection{
       renderStats();
       fillPersonnelAdmin();
       renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
     }finally{
       cloudApplying=false;
     }
@@ -1838,7 +2240,10 @@ body.role-admin #statsSection{
       cloudReady=false;
       showCloudError("Anmeldung/Synchronisierung", err);
     }
-  }
+  
+    loadLastChanged();
+    if(alreadySeen) showLiveChange("Cloud-Daten wurden aktualisiert");
+}
 
   function personnelStorageKey(wa=currentWA()){
     return `lhf2500_personnel_wa_${wa}`;
@@ -2016,8 +2421,10 @@ body.role-admin #statsSection{
     if(!selectedShift) return;
     if(!plans[selectedShift]) plans[selectedShift] = {};
     plans[selectedShift].availability = {...availability};
+    setLastChanged("Verfügbarkeit wurde geändert");
     plans[selectedShift].fixedCover = {...fixedCover};
     savePlans();
+    setLastChanged("Plan wurde aktualisiert");
     renderPlanner();
   }
 
@@ -2041,6 +2448,7 @@ body.role-admin #statsSection{
       updateFixedCards();
       renderPeople();
       renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
     };
     mcAbsent.onchange=()=>{
       fixedCover.mcAbsent=mcAbsent.checked;
@@ -2049,6 +2457,7 @@ body.role-admin #statsSection{
       updateFixedCards();
       renderPeople();
       renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
     };
     sfGuest.oninput=()=>{
       fixedCover.sfGuest=sfGuest.value;
@@ -2056,6 +2465,7 @@ body.role-admin #statsSection{
       updateFixedCards();
       renderPeople();
       renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
     };
     mcGuest.oninput=()=>{
       fixedCover.mcGuest=mcGuest.value;
@@ -2063,6 +2473,7 @@ body.role-admin #statsSection{
       updateFixedCards();
       renderPeople();
       renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
     };
   }
 
@@ -2242,7 +2653,7 @@ body.role-admin #statsSection{
           <div class="next-shift-date">${next.type==="day"?"☀️":"🌙"} ${formatShiftDate(next.date)}</div>
           <div class="next-shift-meta">${next.type==="day"?"Tagdienst":"Nachtdienst"}</div>
         </div>
-        <div class="next-shift-status">${saved && saved.assignment ? "✓ Besetzung geplant" : "Noch nicht geplant"}</div>
+        ${planStatusHTML(saved)}
       </div>
 `;
 }
@@ -2266,6 +2677,7 @@ body.role-admin #statsSection{
   }
 
   function saveCurrentAssignment(){
+    setLastChanged("Besetzung gespeichert");
     if(!current || !current.length){
       const msg=document.getElementById("message");
       if(msg) msg.innerHTML='<div class="info">Es gibt noch keine Besetzung zum Speichern.</div>';
@@ -2350,6 +2762,7 @@ body.role-admin #statsSection{
         swapSourcePosition=null;
 
         renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
         setUnsavedSwap(true);
         const msg=document.getElementById("message");
         if(msg) msg.innerHTML='<div class="info">Besetzung getauscht – Änderung noch nicht gespeichert.</div>';
@@ -2389,7 +2802,7 @@ body.role-admin #statsSection{
             <div class="selected-shift-date">${shift?.type==="day"?"☀️":"🌙"} ${formatShiftDate(selectedShift)}</div>
             <div class="selected-shift-type">${shift?.type==="day"?"Tagdienst":"Nachtdienst"}</div>
           </div>
-          <div class="selected-shift-status">${saved && saved.assignment ? "✓ Besetzung geplant" : "Noch nicht geplant"}</div>
+          ${planStatusHTML(saved)}
         </div>`;
     }else{
       selectedCard.innerHTML='<div class="selected-shift-empty">Noch keinen Dienst ausgewählt.</div>';
@@ -2496,6 +2909,7 @@ body.role-admin #statsSection{
     }
     current=chosen;
     renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
     document.getElementById("message").innerHTML='<div class="info ok">Manuelle Besetzung übernommen. Du kannst sie jetzt speichern.</div>';
   }
 
@@ -2546,6 +2960,7 @@ body.role-admin #statsSection{
     // If somehow more people than positions exist, ignore extras. With current setup max is 5.
     current = assignment;
     renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
 
     const missing = optional.filter(pos => !assignment.some(a=>a.position===pos));
     document.getElementById("message").innerHTML = missing.length
@@ -2804,10 +3219,12 @@ body.role-admin #statsSection{
       if(saved && Array.isArray(saved.assignment) && saved.assignment.length){
         current=saved.assignment.map(x=>({...x}));
         renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
         document.getElementById("message").innerHTML=`<div class="info ok">Planung für ${formatShiftDate(selectedShift)} geladen.</div>`;
       }else{
         current=[];
         renderResult();
+    window.setTimeout(animateAssignmentReveal,20);
         document.getElementById("message").innerHTML=`<div class="info">Dienst ${formatShiftDate(selectedShift)} ausgewählt.</div>`;
       }
     }
@@ -2821,17 +3238,6 @@ body.role-admin #statsSection{
     }
     generateAssignment();
     document.getElementById("message").innerHTML=`<div class="info ok">Besetzung für ${formatShiftDate(selectedShift)} ausgelost. Jetzt „Besetzung speichern“ drücken.</div>`;
-  });
-
-
-  document.getElementById("loginBtn").addEventListener("click",tryLogin);
-  document.getElementById("loginPassword").addEventListener("keydown",(e)=>{
-    if(e.key==="Enter") tryLogin();
-  });
-  document.getElementById("loginPassword").addEventListener("input",(e)=>{
-    const value=e.target.value.replace(/\D/g,"").slice(0,6);
-    if(e.target.value!==value) e.target.value=value;
-    if(value.length===6) tryLogin();
   });
   document.getElementById("logoutBtn").addEventListener("click",()=>{
     try{sessionStorage.removeItem(ROLE_KEY)}catch(e){}
@@ -2865,6 +3271,7 @@ body.role-admin #statsSection{
     savePersonnelBtn.addEventListener("click",()=>{
       if(!requireAdmin()) return;
       savePersonnelConfig();
+    setLastChanged("Plan wurde aktualisiert");
     });
   }
 
@@ -2893,11 +3300,12 @@ body.role-admin #statsSection{
     selectedWA=null;
     setTimeout(()=>{
       showWAGate();
-      const oldLogin=document.getElementById("loginOverlay");
-      if(oldLogin) oldLogin.style.display="none";
     },0);
   },true);
 
+  window.addEventListener("DOMContentLoaded",initLFWSplash);
+  window.addEventListener("DOMContentLoaded",initProLayout);
+  window.addEventListener("DOMContentLoaded", bindProPlusFeatures);
   window.addEventListener("DOMContentLoaded",initWAGate);
 
 </script>
