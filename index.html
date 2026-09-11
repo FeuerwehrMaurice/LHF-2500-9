@@ -2472,93 +2472,6 @@ input[type="checkbox"]{accent-color:var(--active-wa)!important}
 </style>
 
 
-<style id="lfwAdminDemoStyles">
-.demo-mode-banner{
-  display:none;
-  position:sticky;
-  top:0;
-  z-index:18000;
-  margin:0 auto 10px;
-  width:min(100%,1000px);
-  padding:9px 12px;
-  background:#15191d;
-  border:1px solid var(--active-wa,#8f969d);
-  border-left:4px solid var(--active-wa,#8f969d);
-  color:#f3f5f6;
-  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
-  font-size:.74rem;
-  font-weight:700;
-  letter-spacing:.04em;
-  text-align:center;
-}
-body.demo-mode .demo-mode-banner{display:block}
-body.demo-mode::after{
-  content:"DEMO";
-  position:fixed;
-  right:12px;
-  bottom:76px;
-  z-index:17500;
-  padding:4px 7px;
-  border:1px solid var(--active-wa,#8f969d);
-  border-radius:4px;
-  background:#0d1013;
-  color:var(--active-wa,#c9cdd1);
-  font:700 .62rem/1 "JetBrains Mono","SFMono-Regular",Consolas,monospace;
-  letter-spacing:.08em;
-  pointer-events:none;
-}
-.demo-admin-box{
-  margin-top:10px;
-  padding:12px;
-  border:1px solid #343b42;
-  border-radius:7px;
-  background:#101317;
-}
-.demo-admin-head{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center;
-}
-.demo-admin-title{font-weight:800;color:#f2f4f5}
-.demo-admin-note{margin-top:6px;color:#9ea6ad;font-size:.78rem;line-height:1.45}
-#demoModeBtn{
-  flex:0 0 auto;
-  min-width:118px!important;
-}
-body.demo-mode #demoModeBtn{
-  border-color:var(--active-wa)!important;
-  color:var(--active-wa)!important;
-}
-.history-item{position:relative}
-.history-admin-row{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:10px;
-}
-.history-delete-btn{
-  width:auto!important;
-  min-width:0!important;
-  padding:7px 10px!important;
-  min-height:34px!important;
-  border:1px solid #694046!important;
-  background:#151113!important;
-  color:#e9a4aa!important;
-  border-radius:5px!important;
-  font-size:.72rem!important;
-}
-body.role-user .history-admin-row{display:none!important}
-.history-admin-hint{
-  display:none;
-  margin:0 0 10px;
-  color:#9ea6ad;
-  font-size:.76rem;
-  line-height:1.4;
-}
-body.role-admin .history-admin-hint{display:block}
-</style>
-
-
 <style id="lfwSolidV1Polish">
 /* === SOLID V1: final polish === */
 :root{
@@ -2754,107 +2667,6 @@ textarea:focus-visible{
 
 
 
-<style id="lfwDemoFixStyles">
-/* Demo visibility fix */
-.demo-mode-banner{
-  display:none!important;
-}
-body.demo-mode .demo-mode-banner{
-  display:block!important;
-  position:fixed!important;
-  top:calc(8px + env(safe-area-inset-top))!important;
-  left:50%!important;
-  transform:translateX(-50%)!important;
-  z-index:25000!important;
-  width:min(calc(100% - 20px),720px)!important;
-  margin:0!important;
-  padding:10px 14px!important;
-  border:1px solid var(--active-wa,#c9cdd1)!important;
-  border-left:5px solid var(--active-wa,#c9cdd1)!important;
-  border-radius:6px!important;
-  background:#11161a!important;
-  color:#fff!important;
-  text-align:center!important;
-  font-weight:900!important;
-  letter-spacing:.04em!important;
-}
-body.demo-mode .app{
-  padding-top:64px!important;
-}
-body.demo-mode::after{
-  content:"DEMO AKTIV"!important;
-  position:fixed!important;
-  right:10px!important;
-  bottom:calc(78px + env(safe-area-inset-bottom))!important;
-  z-index:24000!important;
-  padding:7px 9px!important;
-  border:1px solid var(--active-wa,#c9cdd1)!important;
-  border-radius:5px!important;
-  background:#101317!important;
-  color:var(--active-wa,#c9cdd1)!important;
-  font:900 .68rem/1 "JetBrains Mono","SFMono-Regular",Consolas,monospace!important;
-  letter-spacing:.08em!important;
-}
-#demoModeBtn{
-  border-color:#4a5158!important;
-  color:#f3f5f6!important;
-}
-body.demo-mode #demoModeBtn{
-  border-color:var(--active-wa)!important;
-  background:#171c20!important;
-  color:var(--active-wa)!important;
-}
-#demoModeBtn::before{
-  content:"";
-}
-body.demo-mode #demoModeBtn::before{
-  content:"● "!important;
-}
-</style>
-
-
-<style id="lfwDemoWAStyles">
-#waButtons .wa-demo-btn{
-  grid-column:1 / -1!important;
-  min-height:68px!important;
-  border:1px dashed #69717a!important;
-  background:#101317!important;
-}
-#waButtons .wa-demo-btn strong{color:#f3f5f6!important}
-#waButtons .wa-demo-btn small{color:#9ca4ac!important}
-#waButtons .wa-demo-btn.selected{
-  border-color:#f3f5f6!important;
-  box-shadow:none!important;
-}
-.demo-wa-notice{display:none}
-body.demo-wa .demo-wa-notice{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-  margin:4px 0 14px;
-  padding:10px 12px;
-  border:1px solid #4d555e;
-  border-left:4px solid #f3f5f6;
-  border-radius:7px;
-  background:#11151a;
-  color:#f3f5f6;
-}
-body.demo-wa .demo-wa-notice strong{
-  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
-  font-size:.78rem;
-  letter-spacing:.08em;
-}
-body.demo-wa .demo-wa-notice span{
-  color:#9ca4ac;
-  font-size:.76rem;
-}
-body.demo-wa .admin-only{display:none!important}
-body.demo-wa #cloudStatus{color:#9ca4ac!important}
-</style>
-
-
 <style id="lfwNoGlowFinalOverride">
 /* ===== FINAL NO-GLOW OVERRIDE ===== */
 :root{
@@ -3014,7 +2826,6 @@ body[data-wa="1"]{--wa-color:#f2cc2f}
 body[data-wa="2"]{--wa-color:#2f80ed}
 body[data-wa="3"]{--wa-color:#27ae60}
 body[data-wa="4"]{--wa-color:#e53935}
-body[data-wa="demo"]{--wa-color:#c7ccd1}
 
 .hero h1,
 .hero h1 span,
@@ -3125,6 +2936,113 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 }
 </style>
 
+
+<style id="lfwWorkflowStyles">
+.workflow-shell{
+  margin:16px 0 18px;
+  padding:14px;
+  border:1px solid #30343a;
+  border-radius:7px;
+  background:#121417;
+}
+.workflow-kicker{
+  margin-bottom:11px;
+  color:#8e949c;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  font-size:.70rem;
+  font-weight:800;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.workflow-progress{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:7px;
+}
+.workflow-progress-item{
+  min-width:0;
+  padding:9px 5px;
+  border:1px solid #2d3238;
+  border-radius:6px;
+  background:#0f1114;
+  text-align:center;
+  color:#727981;
+}
+.workflow-progress-item span{
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  margin:0 auto 5px;
+  border:1px solid #3a4047;
+  border-radius:5px;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  font-size:.72rem;
+  font-weight:900;
+}
+.workflow-progress-item small{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:.64rem;
+  font-weight:800;
+  white-space:nowrap;
+}
+.workflow-progress-item.done{
+  color:#b7bcc2;
+  border-color:#41474e;
+}
+.workflow-progress-item.active{
+  color:var(--wa-color,#f2cc2f);
+  border-color:var(--wa-color,#f2cc2f);
+}
+.workflow-progress-item.active span{
+  border-color:var(--wa-color,#f2cc2f);
+}
+.workflow-caption{
+  margin-top:10px;
+  color:#c7cbd1;
+  font-size:.78rem;
+  font-weight:800;
+}
+
+/* Page-style flow: only the current workflow page is visible. */
+body[data-workflow-step] .workflow-page{display:none!important;}
+body[data-workflow-step="1"] #plannerSection{display:block!important;}
+body[data-workflow-step="2"] #availabilityBox{display:block!important;}
+body[data-workflow-step="3"] #fixedCoverBox,
+body[data-workflow-step="3"] #fixedSfSection,
+body[data-workflow-step="3"] #fixedMcSection{display:block!important;}
+body[data-workflow-step="4"] #crewPoolSection,
+body[data-workflow-step="4"] #manualBox,
+body[data-workflow-step="4"] #generateWrap{display:block!important;}
+body[data-workflow-step="5"] #resultSection,
+body[data-workflow-step="5"] #statsSection,
+body[data-workflow-step="5"] #historySection{display:block!important;}
+body[data-workflow-step="5"] #unsavedBar.show{display:flex!important;}
+
+.workflow-actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.workflow-actions .btn{flex:1;min-width:180px;}
+.workflow-primary{
+  border-color:var(--wa-color,#f2cc2f)!important;
+  color:var(--wa-color,#f2cc2f)!important;
+}
+.workflow-actions-before-draw{margin:0 0 10px;}
+
+@media(max-width:650px){
+  .workflow-progress{gap:4px;}
+  .workflow-progress-item{padding:8px 2px;}
+  .workflow-progress-item small{font-size:.55rem;}
+  .workflow-actions{display:grid;grid-template-columns:1fr;}
+  .workflow-actions .btn{width:100%;min-width:0;}
+}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -3142,7 +3060,6 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
       <button type="button" data-wa="2" onclick="window.LFWSelectWA('2', this)"><strong>WA 2</strong><small>Dienstplan öffnen</small></button>
       <button type="button" data-wa="3" onclick="window.LFWSelectWA('3', this)"><strong>WA 3</strong><small>Dienstplan öffnen</small></button>
       <button type="button" data-wa="4" onclick="window.LFWSelectWA('4', this)"><strong>WA 4</strong><small>Dienstplan öffnen</small></button>
-      <button type="button" data-wa="demo" class="wa-demo-btn" onclick="window.LFWSelectWA('demo', this)"><strong>DEMO</strong><small>Ohne Passwort · Vorführung</small></button>
     </div>
 
     <div class="wa-password-wrap" id="waPasswordWrap">
@@ -3174,39 +3091,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     const input=document.getElementById("waPassword");
     const err=document.getElementById("waError");
 
-    if(chosenWA==="demo"){
-      if(err) err.textContent="";
-      if(wrap){
-        wrap.classList.remove("show");
-        wrap.style.setProperty("display","none","important");
-      }
-
-      sessionStorage.removeItem("lfw2500_demo_mode");
-      sessionStorage.setItem("lf2500_wa","demo");
-      sessionStorage.setItem("lf2500_role_v1","user");
-      window.selectedWA="demo";
-
-      document.body.dataset.wa="demo";
-      document.body.classList.remove("role-admin");
-      document.body.classList.add("role-user","demo-wa");
-
-      const gate=document.getElementById("waGate");
-      if(gate){
-        gate.classList.add("hidden");
-        gate.style.setProperty("display","none","important");
-      }
-
-      setTimeout(()=>{
-        try{
-          if(typeof window.loadWAData==="function") window.loadWAData("demo");
-        }catch(e){
-          console.error("LFW Demo-Initialisierung:",e);
-        }
-      },0);
-      return;
-    }
-
-    if(label) label.textContent="WA "+chosenWA+" · Passwort";
+if(label) label.textContent="WA "+chosenWA+" · Passwort";
     if(err) err.textContent="";
     if(wrap){
       wrap.classList.add("show");
@@ -3247,7 +3132,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     window.selectedWA=String(wa);
 
     document.body.dataset.wa=String(wa);
-    document.body.classList.remove("role-user","role-admin","demo-wa");
+    document.body.classList.remove("role-user","role-admin");
     document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
 
     const gate=document.getElementById("waGate");
@@ -3286,29 +3171,22 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 
     const rememberedWA=sessionStorage.getItem("lf2500_wa");
     const rememberedRole=sessionStorage.getItem("lf2500_role_v1");
-    if(rememberedWA==="demo" && rememberedRole==="user"){
-      const demoBtn=document.querySelector('#waButtons button[data-wa="demo"]');
-      window.LFWSelectWA("demo",demoBtn);
-    }else if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
+    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
        (rememberedRole==="user" || rememberedRole==="admin")){
       chosenWA=rememberedWA;
       window.selectedWA=rememberedWA;
       if(input) input.value=rememberedRole==="admin" ? ADMIN_PW : WA_PW[rememberedWA];
       window.LFWDoLogin();
+    }else if(rememberedWA && !["1","2","3","4"].includes(rememberedWA)){
+      sessionStorage.removeItem("lf2500_wa");
+      sessionStorage.removeItem("lf2500_role_v1");
     }
   });
 })();
 </script>
 
 <div class="app">
-<div class="demo-wa-notice" id="demoWaNotice">
-  <strong>DEMO-WACHABTEILUNG</strong>
-  <span>Vorführung · ohne Passwort · keine Speicherung · keine Cloud-Synchronisierung</span>
 </div>
-<section class="hero">
-    <div class="badge">
-      <div class="badge-inner">2500</div>
-    </div>
     <h1>Lehrfeuerwehr <span>2500</span></h1>
 <div class="vehicle-designation">LHF 2500/9</div>
     <span class="ghost">LHF</span>
@@ -3334,6 +3212,18 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     <span class="role-badge" id="roleBadge">Benutzer</span>
     <button class="logout-btn" id="logoutBtn">Abmelden</button>
   </div>
+
+  <section class="workflow-shell" id="workflowShell" aria-label="Besetzungsablauf">
+    <div class="workflow-kicker">Besetzung Schritt für Schritt</div>
+    <div class="workflow-progress" id="workflowProgress">
+      <div class="workflow-progress-item" data-step="1"><span>1</span><small>Dienst</small></div>
+      <div class="workflow-progress-item" data-step="2"><span>2</span><small>Personal</small></div>
+      <div class="workflow-progress-item" data-step="3"><span>3</span><small>Staffelführer</small></div>
+      <div class="workflow-progress-item" data-step="4"><span>4</span><small>Auslosung</small></div>
+      <div class="workflow-progress-item" data-step="5"><span>5</span><small>Ergebnis</small></div>
+    </div>
+    <div class="workflow-caption" id="workflowCaption">Schritt 1 von 5 · Dienst auswählen</div>
+  </section>
 
 
 
@@ -3376,15 +3266,19 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     </div>
   </details>
 
-<section class="availability-box" id="availabilityBox">
+<section class="availability-box workflow-page" id="availabilityBox" data-workflow-page="2">
     <div class="availability-title">Personal verfügbar <span id="availabilityScope" style="font-size:.75rem;color:#aaa;font-weight:700"></span></div>
     <div class="availability-list" id="availabilityList"></div>
     <div class="availability-hint">
-      Haken raus = krank / nicht verfügbar. Wenn ein Dienst ausgewählt ist, gilt die Auswahl nur für diesen Dienst. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
+      Haken raus = für diesen Dienst nicht verfügbar. Maschinist sowie Angriffstruppführer und Angriffstruppmann werden immer zuerst vollständig besetzt.
+    </div>
+    <div class="workflow-actions">
+      <button class="btn" id="workflowPersonalBack" type="button">← Zurück</button>
+      <button class="btn workflow-primary" id="workflowPersonalNext" type="button">Weiter zur Staffelführer-Abfrage →</button>
     </div>
   </section>
 
-  <section class="fixed-cover-box" id="fixedCoverBox">
+  <section class="fixed-cover-box workflow-page" id="fixedCoverBox" data-workflow-page="3">
     <div class="fixed-cover-title">Stammpersonal / Vertretung <span id="coverScope" style="font-size:.75rem;color:#aaa;font-weight:700"></span></div>
     <div class="fixed-cover-grid">
       <div class="fixed-cover-item">
@@ -3396,11 +3290,15 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
         <input id="mcGuest" type="text" placeholder="Gast / Vertretung eintragen" disabled>
       </div>
     </div>
+    <div class="workflow-actions">
+      <button class="btn" id="workflowFixedBack" type="button">← Zurück</button>
+      <button class="btn workflow-primary" id="workflowFixedNext" type="button">Weiter zur Auslosung →</button>
+    </div>
   </section>
 
 
 
-  <section class="section">
+  <section class="section workflow-page" id="fixedSfSection" data-workflow-page="3">
     <h2 class="section-title">Staffelführer</h2>
     <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
       <div class="avatar">DT</div>
@@ -3409,7 +3307,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     </div>
   </section>
 
-  <section class="section">
+  <section class="section workflow-page" id="fixedMcSection" data-workflow-page="3">
     <h2 class="section-title">Maschinisten-Chef</h2>
     <div class="person-card" style="max-width:420px;margin:0 auto;border-color:#c91b1b">
       <div class="avatar">RS</div>
@@ -3418,13 +3316,13 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     </div>
   </section>
 
-  <section class="section">
+  <section class="section workflow-page" id="crewPoolSection" data-workflow-page="4">
     <h2 class="section-title">LHF-Besatzung zur Auslosung</h2>
     <div class="people-grid" id="peopleGrid"></div>
   </section>
 
 
-  <section class="section planner" id="plannerSection">
+  <section class="section planner workflow-page" id="plannerSection" data-workflow-page="1">
     <h2 class="section-title">Dienstplanung</h2>
     <div class="planner-toolbar">
       <select id="planMonth" aria-label="Monat">
@@ -3438,7 +3336,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
         <option value="">Dienst auswählen</option>
       </select>
 
-      <button class="btn" id="planSelectedBtn">Dienst auslosen</button>
+      <button class="btn workflow-primary" id="planSelectedBtn">Weiter zur Personalabfrage →</button>
       <button class="btn admin-only" id="overwritePlanBtn">Planung ändern / überschreiben</button>
     </div>
 
@@ -3450,7 +3348,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
   </section>
 
 
-  <section class="manual-box admin-only" id="manualBox">
+  <section class="manual-box admin-only workflow-page" id="manualBox" data-workflow-page="4">
     <div class="manual-title">Besetzung manuell eintragen</div>
     <div class="manual-grid" id="manualGrid"></div>
     <div class="manual-actions">
@@ -3458,13 +3356,16 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     </div>
   </section>
 
-  <section class="generate-wrap">
-    <button class="generate" id="generateBtn">🎲 BESATZUNG AUSLOSEN</button>
+  <section class="generate-wrap workflow-page" id="generateWrap" data-workflow-page="4">
+    <div class="workflow-actions workflow-actions-before-draw">
+      <button class="btn" id="workflowDrawBack" type="button">← Zurück zur Staffelführer-Abfrage</button>
+    </div>
+    <button class="generate" id="generateBtn">🎲 JETZT BESATZUNG AUSLOSEN</button>
     <div id="message"></div>
   </section>
 
-  <section class="section" id="resultSection" style="display:none">
-    <h2 class="section-title">Aktuelle Besetzung</h2>
+  <section class="section workflow-page" id="resultSection" data-workflow-page="5" style="display:none">
+    <h2 class="section-title">Ergebnis · Aktuelle Besetzung</h2>
     <div class="vehicle-wrap">
       <div class="vehicle-label">Lehrfeuerwehr 2500 · Fahrzeugbesetzung</div>
 
@@ -3514,6 +3415,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     <button class="share-assignment-btn" id="shareAssignmentBtn" type="button">📤 Besetzung teilen</button>
 
     <div class="actions">
+      <button class="btn" id="workflowRestartBtn" type="button">← Neue Planung</button>
       <button class="btn" id="rerollBtn">Neu auslosen</button>
       <button class="btn" id="saveBtn">Besetzung speichern</button>
       <button class="btn danger admin-only" id="resetHistoryBtn">Historie löschen</button>
@@ -3522,7 +3424,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 
 
 
-  <div class="unsaved-bar" id="unsavedBar">
+  <div class="unsaved-bar workflow-page" id="unsavedBar" data-workflow-page="5">
     <div>
       <div class="unsaved-text">Änderung noch nicht gespeichert</div>
       <div class="unsaved-sub">Die Besetzung wurde im LFW getauscht.</div>
@@ -3531,7 +3433,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
   </div>
 
 
-<section class="section stats" id="statsSection">
+<section class="section stats workflow-page" id="statsSection" data-workflow-page="5">
     <h2 class="section-title">Statistik</h2>
     <button class="btn admin-only" id="repairStatsBtn" type="button">Statistik reparieren</button>
     <div class="stats-summary" id="statsSummary"></div>
@@ -3540,7 +3442,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     </div>
   </section>
 
-  <section class="history" id="historySection">
+  <section class="history workflow-page" id="historySection" data-workflow-page="5">
     <h2 class="section-title">Letzte Besetzungen</h2>
     <div class="history-list" id="historyList"></div>
   </section>
@@ -4015,10 +3917,6 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 
   async function startCloudForWA(wa){
     wa=String(wa);
-    if(wa==="demo"){
-      setCloudStatus("Demo · offline");
-      return;
-    }
     if(!cloudAuth || !cloudDb){
       setCloudStatus("nicht verfügbar");
       return;
@@ -4116,7 +4014,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 
   function fillPersonnelAdmin(){
     const waLabel=document.getElementById("personnelAdminWA");
-    if(waLabel) waLabel.textContent=currentWA()==="demo" ? "DEMO" : `WA ${currentWA()}`;
+    if(waLabel) waLabel.textContent=`WA ${currentWA()}`;
     const sf=document.getElementById("adminSfName");
     const mc=document.getElementById("adminMcName");
     if(sf) sf.value=baseFixedStaff.sf;
@@ -4161,85 +4059,8 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 
   window.loadWAData=function(wa){
     wa=String(wa);
-    document.body.classList.toggle("demo-wa", wa==="demo");
-
-    if(wa==="demo"){
-      // Eigene Vorführ-Wachabteilung. Nutzt die vorhandene Oberfläche,
-      // schreibt aber weder Historie/Pläne noch Firebase-Daten.
-      demoMode=true;
-
-      // Stop any live listener/pending cloud write from the previously opened WA.
-      if(cloudPushTimer){
-        clearTimeout(cloudPushTimer);
-        cloudPushTimer=null;
-      }
-      if(cloudUnsubscribe){
-        try{ cloudUnsubscribe(); }catch(e){}
-        cloudUnsubscribe=null;
-      }
-      cloudReady=false;
-      cloudActiveWA=null;
-      setCloudStatus("Demo · offline");
-
-      sessionStorage.setItem("lf2500_wa","demo");
-      sessionStorage.setItem("lf2500_role_v1","user");
-
-      const today=new Date();
-      const tomorrow=new Date(today);
-      tomorrow.setDate(today.getDate()+1);
-      const iso=(d)=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-
-      shifts=[
-        {date:iso(today),type:"day"},
-        {date:iso(tomorrow),type:"night"}
-      ];
-      history=[];
-      plans={};
-      selectedShift=shifts[0].date;
-
-      baseFixedStaff={
-        sf:"Demo Staffelführer",
-        mc:"Demo Maschinisten-Chef"
-      };
-      people=[
-        "Demo Maschinist",
-        "Demo Angriffstruppführer",
-        "Demo Angriffstruppmann",
-        "Demo Wassertruppführer",
-        "Demo Wassertruppmann"
-      ];
-      availability=defaultAvailability();
-      fixedCover={sfAbsent:false,sfGuest:"",mcAbsent:false,mcGuest:""};
-
-      current=[
-        {position:"Maschinist",person:"Demo Maschinist"},
-        {position:"Angriffstruppführer",person:"Demo Angriffstruppführer"},
-        {position:"Angriffstruppmann",person:"Demo Angriffstruppmann"},
-        {position:"Wassertruppführer",person:"Demo Wassertruppführer"},
-        {position:"Wassertruppmann",person:"Demo Wassertruppmann"}
-      ];
-
-      setUnsavedSwap(false);
-      initFixedCover();
-      updateFixedCards();
-      renderPeople();
-      renderAvailability();
-      renderManual();
-      renderPlanner();
-      renderTodayStatus();
-      renderNextShift();
-      renderResult();
-      renderHistory();
-      renderStats();
-      fillPersonnelAdmin();
-      applyDemoModeUI();
-
-      const msg=document.getElementById("message");
-      if(msg) msg.innerHTML='<div class="info ok"><strong>Demo-Wachabteilung geöffnet.</strong> Alle sieben Funktionen sind beispielhaft besetzt. Änderungen werden nicht gespeichert.</div>';
-      return;
-    }
-
-    demoMode=false;
+    if(typeof setWorkflowStep==="function") setWorkflowStep(1,false);
+demoMode=false;
     applyDemoModeUI();
     if(wa==="1") migrateWA1LegacyData();
 
@@ -4422,86 +4243,14 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
   }
 
 
-  let demoMode = sessionStorage.getItem("lfw2500_demo_mode")==="1";
-
-  // A reload cannot restore the in-memory demo snapshot safely.
-  // Therefore an old demo flag is cleared here during initialization.
-  if(demoMode){
-    sessionStorage.removeItem("lfw2500_demo_mode");
-    demoMode=false;
-  }
-  let demoSnapshot = null;
-
-  function cloneJSON(value){
-    try{return JSON.parse(JSON.stringify(value));}catch(e){return value;}
-  }
-
-  function captureDemoSnapshot(){
-    demoSnapshot={
-      plans:cloneJSON(plans),
-      history:cloneJSON(history),
-      availability:cloneJSON(availability),
-      fixedCover:cloneJSON(fixedCover),
-      current:cloneJSON(current),
-      selectedShift:selectedShift
-    };
-  }
-
-  function restoreDemoSnapshot(){
-    if(!demoSnapshot) return;
-    plans=cloneJSON(demoSnapshot.plans);
-    history=cloneJSON(demoSnapshot.history);
-    availability=cloneJSON(demoSnapshot.availability);
-    fixedCover=cloneJSON(demoSnapshot.fixedCover);
-    current=cloneJSON(demoSnapshot.current);
-    selectedShift=demoSnapshot.selectedShift;
-    demoSnapshot=null;
-
-    renderPlanner();
-    renderNextShift();
-    renderAvailability();
-    renderManual();
-    initFixedCover();
-    updateFixedCards();
-    renderPeople();
-    renderResult();
-    renderHistory();
-    renderStats();
-  }
+  // Demo-Funktion entfernt. Kompatibilitätsflag bleibt dauerhaft aus.
+  let demoMode = false;
 
   function applyDemoModeUI(){
     document.body.classList.remove("demo-mode");
   }
 
-  function setDemoMode(state){
-    if(appRole!=="admin" && state){
-      requireAdmin("Der Demo-Modus kann nur im Admin-Modus gestartet werden.");
-      return;
-    }
 
-    const next=!!state;
-
-    if(next && !demoMode){
-      captureDemoSnapshot();
-    }
-
-    if(!next && demoMode){
-      restoreDemoSnapshot();
-    }
-
-    demoMode=next;
-    if(demoMode) sessionStorage.setItem("lfw2500_demo_mode","1");
-    else sessionStorage.removeItem("lfw2500_demo_mode");
-
-    applyDemoModeUI();
-
-    const msg=document.getElementById("message");
-    if(msg){
-      msg.innerHTML=demoMode
-        ? '<div class="info ok"><strong>Demo-Modus aktiv.</strong> Du kannst Auslosung, Tausch und Bedienung vorführen. Echte Historie, Statistik, Dienstplanung und Cloud-Daten bleiben unverändert.</div>'
-        : '<div class="info ok"><strong>Demo beendet.</strong> Der echte Stand der Wachabteilung wurde wiederhergestellt.</div>';
-    }
-  }
 
   function demoSaveMessage(){
     const msg=document.getElementById("message");
@@ -4633,7 +4382,7 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     const box=document.getElementById("nextShiftContent");
     if(!box) return;
     const waLabel=document.getElementById("nextShiftWA");
-    if(waLabel) waLabel.textContent=currentWA()==="demo" ? "DEMO" : `WA ${currentWA()}`;
+    if(waLabel) waLabel.textContent=`WA ${currentWA()}`;
     const next=getNextShift();
     if(!next){
       box.innerHTML='<div class="selected-shift-empty">Kein weiterer Dienst im hinterlegten Zeitraum.</div>';
@@ -4914,6 +4663,85 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     document.getElementById("message").innerHTML='<div class="info ok">Manuelle Besetzung übernommen. Du kannst sie jetzt speichern.</div>';
   }
 
+  const WORKFLOW_LABELS={
+    1:"Dienst auswählen",
+    2:"Personalabfrage",
+    3:"Staffelführer / Stammpersonal",
+    4:"Auslosung",
+    5:"Ergebnis & Statistik"
+  };
+  let workflowStep=1;
+
+  function updateWorkflowProgress(){
+    document.body.dataset.workflowStep=String(workflowStep);
+    const caption=document.getElementById("workflowCaption");
+    if(caption) caption.textContent=`Schritt ${workflowStep} von 5 · ${WORKFLOW_LABELS[workflowStep]}`;
+
+    document.querySelectorAll("#workflowProgress .workflow-progress-item").forEach(item=>{
+      const step=Number(item.dataset.step);
+      item.classList.toggle("active",step===workflowStep);
+      item.classList.toggle("done",step<workflowStep);
+    });
+  }
+
+  function setWorkflowStep(step,scroll=true){
+    step=Math.max(1,Math.min(5,Number(step)||1));
+
+    if(step>1 && !selectedShift){
+      workflowStep=1;
+      updateWorkflowProgress();
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Bitte zuerst einen Dienst auswählen.</div>';
+      return false;
+    }
+
+    if(step===5 && (!current || !current.length)){
+      workflowStep=4;
+      updateWorkflowProgress();
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Bitte zuerst eine Besetzung auslosen.</div>';
+      return false;
+    }
+
+    workflowStep=step;
+    updateWorkflowProgress();
+    if(scroll){
+      const shell=document.getElementById("workflowShell");
+      if(shell) shell.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    return true;
+  }
+
+  function validatePersonalWorkflow(){
+    const availablePeople=people.filter(name=>availability[name]!==false);
+    if(availablePeople.length<3){
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Für die Auslosung müssen mindestens 3 Personen verfügbar sein: Maschinist, Angriffstruppführer und Angriffstruppmann.</div>';
+      return false;
+    }
+    return true;
+  }
+
+  function validateFixedWorkflow(){
+    if(fixedCover.sfAbsent && !String(fixedCover.sfGuest||"").trim()){
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Bitte eine Vertretung für den Staffelführer eintragen.</div>';
+      document.getElementById("sfGuest")?.focus();
+      return false;
+    }
+    if(fixedCover.mcAbsent && !String(fixedCover.mcGuest||"").trim()){
+      const msg=document.getElementById("message");
+      if(msg) msg.innerHTML='<div class="info">Bitte eine Vertretung für den Maschinisten-Chef eintragen.</div>';
+      document.getElementById("mcGuest")?.focus();
+      return false;
+    }
+    return true;
+  }
+
+  window.LFWWorkflowGo=function(step){
+    return setWorkflowStep(step,true);
+  };
+
   function generateAssignment(){
     const availablePeople = people.filter(name => availability[name] !== false);
 
@@ -5128,8 +4956,9 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 
     const msg=document.getElementById("message");
     if(msg){
-      msg.innerHTML=`<div class="info ok"><strong>${label} wurde gelöscht.</strong><br>Historie, Statistik und die gespeicherte Besetzung dieses Dienstes sind entfernt. Du kannst den Dienst jetzt neu auslosen oder manuell neu besetzen.</div>`;
+      msg.innerHTML=`<div class="info ok"><strong>${label} wurde gelöscht.</strong><br>Historie, Statistik und die gespeicherte Besetzung dieses Dienstes sind entfernt. Du kannst den Dienst jetzt neu planen.</div>`;
     }
+    if(iso && selectedShift===iso) setWorkflowStep(2);
   }
 
   function renderHistory(){
@@ -5168,8 +4997,24 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     });
   }
 
-  document.getElementById("generateBtn").addEventListener("click",generateAssignment);
-  document.getElementById("rerollBtn").addEventListener("click",generateAssignment);
+  document.getElementById("generateBtn").addEventListener("click",()=>{
+    if(!validatePersonalWorkflow() || !validateFixedWorkflow()) return;
+    generateAssignment();
+    if(current && current.length){
+      setWorkflowStep(5,false);
+      renderStats();
+      window.setTimeout(()=>{
+        document.getElementById("resultSection")?.scrollIntoView({behavior:"smooth",block:"start"});
+      },30);
+    }
+  });
+  document.getElementById("rerollBtn").addEventListener("click",()=>{
+    generateAssignment();
+    if(current && current.length){
+      setWorkflowStep(5,false);
+      renderStats();
+    }
+  });
 
   document.getElementById("saveBtn").addEventListener("click",()=>{
     if(!current.length) return;
@@ -5314,12 +5159,24 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
       document.getElementById("plannerSection").scrollIntoView({behavior:"smooth"});
       return;
     }
-    generateAssignment();
-    document.getElementById("message").innerHTML=`<div class="info ok">Besetzung für ${formatShiftDate(selectedShift)} ausgelost. Jetzt „Besetzung speichern“ drücken.</div>`;
+    document.getElementById("message").innerHTML=`<div class="info ok">${formatShiftDate(selectedShift)} ausgewählt. Jetzt die Personalverfügbarkeit prüfen.</div>`;
+    setWorkflowStep(2);
   });
+
+  document.getElementById("workflowPersonalBack")?.addEventListener("click",()=>setWorkflowStep(1));
+  document.getElementById("workflowPersonalNext")?.addEventListener("click",()=>{
+    if(validatePersonalWorkflow()) setWorkflowStep(3);
+  });
+  document.getElementById("workflowFixedBack")?.addEventListener("click",()=>setWorkflowStep(2));
+  document.getElementById("workflowFixedNext")?.addEventListener("click",()=>{
+    if(validateFixedWorkflow()) setWorkflowStep(4);
+  });
+  document.getElementById("workflowDrawBack")?.addEventListener("click",()=>setWorkflowStep(3));
+  document.getElementById("workflowRestartBtn")?.addEventListener("click",()=>setWorkflowStep(1));
 
   document.getElementById("applyManualBtn").addEventListener("click",applyManualAssignment);
 
+  setWorkflowStep(1,false);
   loadShiftPersonnelState();
   initFixedCover();
   updateFixedCards();
@@ -5388,7 +5245,6 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
     if(!btn) return;
     sessionStorage.removeItem("lf2500_wa");
     sessionStorage.removeItem("lf2500_role_v1");
-    sessionStorage.removeItem("lfw2500_demo_mode");
     selectedWA=null;
     const gate=document.getElementById("waGate");
     if(gate) gate.style.removeProperty("display");
@@ -5407,9 +5263,9 @@ body[data-wa="demo"]{--wa-color:#c7ccd1}
 <section id="appInfoPanel" class="lfw-v1-card">
   <div class="lfw-v1-eyebrow">Systeminformation</div>
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
-  <p class="lfw-v1-text">Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
+  <p class="lfw-v1-text">Interne Web-App mit geführtem Ablauf für Dienstwahl, Personalabfrage, Stammpersonal, Auslosung und Statistik der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.2.3</span></div>
+    <div class="mini"><strong>Version</strong><span>1.3</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
@@ -5849,11 +5705,21 @@ body.legal-open{overflow:hidden}
       nav.addEventListener("click", function(e){
         const btn = e.target.closest("button[data-target]");
         if(!btn) return;
-        const target = document.getElementById(btn.dataset.target);
+        const targetId=btn.dataset.target;
+        const target = document.getElementById(targetId);
         if(!target) return;
+
+        if(typeof window.LFWWorkflowGo==="function"){
+          if(targetId==="plannerSection"){
+            window.LFWWorkflowGo(1);
+          }else if(targetId==="resultSection" || targetId==="statsSection"){
+            if(!window.LFWWorkflowGo(5)) return;
+          }
+        }
+
         nav.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
         btn.classList.add("active");
-        target.scrollIntoView({behavior:"smooth",block:"start"});
+        window.setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),20);
       });
     }
   });
