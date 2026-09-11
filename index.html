@@ -3559,6 +3559,55 @@ body.auth-busy button{pointer-events:none}
 }
 </style>
 
+
+<style id="lfw153ContactStyles">
+#contactModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:130000;
+  overflow:auto;
+  padding:24px;
+  background:#07090b;
+}
+#contactModal.open{display:block}
+.contact-shell{
+  width:min(100%,680px);
+  margin:20px auto;
+  padding:20px;
+  border:1px solid #343a41;
+  border-radius:8px;
+  background:#101316;
+}
+.contact-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:14px;
+}
+.contact-top h1{margin:4px 0 0;font-size:1.45rem}
+.contact-intro{color:#a8afb7;line-height:1.55;font-size:.88rem}
+.contact-field{display:block;margin-top:13px}
+.contact-field span{display:block;margin-bottom:6px;color:#d7dadd;font-size:.78rem;font-weight:800}
+.contact-field input,.contact-field textarea{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #343a41;
+  border-radius:6px;
+  background:#0b0e10;
+  color:#f2f3f5;
+  padding:12px;
+  outline:none;
+}
+.contact-field textarea{resize:vertical;min-height:140px}
+.contact-field input:focus,.contact-field textarea:focus{border-color:var(--wa-accent,#f2cc2f)}
+.contact-note{margin-top:12px;color:#8f969e;font-size:.76rem}
+.contact-submit{width:100%;margin-top:14px}
+.contact-status{min-height:20px;margin-top:9px;color:#a8afb7;font-size:.78rem}
+body.contact-open{overflow:hidden}
+</style>
+
 </head>
 <body class="auth-logged-out">
 <div id="authGlobalLoader" aria-hidden="true"><div class="auth-loader-card"><div class="auth-loader-mark"></div><strong id="authLoaderTitle">Dienstplan wird geladen</strong><span id="authLoaderText">Daten werden vorbereitet…</span></div></div>
@@ -3592,6 +3641,8 @@ body.auth-busy button{pointer-events:none}
       <button type="button" data-legal-open="impressum">Impressum</button>
       <span>·</span>
       <button type="button" data-legal-open="datenschutz">Datenschutz</button>
+  <span>·</span>
+  <button type="button" id="openContactForm">Kontakt</button>
       <span>·</span>
       <button type="button" id="openAdminLogin">Admin</button>
     </div>
@@ -5813,7 +5864,7 @@ demoMode=false;
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App mit geführtem Ablauf für Dienstwahl, Personalabfrage, Stammpersonal, Auslosung und Statistik der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.5.2</span></div>
+    <div class="mini"><strong>Version</strong><span>1.5.3</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
@@ -5841,7 +5892,7 @@ body.legal-open{overflow:hidden}
  <div class="legal-card"><p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p><p><strong>Kontakt</strong><br><span class="legal-placeholder">E-Mail-Adresse wird nach Einrichtung der Domain ergänzt.</span></p></div>
  <h2>Hinweis zum Angebot</h2><p>Diese Web-Anwendung dient der internen Organisation von Dienst- und Fahrzeugbesetzungen der Lehrfeuerwehr 2500.</p>
  <h2>Verantwortlich für Inhalte</h2><p>Maurice Klose<br>Eschenweg 107<br>13587 Berlin</p>
- <p class="legal-note">Vor einer öffentlichen Veröffentlichung sollte die Kontakt-E-Mail ergänzt und geprüft werden, welche gesetzlichen Anbieterangaben für den konkreten Betrieb der Seite erforderlich sind.</p>
+ <p class="legal-note">Kontakt per E-Mail: Mauricediane@web.de. Vor einer öffentlichen bzw. geschäftsmäßigen Veröffentlichung sollte zusätzlich geprüft werden, welche weiteren Anbieterangaben für den konkreten Betrieb erforderlich sind.</p>
  </div>
 </section>
 
@@ -5850,7 +5901,7 @@ body.legal-open{overflow:hidden}
  <h1>Datenschutz</h1><div class="legal-kicker">Datenschutzhinweise · Stand September 2026</div>
 
  <h2>1. Verantwortlicher</h2>
- <div class="legal-card"><p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p><p><span class="legal-placeholder">Kontakt-E-Mail wird nach Einrichtung der Domain ergänzt.</span></p></div>
+ <div class="legal-card"><p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p><p><a href="mailto:Mauricediane@web.de">Mauricediane@web.de</a></p></div>
 
  <h2>2. Zweck der Anwendung</h2>
  <p>Die Web-Anwendung „Lehrfeuerwehr 2500 / LHF 2500/9“ dient der internen Dienst- und Fahrzeugbesetzungsplanung. Verarbeitet werden nur Daten, die für diese organisatorischen Funktionen benötigt werden.</p>
@@ -5897,7 +5948,7 @@ body.legal-open{overflow:hidden}
 
  <h2>15. Änderungen dieser Datenschutzhinweise</h2>
  <p>Diese Hinweise werden angepasst, wenn sich Funktionen, eingesetzte Dienste, Hosting, Speicherorte oder der organisatorische Verantwortliche ändern.</p>
- <p class="legal-note">Vor der endgültigen Veröffentlichung müssen noch die Kontakt-E-Mail, die tatsächliche Firebase-/Firestore-Region, eine konkrete Löschfrist und – bei offizieller dienstlicher Nutzung – die zuständige verantwortliche Stelle und Rechtsgrundlage ergänzt bzw. bestätigt werden.</p>
+ <p class="legal-note">Vor der endgültigen Veröffentlichung müssen noch die tatsächliche Firebase-/Firestore-Region, eine konkrete Löschfrist und – bei offizieller dienstlicher Nutzung – die zuständige verantwortliche Stelle und Rechtsgrundlage ergänzt bzw. bestätigt werden.</p>
  </div>
 </section>
 <script id="lfwWADynamicColorScript">
@@ -6194,9 +6245,45 @@ body.legal-open{overflow:hidden}
   <div class="legal-footer-links">
     <button type="button" data-legal-open="impressum">Impressum</button>
     <button type="button" data-legal-open="datenschutz">Datenschutz</button>
+    <button type="button" id="openContactFooter">Kontakt</button>
   </div>
 </div>
 
+
+
+<section class="contact-overlay" id="contactModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+  <div class="contact-shell">
+    <div class="contact-top">
+      <div>
+        <div class="legal-brand">LEHRFEUERWEHR 2500</div>
+        <h1 id="contactTitle">Kontakt</h1>
+      </div>
+      <button type="button" class="legal-close" id="contactCloseBtn" aria-label="Kontakt schließen">Schließen</button>
+    </div>
+    <p class="contact-intro">Nachricht an Maurice Klose. Beim Absenden öffnet sich dein E-Mail-Programm mit einer vorbereiteten Nachricht. Die App selbst speichert den Inhalt des Formulars nicht.</p>
+    <form id="contactForm">
+      <label class="contact-field">
+        <span>Name</span>
+        <input id="contactName" name="name" type="text" maxlength="100" autocomplete="name" required>
+      </label>
+      <label class="contact-field">
+        <span>E-Mail für Rückfragen</span>
+        <input id="contactEmail" name="email" type="email" maxlength="180" autocomplete="email" required>
+      </label>
+      <label class="contact-field">
+        <span>Betreff</span>
+        <input id="contactSubject" name="subject" type="text" maxlength="140" required>
+      </label>
+      <label class="contact-field">
+        <span>Nachricht</span>
+        <textarea id="contactMessage" name="message" rows="7" maxlength="3000" required></textarea>
+      </label>
+      <div class="contact-note">Empfänger: <strong>Mauricediane@web.de</strong></div>
+      <button type="submit" class="btn contact-submit">E-Mail vorbereiten</button>
+      <div class="contact-status" id="contactStatus" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
 
 <script id="lfw15AuthCore">
 (function(){
@@ -6447,6 +6534,85 @@ body.legal-open{overflow:hidden}
   }else{
     bind();
   }
+})();
+</script>
+
+
+<script id="lfw153ContactController">
+(function(){
+  "use strict";
+  const RECIPIENT="Mauricediane@web.de";
+  const $=id=>document.getElementById(id);
+
+  function openContact(){
+    const modal=$("contactModal");
+    if(!modal) return;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.classList.add("contact-open");
+    setTimeout(()=>$("contactName")?.focus(),30);
+  }
+
+  function closeContact(){
+    const modal=$("contactModal");
+    if(!modal) return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.classList.remove("contact-open");
+  }
+
+  function prepareMail(e){
+    e.preventDefault();
+    const name=$("contactName")?.value.trim()||"";
+    const email=$("contactEmail")?.value.trim()||"";
+    const subject=$("contactSubject")?.value.trim()||"";
+    const message=$("contactMessage")?.value.trim()||"";
+    const status=$("contactStatus");
+
+    if(!name || !email || !subject || !message){
+      if(status) status.textContent="Bitte alle Felder ausfüllen.";
+      return;
+    }
+
+    const body=[
+      message,
+      "",
+      "—",
+      "Absender: "+name,
+      "E-Mail für Rückfragen: "+email
+    ].join("\n");
+
+    const url="mailto:"+RECIPIENT+
+      "?subject="+encodeURIComponent(subject)+
+      "&body="+encodeURIComponent(body);
+
+    if(status) status.textContent="E-Mail-Programm wird geöffnet …";
+    window.location.href=url;
+  }
+
+  document.addEventListener("click",function(e){
+    if(e.target.closest("#openContactForm,#openContactFooter")){
+      e.preventDefault();
+      openContact();
+      return;
+    }
+    if(e.target.closest("#contactCloseBtn")){
+      e.preventDefault();
+      closeContact();
+      return;
+    }
+    if(e.target.id==="contactModal") closeContact();
+  });
+
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape" && $("contactModal")?.classList.contains("open")) closeContact();
+  });
+
+  document.addEventListener("DOMContentLoaded",function(){
+    $("contactForm")?.addEventListener("submit",prepareMail);
+  });
+
+  window.LFWContact={open:openContact,close:closeContact};
 })();
 </script>
 
