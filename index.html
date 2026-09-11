@@ -3417,8 +3417,112 @@ body.legal-open{overflow:hidden!important}
 body.admin-login-open{overflow:hidden}
 </style>
 
+
+<style id="lfw142CleanFooterFix">
+/* Alte große Systeminfo unten vollständig aus dem normalen App-Bild entfernen */
+#appInfoPanel{display:none!important}
+
+/* Alte Legal-Navigation/alte Footer-Duplikate im eingeloggten App-Bereich ausblenden */
+.legal-nav,
+.legal-links,
+#legalFooter{display:none!important}
+
+/* Impressum + Datenschutz ausschließlich als Overlay */
+#legalImpressum,
+#legalDatenschutz{
+  display:none!important;
+  position:fixed!important;
+  inset:0!important;
+  z-index:8000!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:24px!important;
+  box-sizing:border-box!important;
+  overflow:auto!important;
+  transform:none!important;
+  background:rgba(7,9,11,.97)!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+#legalImpressum.open,
+#legalDatenschutz.open,
+#legalImpressum[aria-hidden="false"],
+#legalDatenschutz[aria-hidden="false"]{
+  display:block!important;
+}
+#legalImpressum > *,
+#legalDatenschutz > *{
+  width:min(760px,100%)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+body.legal-open{overflow:hidden!important}
+
+/* Startseite: nur eine dezente Linkzeile unter dem WA-Login */
+#waGate .start-login-links{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  margin-top:16px!important;
+  padding-top:14px!important;
+  border-top:1px solid #292e34!important;
+}
+#waGate .start-login-links button{
+  border:0!important;
+  background:transparent!important;
+  padding:4px!important;
+  color:#969da5!important;
+  font-size:.7rem!important;
+  cursor:pointer!important;
+}
+#waGate .start-login-links button:last-child{
+  color:#f2cc2f!important;
+  font-weight:800!important;
+}
+
+/* Kein Überdecken des letzten Inhalts durch Bottom-Navigation */
+body{padding-bottom:110px!important}
+</style>
+
+
+<style id="lfw15CorePolish">
+/* V1.5 Core: eindeutige UI-Zustände */
+body.auth-logged-out .app,
+body.auth-logged-out #lfwBottomNav,
+body.auth-logged-out .bottom-nav{visibility:hidden!important;pointer-events:none!important}
+body.auth-logged-in #waGate{display:none!important}
+body.auth-busy{cursor:progress}
+body.auth-busy button{pointer-events:none}
+.auth-status{min-height:18px;margin-top:8px;color:#8f969e;font-size:.7rem;text-align:center}
+.auth-status.is-error{color:#e06c70;font-weight:700}
+.auth-status.is-ok{color:#63b47b}
+.wa-buttons button[aria-pressed="true"]{border-color:var(--wa,#f2cc2f)!important;border-left-width:4px!important}
+#waEnterBtn.is-loading::after,.admin-login-primary.is-loading::after{content:" · Bitte warten…"}
+.admin-login-modal{transition:opacity .14s ease}
+.admin-login-modal[aria-hidden="true"]{pointer-events:none}
+.admin-login-modal[aria-hidden="false"]{pointer-events:auto}
+.admin-wa-grid button.is-loading{opacity:.7}
+#authGlobalLoader{
+  position:fixed;inset:0;z-index:9000;display:none;place-items:center;background:#090b0df2;
+}
+#authGlobalLoader.show{display:grid}
+.auth-loader-card{width:min(360px,calc(100% - 32px));padding:20px;border:1px solid #343a41;border-radius:8px;background:#101316;text-align:center}
+.auth-loader-mark{width:30px;height:30px;margin:0 auto 12px;border:2px solid #343a41;border-top-color:var(--wa-color,#f2cc2f);border-radius:50%;animation:lfwSpin .7s linear infinite}
+.auth-loader-card strong{display:block;font-size:.92rem}.auth-loader-card span{display:block;margin-top:6px;color:#8f969e;font-size:.72rem}
+@keyframes lfwSpin{to{transform:rotate(360deg)}}
+/* alte, doppelte Recht-/Info-Navigation endgültig aus dem Flow */
+#lfwLegalNav,.legal-links,#appInfoPanel{display:none!important}
+</style>
+
 </head>
-<body>
+<body class="auth-logged-out">
+<div id="authGlobalLoader" aria-hidden="true"><div class="auth-loader-card"><div class="auth-loader-mark"></div><strong id="authLoaderTitle">Dienstplan wird geladen</strong><span id="authLoaderText">Daten werden vorbereitet…</span></div></div>
+
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
 
 <div class="wa-gate" id="waGate">
@@ -3442,13 +3546,14 @@ body.admin-login-open{overflow:hidden}
              maxlength="6" autocomplete="off" placeholder="6-stelliges Passwort">
       <button type="button" id="waEnterBtn">Anmelden</button>
       <div class="wa-error" id="waError"></div>
+      <div class="auth-status" id="authStatus" aria-live="polite"></div>
     </div>
     <div class="start-login-links">
       <button type="button" data-legal-open="impressum">Impressum</button>
       <span>·</span>
       <button type="button" data-legal-open="datenschutz">Datenschutz</button>
       <span>·</span>
-      <button type="button" id="openAdminLogin">Admin</button>
+      <button type="button" id="openAdminLogin" onclick="window.LFWAuth && window.LFWAuth.openAdmin()">Admin</button>
     </div>
   
 </div>
@@ -3481,124 +3586,6 @@ body.admin-login-open{overflow:hidden}
     </div>
   </div>
 </div>
-
-<script>
-(function(){
-  const WA_PW={"1":"111111","2":"222222","3":"333333","4":"444444"};
-  let chosenWA=null;
-
-  window.LFWSelectWA=function(wa,btn){
-    chosenWA=String(wa);
-    window.selectedWA=chosenWA;
-
-    document.querySelectorAll("#waButtons button[data-wa]").forEach(b=>b.classList.remove("selected"));
-    if(btn) btn.classList.add("selected");
-
-    const wrap=document.getElementById("waPasswordWrap");
-    const label=document.getElementById("waSelected");
-    const input=document.getElementById("waPassword");
-    const err=document.getElementById("waError");
-
-if(label) label.textContent="WA "+chosenWA+" · Passwort";
-    if(err) err.textContent="";
-    if(wrap){
-      wrap.classList.add("show");
-      wrap.style.setProperty("display","block","important");
-    }
-    if(input){
-      input.value="";
-      setTimeout(()=>input.focus(),30);
-    }
-  };
-
-  window.LFWEnterAuthorizedWA=function(wa,role){
-    wa=String(wa);
-    role=role==="admin" ? "admin" : "user";
-
-    sessionStorage.setItem("lf2500_wa",wa);
-    sessionStorage.setItem("lf2500_role_v1",role);
-    window.selectedWA=wa;
-
-    document.body.dataset.wa=wa;
-    document.body.classList.remove("role-user","role-admin");
-    document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
-
-    const gate=document.getElementById("waGate");
-    if(gate){
-      gate.classList.add("hidden");
-      gate.style.setProperty("display","none","important");
-    }
-
-    setTimeout(()=>{
-      try{
-        if(typeof window.loadWAData==="function") window.loadWAData(wa);
-      }catch(e){
-        console.error("LFW App-Initialisierung:",e);
-      }
-    },0);
-  };
-
-  window.LFWDoLogin=function(){
-    const input=document.getElementById("waPassword");
-    const err=document.getElementById("waError");
-    const wa=chosenWA || window.selectedWA;
-
-    if(!wa){
-      if(err) err.textContent="Bitte zuerst eine Wachabteilung auswählen.";
-      return;
-    }
-
-    const pw=String(input?.value||"").replace(/\D/g,"").slice(0,6);
-    if(input) input.value=pw;
-    if(pw.length<6) return;
-
-    let role=null;
-    if(pw===WA_PW[String(wa)]) role="user";
-
-    if(!role){
-      if(err) err.textContent="Passwort nicht korrekt.";
-      if(input){ input.value=""; input.focus(); }
-      return;
-    }
-
-    window.LFWEnterAuthorizedWA(String(wa),role);
-  };
-
-  document.addEventListener("DOMContentLoaded",function(){
-    const input=document.getElementById("waPassword");
-    const btn=document.getElementById("waEnterBtn");
-
-    if(btn) btn.onclick=window.LFWDoLogin;
-
-    if(input){
-      input.addEventListener("input",function(){
-        this.value=this.value.replace(/\D/g,"").slice(0,6);
-        if(this.value.length===6) window.LFWDoLogin();
-      });
-      input.addEventListener("keydown",function(e){
-        if(e.key==="Enter"){
-          e.preventDefault();
-          window.LFWDoLogin();
-        }
-      });
-    }
-
-    const rememberedWA=sessionStorage.getItem("lf2500_wa");
-    const rememberedRole=sessionStorage.getItem("lf2500_role_v1");
-    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) && rememberedRole==="admin"){
-      window.LFWEnterAuthorizedWA(rememberedWA,"admin");
-    }else if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) && rememberedRole==="user"){
-      chosenWA=rememberedWA;
-      window.selectedWA=rememberedWA;
-      if(input) input.value=WA_PW[rememberedWA];
-      window.LFWDoLogin();
-    }else if(rememberedWA && !["1","2","3","4"].includes(rememberedWA)){
-      sessionStorage.removeItem("lf2500_wa");
-      sessionStorage.removeItem("lf2500_role_v1");
-    }
-  });
-})();
-</script>
 
 <div class="app">
 </div>
@@ -4019,7 +4006,6 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
     "3":"333333",
     "4":"444444"
   };
-  const GLOBAL_ADMIN_PASSWORD = "121212";
   let selectedWA = null;
 
   function showWAGate(){
@@ -4102,12 +4088,7 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
       input.value=pw;
 
       if(pw.length<6) return;
-
-      if(pw===GLOBAL_ADMIN_PASSWORD){
-        enterWA(selectedWA,"admin");
-        return;
-      }
-      if(pw===WA_PASSWORDS[selectedWA]){
+if(pw===WA_PASSWORDS[selectedWA]){
         enterWA(selectedWA,"user");
         return;
       }
@@ -4150,6 +4131,8 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
   let appRole = sessionStorage.getItem(ROLE_KEY) || null;
 
   function requireAdmin(message="Diese Funktion ist nur im Admin-Modus verfügbar."){
+    const sessionRole = sessionStorage.getItem(ROLE_KEY);
+    if(sessionRole === "admin" || sessionRole === "user") appRole = sessionRole;
     if(appRole === "admin") return true;
     const msg = document.getElementById("message");
     if(msg) msg.innerHTML = `<div class="info">${message}</div>`;
@@ -5678,7 +5661,7 @@ demoMode=false;
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App mit geführtem Ablauf für Dienstwahl, Personalabfrage, Stammpersonal, Auslosung und Statistik der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.4.1</span></div>
+    <div class="mini"><strong>Version</strong><span>1.5</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
@@ -5699,11 +5682,6 @@ demoMode=false;
 .legal-overlay h2{font-size:24px;margin:38px 0 14px;line-height:1.2}.legal-overlay h3{font-size:17px;margin:26px 0 10px}.legal-overlay p,.legal-overlay li{font-size:16px;line-height:1.7;color:#cfcfcf}.legal-overlay ul{padding-left:22px}.legal-card{background:#151515;border:1px solid #2c2c2c;border-radius:18px;padding:22px;margin:18px 0 30px}.legal-note{border-left:3px solid #777;padding-left:14px;color:#aaa!important}.legal-placeholder{color:#aaa;font-style:italic}
 body.legal-open{overflow:hidden}
 </style>
-
-<div class="legal-links" aria-label="Rechtliche Informationen">
-  <button type="button" data-legal-open="impressum">Impressum</button><span>·</span>
-  <button type="button" data-legal-open="datenschutz">Datenschutz</button>
-</div>
 
 <section class="legal-overlay" id="legalImpressum" aria-hidden="true">
  <div class="legal-shell"><div class="legal-top"><div class="legal-brand">LEHRFEUERWEHR 2500</div><button class="legal-close" data-legal-close>Schließen</button></div>
@@ -5770,17 +5748,6 @@ body.legal-open{overflow:hidden}
  <p class="legal-note">Vor der endgültigen Veröffentlichung müssen noch die Kontakt-E-Mail, die tatsächliche Firebase-/Firestore-Region, eine konkrete Löschfrist und – bei offizieller dienstlicher Nutzung – die zuständige verantwortliche Stelle und Rechtsgrundlage ergänzt bzw. bestätigt werden.</p>
  </div>
 </section>
-<script>
-(function(){
- const map={impressum:document.getElementById('legalImpressum'),datenschutz:document.getElementById('legalDatenschutz')};
- function closeAll(){Object.values(map).forEach(x=>{x.classList.remove('open');x.setAttribute('aria-hidden','true')});document.body.classList.remove('legal-open')}
- document.querySelectorAll('[data-legal-open]').forEach(b=>b.addEventListener('click',()=>{closeAll();const x=map[b.dataset.legalOpen];if(x){x.classList.add('open');x.setAttribute('aria-hidden','false');document.body.classList.add('legal-open');x.scrollTop=0}}));
- document.querySelectorAll('[data-legal-close]').forEach(b=>b.addEventListener('click',closeAll));
- document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
-})();
-</script>
-
-
 <script id="lfwWADynamicColorScript">
 (function(){
   function applyActiveWAColor(wa){
@@ -5811,91 +5778,11 @@ body.legal-open{overflow:hidden}
 </script>
 
 
-<nav id="lfwLegalNav" aria-label="Rechtliches und App-Informationen">
-  <button type="button" data-lfw-modal="lfwImpressum">Impressum</button>
-  <button type="button" data-lfw-modal="lfwDatenschutz">Datenschutz</button>
-  <button type="button" data-lfw-modal="lfwKontakt">Kontakt</button>
-  <button type="button" data-lfw-modal="lfwInfo">Über die App</button>
-</nav>
-
-<div id="lfwImpressum" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwImpressumTitle">
-  <div class="lfw-modal-dialog">
-    <div class="lfw-modal-head"><h2 id="lfwImpressumTitle">Impressum</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
-    <p><strong>Maurice Klose</strong><br>Eschenweg 107<br>13587 Berlin<br>Deutschland</p>
-    <h3>Kontakt</h3>
-    <p>E-Mail: <em>wird nach Einrichtung der eigenen Domain ergänzt</em></p>
-    <div class="note">Vor einer öffentlichen bzw. offiziellen Nutzung sollte die Kontakt-E-Mail ergänzt und geprüft werden, ob weitere Angaben erforderlich sind.</div>
-  </div>
 </div>
 
-<div id="lfwDatenschutz" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwDatenschutzTitle">
-  <div class="lfw-modal-dialog">
-    <div class="lfw-modal-head"><h2 id="lfwDatenschutzTitle">Datenschutzerklärung</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
-    <h3>1. Verantwortlicher</h3>
-    <p>Maurice Klose, Eschenweg 107, 13587 Berlin, Deutschland. Eine Kontakt-E-Mail wird nach Einrichtung der eigenen Domain ergänzt.</p>
-
-    <h3>2. Zweck der Web-App</h3>
-    <p>Die Web-App dient der Dienstplanung, Verfügbarkeitsverwaltung, Fahrzeugbesetzung sowie der Anzeige von Historien und Statistiken innerhalb der Lehrfeuerwehr 2500.</p>
-
-    <h3>3. Verarbeitete Daten</h3>
-    <p>Je nach Nutzung werden insbesondere Namen, Wachabteilung, Verfügbarkeitsstatus, zugeteilte Fahrzeugfunktion, Dienst- und Besetzungsdaten sowie daraus entstehende Historien- und Statistikdaten verarbeitet.</p>
-
-    <h3>4. Firebase / Google</h3>
-    <p>Zur geräteübergreifenden Synchronisierung nutzt die Anwendung Google Firebase, insbesondere Cloud Firestore und Firebase Authentication. Die Anmeldung gegenüber Firebase erfolgt derzeit anonym. Dabei können technische Verbindungsdaten verarbeitet werden.</p>
-
-    <h3>5. GitHub Pages</h3>
-    <p>Die Web-App wird derzeit über GitHub Pages bereitgestellt. Beim Abruf der Website können technisch erforderliche Verbindungs- und Protokolldaten verarbeitet werden.</p>
-
-    <h3>6. Browser-Speicher</h3>
-    <p>Die Anwendung nutzt LocalStorage und SessionStorage, um erforderliche Einstellungen und Anwendungszustände lokal im Browser zu speichern. Diese Speichermechanismen dienen der Funktion der App und nicht zu Werbe- oder Trackingzwecken.</p>
-
-    <h3>7. Empfänger und technische Dienstleister</h3>
-    <p>Technische Dienstleister können insbesondere Google/Firebase sowie GitHub sein. Eine Weitergabe an weitere Empfänger erfolgt nur, soweit dies für Betrieb, Sicherheit oder aufgrund gesetzlicher Pflichten erforderlich ist.</p>
-
-    <h3>8. Speicherdauer</h3>
-    <p>Daten werden grundsätzlich nur so lange gespeichert, wie sie für Dienstplanung, Besetzung, Historie und Statistik erforderlich sind oder bis sie durch berechtigte Nutzer bzw. Administratoren gelöscht oder überschrieben werden.</p>
-
-    <h3>9. Betroffenenrechte</h3>
-    <p>Betroffene Personen können im Rahmen der gesetzlichen Voraussetzungen insbesondere Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und gegebenenfalls Widerspruch verlangen. Außerdem besteht grundsätzlich das Recht auf Beschwerde bei einer zuständigen Datenschutzaufsichtsbehörde.</p>
-
-    <h3>10. Rechtsgrundlage und dienstlicher Einsatz</h3>
-    <p>Die konkrete Rechtsgrundlage hängt davon ab, in welchem organisatorischen Rahmen die App genutzt wird und wer datenschutzrechtlich als Verantwortlicher gilt. Vor einer offiziellen dienstlichen Nutzung sollte dies verbindlich geklärt und dieser Abschnitt entsprechend ergänzt werden.</p>
-
-    <h3>11. Keine Werbung / kein Tracking</h3>
-    <p>Die Anwendung setzt nach aktuellem Stand keine Werbenetzwerke und keine Analyse- oder Marketingtracker ein. Ein allgemeines Cookie-Einwilligungsbanner ist daher nicht vorgesehen.</p>
-
-    <div class="note">Stand: September 2026. Diese Erklärung beschreibt den aktuellen technischen Aufbau der Web-App. Änderungen an Hosting, Firebase, Authentifizierung oder weiteren Diensten müssen hier nachvollzogen werden.</div>
-  </div>
 </div>
 
-<div id="lfwKontakt" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwKontaktTitle">
-  <div class="lfw-modal-dialog">
-    <div class="lfw-modal-head"><h2 id="lfwKontaktTitle">Kontakt</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
-    <p>Für Rückfragen, Fehlerhinweise oder Verbesserungsvorschläge wird hier nach Einrichtung der Domain eine Kontakt-E-Mail hinterlegt.</p>
-    <div class="note">Ein eigenes Kontaktformular ist bewusst nicht eingebaut, damit keine zusätzlichen personenbezogenen Nachrichtendaten in der App gespeichert werden müssen.</div>
-  </div>
 </div>
-
-<div id="lfwInfo" class="lfw-modal" role="dialog" aria-modal="true" aria-labelledby="lfwInfoTitle">
-  <div class="lfw-modal-dialog">
-    <div class="lfw-modal-head"><h2 id="lfwInfoTitle">Über die App</h2><button class="lfw-modal-close" type="button">Schließen</button></div>
-    <p><strong>LHF 2500/9 Dienstplaner</strong><br>Version 1.1</p>
-    <p>Interne Web-App für Dienstplanung, Verfügbarkeit und Fahrzeugbesetzung der Lehrfeuerwehr 2500.</p>
-    <h3>Änderungen in Version 1.1</h3>
-    <ul>
-      <li>WA-spezifische Farbführung</li>
-      <li>Dienst- und Besetzungsplanung</li>
-      <li>Verfügbarkeitsverwaltung</li>
-      <li>Besetzungsauslosung und Historie</li>
-      <li>Statistik und Adminbereich</li>
-      <li>Cloud-Synchronisierung über Firebase</li>
-      <li>Eigenständiges Terminal-Design ohne Glow</li>
-      <li>Impressum, Datenschutz, Kontakt und App-Info</li>
-      <li>Ankündigungsbereich für Wachabteilungen</li><li>Passwortfreie Demo-Wachabteilung und gezielte Statistikbereinigung im Adminbereich</li>
-    </ul>
-  </div>
-</div>
-
 
 <script id="lfwV1CompleteScript">
 (function(){
@@ -6091,7 +5978,7 @@ body.legal-open{overflow:hidden}
   <button type="button" data-target="plannerSection"><span class="nav-code">01</span><span>Dienstplan</span></button>
   <button type="button" data-target="resultSection"><span class="nav-code">02</span><span>Besetzung</span></button>
   <button type="button" data-target="statsSection"><span class="nav-code">03</span><span>Statistik</span></button>
-  <button type="button" data-target="appInfoPanel"><span class="nav-code">04</span><span>Info</span></button>
+  <button type="button" data-auth-action="top"><span class="nav-code">04</span><span>Oben</span></button>
 </nav>
 
 
@@ -6158,113 +6045,219 @@ body.legal-open{overflow:hidden}
   </div>
 </div>
 
-<script id="lfwProfessionalLegalModal">
+
+<script id="lfw15AuthCore">
 (function(){
+  "use strict";
+  const WA_PINS={"1":"111111","2":"222222","3":"333333","4":"444444"};
+  const ADMIN_PIN="121212";
+  const WA_KEY="lf2500_wa";
+  const ROLE_KEY="lf2500_role_v1";
+  const VALID_WA=new Set(["1","2","3","4"]);
+  let selectedWA=null;
+  let entering=false;
+
+  const $=id=>document.getElementById(id);
+  const normalizePin=v=>String(v||"").replace(/\D/g,"").slice(0,6);
+
+  function setAuthStatus(message,type=""){
+    const el=$("authStatus");
+    if(!el) return;
+    el.textContent=message||"";
+    el.className="auth-status"+(type?" is-"+type:"");
+  }
+  function setBusy(on,title="Dienstplan wird geladen",detail="Daten werden vorbereitet…"){
+    entering=!!on;
+    document.body.classList.toggle("auth-busy",!!on);
+    const loader=$("authGlobalLoader");
+    if(loader){
+      loader.classList.toggle("show",!!on);
+      loader.setAttribute("aria-hidden",on?"false":"true");
+    }
+    if($("authLoaderTitle")) $("authLoaderTitle").textContent=title;
+    if($("authLoaderText")) $("authLoaderText").textContent=detail;
+  }
+  function markSelectedWA(wa){
+    selectedWA=VALID_WA.has(String(wa))?String(wa):null;
+    window.selectedWA=selectedWA;
+    document.querySelectorAll("#waButtons button[data-wa]").forEach(btn=>{
+      const on=btn.dataset.wa===selectedWA;
+      btn.classList.toggle("selected",on);
+      btn.setAttribute("aria-pressed",on?"true":"false");
+    });
+    const wrap=$("waPasswordWrap"), label=$("waSelected"), input=$("waPassword");
+    if(selectedWA){
+      if(label) label.textContent=`WA ${selectedWA} · Passwort`;
+      if(wrap){wrap.classList.add("show");wrap.style.setProperty("display","block","important")}
+      if(input){input.value="";setTimeout(()=>input.focus(),20)}
+    }
+    setAuthStatus("");
+  }
+  function showGate(){
+    setBusy(false);
+    document.body.classList.add("auth-logged-out");
+    document.body.classList.remove("auth-logged-in","role-user","role-admin");
+    document.body.removeAttribute("data-wa");
+    const gate=$("waGate");
+    if(gate){gate.classList.remove("hidden");gate.style.removeProperty("display")}
+  }
+  function hideGate(){
+    const gate=$("waGate");
+    if(gate){gate.classList.add("hidden");gate.style.setProperty("display","none","important")}
+    document.body.classList.remove("auth-logged-out");
+    document.body.classList.add("auth-logged-in");
+  }
+  async function enterApp(wa,role){
+    wa=String(wa); role=role==="admin"?"admin":"user";
+    if(!VALID_WA.has(wa)||entering) return false;
+    setBusy(true,"WA "+wa+" wird geladen",role==="admin"?"Adminbereich wird vorbereitet…":"Dienstplan wird synchronisiert…");
+    try{
+      sessionStorage.setItem(WA_KEY,wa);
+      sessionStorage.setItem(ROLE_KEY,role);
+      selectedWA=wa; window.selectedWA=wa;
+      document.body.dataset.wa=wa;
+      document.body.setAttribute("data-active-wa",wa);
+      document.body.classList.remove("role-user","role-admin");
+      document.body.classList.add(role==="admin"?"role-admin":"role-user");
+      hideGate();
+      closeAdmin();
+      if(typeof window.applyActiveWAColor==="function") window.applyActiveWAColor(wa);
+      if(typeof window.loadWAData!=="function") throw new Error("App-Loader ist nicht verfügbar.");
+      const result=window.loadWAData(wa);
+      if(result && typeof result.then==="function") await result;
+      await new Promise(r=>setTimeout(r,80));
+      setBusy(false);
+      return true;
+    }catch(err){
+      console.error("LFW Auth/Core:",err);
+      sessionStorage.removeItem(WA_KEY);sessionStorage.removeItem(ROLE_KEY);
+      showGate();
+      setAuthStatus("App konnte nicht geladen werden. Bitte Seite neu laden.","error");
+      return false;
+    }
+  }
+  function userLogin(){
+    if(entering) return;
+    if(!selectedWA){setAuthStatus("Bitte zuerst eine Wachabteilung auswählen.","error");return}
+    const input=$("waPassword");
+    const pin=normalizePin(input?.value);
+    if(input) input.value=pin;
+    if(pin.length!==6){setAuthStatus("Bitte das 6-stellige Passwort eingeben.","error");return}
+    if(pin!==WA_PINS[selectedWA]){
+      setAuthStatus("Passwort nicht korrekt.","error");
+      if(input){input.value="";input.focus()}
+      return;
+    }
+    setAuthStatus("Anmeldung erfolgreich.","ok");
+    enterApp(selectedWA,"user");
+  }
+  function resetAdmin(){
+    if($("adminLoginPassword")) $("adminLoginPassword").value="";
+    if($("adminLoginError")) $("adminLoginError").textContent="";
+    if($("adminPasswordStep")) $("adminPasswordStep").hidden=false;
+    if($("adminWAChoice")) $("adminWAChoice").hidden=true;
+  }
+  function openAdmin(){
+    resetAdmin();
+    const modal=$("adminLoginModal");
+    if(!modal) return false;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.classList.add("admin-login-open");
+    setTimeout(()=>$("adminLoginPassword")?.focus(),20);
+    return true;
+  }
+  function closeAdmin(){
+    const modal=$("adminLoginModal");
+    if(modal){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
+    document.body.classList.remove("admin-login-open");
+  }
+  function verifyAdmin(){
+    const input=$("adminLoginPassword");
+    const pin=normalizePin(input?.value);
+    if(input) input.value=pin;
+    const err=$("adminLoginError");
+    if(pin!==ADMIN_PIN){
+      if(err) err.textContent="Admin-Passwort nicht korrekt.";
+      if(input){input.value="";input.focus()}
+      return false;
+    }
+    if(err) err.textContent="";
+    if($("adminPasswordStep")) $("adminPasswordStep").hidden=true;
+    if($("adminWAChoice")) $("adminWAChoice").hidden=false;
+    return true;
+  }
+  function logout(){
+    sessionStorage.removeItem(WA_KEY);sessionStorage.removeItem(ROLE_KEY);
+    selectedWA=null;window.selectedWA=null;
+    closeAdmin();
+    markSelectedWA(null);
+    showGate();
+    setAuthStatus("Abgemeldet.","ok");
+  }
+
+  // One legal controller.
   function closeLegal(){
-    document.querySelectorAll("#legalImpressum,#legalDatenschutz").forEach(p=>p.classList.remove("open"));
+    document.querySelectorAll("#legalImpressum,#legalDatenschutz").forEach(p=>{p.classList.remove("open");p.setAttribute("aria-hidden","true")});
     document.body.classList.remove("legal-open");
   }
   function openLegal(kind){
     closeLegal();
-    const id=kind==="datenschutz" ? "legalDatenschutz" : "legalImpressum";
-    const panel=document.getElementById(id);
+    const panel=$(kind==="datenschutz"?"legalDatenschutz":"legalImpressum");
     if(!panel) return;
-    panel.classList.add("open");
-    document.body.classList.add("legal-open");
+    panel.classList.add("open");panel.setAttribute("aria-hidden","false");document.body.classList.add("legal-open");panel.scrollTop=0;
   }
+
+  // Event delegation keeps dynamically rendered UI reliable.
   document.addEventListener("click",function(e){
-    const opener=e.target.closest && e.target.closest("[data-legal-open]");
-    if(opener){ e.preventDefault(); openLegal(opener.dataset.legalOpen); return; }
-    const closer=e.target.closest && e.target.closest(".legal-close");
-    if(closer){ e.preventDefault(); closeLegal(); }
-  });
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeLegal(); });
-  window.LFWOpenLegal=openLegal;
-  window.LFWCloseLegal=closeLegal;
-})();
-</script>
-
-
-<script id="lfwSeparateAdminLogin">
-(function(){
-  const ADMIN_PW="121212";
-
-  function resetAdminModal(){
-    const pw=document.getElementById("adminLoginPassword");
-    const err=document.getElementById("adminLoginError");
-    const step=document.getElementById("adminPasswordStep");
-    const wa=document.getElementById("adminWAChoice");
-    if(pw) pw.value="";
-    if(err) err.textContent="";
-    if(step) step.hidden=false;
-    if(wa) wa.hidden=true;
-  }
-
-  function openAdmin(){
-    resetAdminModal();
-    const modal=document.getElementById("adminLoginModal");
-    if(!modal) return;
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden","false");
-    document.body.classList.add("admin-login-open");
-    setTimeout(()=>document.getElementById("adminLoginPassword")?.focus(),30);
-  }
-
-  function closeAdmin(){
-    const modal=document.getElementById("adminLoginModal");
-    if(!modal) return;
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden","true");
-    document.body.classList.remove("admin-login-open");
-    resetAdminModal();
-  }
-
-  function verifyAdmin(){
-    const pw=String(document.getElementById("adminLoginPassword")?.value||"").replace(/\D/g,"").slice(0,6);
-    const err=document.getElementById("adminLoginError");
-    if(pw!==ADMIN_PW){
-      if(err) err.textContent="Admin-Passwort nicht korrekt.";
-      const input=document.getElementById("adminLoginPassword");
-      if(input){ input.value=""; input.focus(); }
+    const waBtn=e.target.closest?.("#waGate #waButtons button[data-wa]");
+    if(waBtn){e.preventDefault();e.stopPropagation();markSelectedWA(waBtn.dataset.wa);return}
+    const login=e.target.closest?.("#waEnterBtn");
+    if(login){e.preventDefault();e.stopPropagation();userLogin();return}
+    const adminOpen=e.target.closest?.("#openAdminLogin");
+    if(adminOpen){e.preventDefault();e.stopPropagation();openAdmin();return}
+    const adminClose=e.target.closest?.("#closeAdminLogin");
+    if(adminClose){e.preventDefault();closeAdmin();return}
+    const adminSubmit=e.target.closest?.("#adminLoginSubmit");
+    if(adminSubmit){e.preventDefault();verifyAdmin();return}
+    const adminWA=e.target.closest?.("[data-admin-wa]");
+    if(adminWA && $("adminLoginModal")?.classList.contains("open")){
+      e.preventDefault();
+      if($("adminWAChoice")?.hidden===false) enterApp(adminWA.dataset.adminWa,"admin");
       return;
     }
-    if(err) err.textContent="";
-    document.getElementById("adminPasswordStep").hidden=true;
-    document.getElementById("adminWAChoice").hidden=false;
+    const legalOpen=e.target.closest?.("[data-legal-open]");
+    if(legalOpen){e.preventDefault();openLegal(legalOpen.dataset.legalOpen);return}
+    const legalClose=e.target.closest?.("[data-legal-close],#legalImpressum .legal-close,#legalDatenschutz .legal-close");
+    if(legalClose){e.preventDefault();closeLegal();return}
+    const logoutBtn=e.target.closest?.(".logout-btn,#logoutBtn");
+    if(logoutBtn){setTimeout(logout,0);return}
+    const topBtn=e.target.closest?.("[data-auth-action='top']");
+    if(topBtn){e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});return}
+    if(e.target===$("adminLoginModal")) closeAdmin();
+  },true);
+
+  $("waPassword")?.addEventListener("input",function(){this.value=normalizePin(this.value)});
+  $("waPassword")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();userLogin()}});
+  $("adminLoginPassword")?.addEventListener("input",function(){this.value=normalizePin(this.value)});
+  $("adminLoginPassword")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();verifyAdmin()}});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAdmin();closeLegal()}});
+
+  function boot(){
+    const wa=sessionStorage.getItem(WA_KEY), role=sessionStorage.getItem(ROLE_KEY);
+    if(VALID_WA.has(wa) && (role==="user"||role==="admin")){
+      enterApp(wa,role);
+    }else{
+      sessionStorage.removeItem(WA_KEY);sessionStorage.removeItem(ROLE_KEY);showGate();
+    }
   }
 
-  document.getElementById("openAdminLogin")?.addEventListener("click",openAdmin);
-  document.getElementById("closeAdminLogin")?.addEventListener("click",closeAdmin);
-  document.getElementById("adminLoginSubmit")?.addEventListener("click",verifyAdmin);
+  window.LFWAuth={openAdmin,closeAdmin,verifyAdmin,enterApp,logout,openLegal,closeLegal,getState:()=>({wa:selectedWA,role:sessionStorage.getItem(ROLE_KEY)})};
+  window.LFWSelectWA=(wa)=>markSelectedWA(wa);
+  window.LFWDoLogin=userLogin;
+  window.LFWEnterAuthorizedWA=enterApp;
 
-  document.getElementById("adminLoginPassword")?.addEventListener("input",function(){
-    this.value=this.value.replace(/\D/g,"").slice(0,6);
-  });
-  document.getElementById("adminLoginPassword")?.addEventListener("keydown",function(e){
-    if(e.key==="Enter"){
-      e.preventDefault();
-      verifyAdmin();
-    }
-  });
-
-  document.querySelectorAll("[data-admin-wa]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const wa=btn.dataset.adminWa;
-      closeAdmin();
-      if(typeof window.LFWEnterAuthorizedWA==="function"){
-        window.LFWEnterAuthorizedWA(wa,"admin");
-      }
-    });
-  });
-
-  document.getElementById("adminLoginModal")?.addEventListener("click",e=>{
-    if(e.target.id==="adminLoginModal") closeAdmin();
-  });
-  document.addEventListener("keydown",e=>{
-    if(e.key==="Escape" && document.getElementById("adminLoginModal")?.classList.contains("open")){
-      closeAdmin();
-    }
-  });
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot,{once:true}); else boot();
 })();
 </script>
 
