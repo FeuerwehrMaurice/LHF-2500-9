@@ -4319,6 +4319,7 @@ if(pw===WA_PASSWORDS[selectedWA]){
 
     if(!data || String(wa)!==String(currentWA())) return;
     cloudApplying=true;
+    let julianNameMigrated=false;
     try{
       const keys=storageKeysForWA(String(wa));
       if(data.personnel) localStorage.setItem(personnelStorageKey(String(wa)),JSON.stringify(data.personnel));
@@ -4327,6 +4328,7 @@ if(pw===WA_PASSWORDS[selectedWA]){
 
       STORAGE_KEY=keys.history;
       PLAN_KEY=keys.plans;
+      julianNameMigrated = String(wa)==="1" ? migrateWA1JulianName() : false;
       history=loadHistory();
       normalizeHistory();
       plans=loadPlans();
@@ -4348,6 +4350,9 @@ if(pw===WA_PASSWORDS[selectedWA]){
       loadLastChanged();
     }finally{
       cloudApplying=false;
+      if(typeof julianNameMigrated!=="undefined" && julianNameMigrated){
+        cloudSchedulePush();
+      }
     }
   }
 
@@ -4402,6 +4407,106 @@ if(pw===WA_PASSWORDS[selectedWA]){
     if(alreadySeen) showLiveChange("Cloud-Daten wurden aktualisiert");
 }
 
+  // WA 1: Namenskorrektur "Julien Ehrlich" -> "Julian Ehrlich".
+  // Bestehende Historie und gespeicherte Dienste werden zusammengeführt,
+  // damit keine Statistik verloren geht.
+  function canonicalWA1PersonName(name){
+    const value=String(name ?? "").trim();
+    return /^julien\s+ehrlich$/i.test(value) ? "Julian Ehrlich" : value;
+  }
+
+  function migrateWA1JulianName(){
+    if(String(currentWA())!=="1") return false;
+
+    const keys=storageKeysForWA("1");
+    let changed=false;
+
+    // Personal-Konfiguration
+    let personnel=null;
+    try{ personnel=JSON.parse(localStorage.getItem(personnelStorageKey("1"))||"null"); }catch(e){}
+    if(personnel && Array.isArray(personnel.people)){
+      const next=personnel.people.map(name=>{
+        const fixed=canonicalWA1PersonName(name);
+        if(fixed!==String(name ?? "").trim()) changed=true;
+        return fixed;
+      });
+      personnel={...personnel,people:next};
+      localStorage.setItem(personnelStorageKey("1"),JSON.stringify(personnel));
+    }
+
+    // Historie / Statistikgrundlage
+    let storedHistory=[];
+    try{ storedHistory=JSON.parse(localStorage.getItem(keys.history)||"[]"); }catch(e){}
+    if(Array.isArray(storedHistory)){
+      storedHistory=storedHistory.map(entry=>{
+        if(!entry || typeof entry!=="object") return entry;
+        let entryChanged=false;
+        const assignment=Array.isArray(entry.assignment)
+          ? entry.assignment.map(a=>{
+              if(!a || typeof a!=="object") return a;
+              const fixed=canonicalWA1PersonName(a.person);
+              if(fixed!==String(a.person ?? "").trim()) entryChanged=true;
+              return entryChanged && fixed!==a.person ? {...a,person:fixed} : a;
+            })
+          : entry.assignment;
+        if(entryChanged){
+          changed=true;
+          return {...entry,assignment};
+        }
+        return entry;
+      });
+      localStorage.setItem(keys.history,JSON.stringify(storedHistory));
+    }
+
+    // Gespeicherte Dienste inkl. Verfügbarkeit
+    let storedPlans={};
+    try{ storedPlans=JSON.parse(localStorage.getItem(keys.plans)||"{}"); }catch(e){}
+    if(storedPlans && typeof storedPlans==="object" && !Array.isArray(storedPlans)){
+      const nextPlans={};
+      for(const [date,plan] of Object.entries(storedPlans)){
+        if(!plan || typeof plan!=="object"){
+          nextPlans[date]=plan;
+          continue;
+        }
+        let planChanged=false;
+        const nextPlan={...plan};
+
+        if(Array.isArray(plan.assignment)){
+          nextPlan.assignment=plan.assignment.map(a=>{
+            if(!a || typeof a!=="object") return a;
+            const fixed=canonicalWA1PersonName(a.person);
+            if(fixed!==String(a.person ?? "").trim()){
+              planChanged=true;
+              return {...a,person:fixed};
+            }
+            return a;
+          });
+        }
+
+        if(plan.availability && typeof plan.availability==="object"){
+          const avail={};
+          for(const [name,value] of Object.entries(plan.availability)){
+            const fixed=canonicalWA1PersonName(name);
+            if(fixed!==name) planChanged=true;
+            // Falls beide Varianten vorhanden sind, "nicht verfügbar" gewinnt.
+            if(Object.prototype.hasOwnProperty.call(avail,fixed)){
+              avail[fixed]=avail[fixed]!==false && value!==false;
+            }else{
+              avail[fixed]=value;
+            }
+          }
+          nextPlan.availability=avail;
+        }
+
+        if(planChanged) changed=true;
+        nextPlans[date]=nextPlan;
+      }
+      localStorage.setItem(keys.plans,JSON.stringify(nextPlans));
+    }
+
+    return changed;
+  }
+
   function personnelStorageKey(wa=currentWA()){
     return `lhf2500_personnel_wa_${wa}`;
   }
@@ -4412,7 +4517,10 @@ if(pw===WA_PASSWORDS[selectedWA]){
     try{data=JSON.parse(localStorage.getItem(personnelStorageKey(wa))||"null")}catch(e){}
     const cfg=data && Array.isArray(data.people) ? data : fallback;
 
-    people = (cfg.people || fallback.people).map((x,i)=>String(x||`Person ${i+1}`).trim());
+    people = (cfg.people || fallback.people).map((x,i)=>{
+      const name=String(x||`Person ${i+1}`).trim();
+      return String(wa)==="1" ? canonicalWA1PersonName(name) : name;
+    });
     baseFixedStaff = {
       sf:String(cfg.sf || fallback.sf).trim(),
       mc:String(cfg.mc || fallback.mc).trim()
@@ -4424,7 +4532,8 @@ if(pw===WA_PASSWORDS[selectedWA]){
     const wa=currentWA();
     const values=[1,2,3,4,5].map(i=>{
       const el=document.getElementById(`adminPerson${i}`);
-      return String(el?.value||"").trim() || `Person ${i}`;
+      const value=String(el?.value||"").trim() || `Person ${i}`;
+      return wa==="1" ? canonicalWA1PersonName(value) : value;
     });
     const sf=String(document.getElementById("adminSfName")?.value||"").trim() || "Staffelführer";
     const mc=String(document.getElementById("adminMcName")?.value||"").trim() || "Maschinisten-Chef";
@@ -4498,7 +4607,10 @@ if(pw===WA_PASSWORDS[selectedWA]){
     if(typeof setWorkflowStep==="function") setWorkflowStep(1,false);
 demoMode=false;
     applyDemoModeUI();
-    if(wa==="1") migrateWA1LegacyData();
+    if(wa==="1"){
+      migrateWA1LegacyData();
+      migrateWA1JulianName();
+    }
 
     const keys=storageKeysForWA(wa);
     STORAGE_KEY=keys.history;
@@ -5701,7 +5813,7 @@ demoMode=false;
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App mit geführtem Ablauf für Dienstwahl, Personalabfrage, Stammpersonal, Auslosung und Statistik der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.5.1</span></div>
+    <div class="mini"><strong>Version</strong><span>1.5.2</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
