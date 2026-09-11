@@ -3519,6 +3519,46 @@ body.auth-busy button{pointer-events:none}
 #lfwLegalNav,.legal-links,#appInfoPanel{display:none!important}
 </style>
 
+
+<style id="lfw151ModalLayerFix">
+/* Login screen sits at z-index 99999. All start-page dialogs must sit above it. */
+#adminLoginModal{
+  z-index:120000!important;
+  pointer-events:auto!important;
+}
+#legalImpressum,
+#legalDatenschutz{
+  z-index:120000!important;
+  pointer-events:auto!important;
+}
+#adminLoginModal.open{
+  display:flex!important;
+}
+#legalImpressum.open,
+#legalDatenschutz.open,
+#legalImpressum[aria-hidden="false"],
+#legalDatenschutz[aria-hidden="false"]{
+  display:block!important;
+}
+
+/* Keep modal content interactive on iPad/Safari */
+#adminLoginModal .admin-login-card,
+#legalImpressum .legal-shell,
+#legalDatenschutz .legal-shell{
+  position:relative!important;
+  z-index:1!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+#openAdminLogin,
+#waGate [data-legal-open]{
+  position:relative!important;
+  z-index:2!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+</style>
+
 </head>
 <body class="auth-logged-out">
 <div id="authGlobalLoader" aria-hidden="true"><div class="auth-loader-card"><div class="auth-loader-mark"></div><strong id="authLoaderTitle">Dienstplan wird geladen</strong><span id="authLoaderText">Daten werden vorbereitet…</span></div></div>
@@ -3553,7 +3593,7 @@ body.auth-busy button{pointer-events:none}
       <span>·</span>
       <button type="button" data-legal-open="datenschutz">Datenschutz</button>
       <span>·</span>
-      <button type="button" id="openAdminLogin" onclick="window.LFWAuth && window.LFWAuth.openAdmin()">Admin</button>
+      <button type="button" id="openAdminLogin">Admin</button>
     </div>
   
 </div>
@@ -5661,7 +5701,7 @@ demoMode=false;
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App mit geführtem Ablauf für Dienstwahl, Personalabfrage, Stammpersonal, Auslosung und Statistik der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.5</span></div>
+    <div class="mini"><strong>Version</strong><span>1.5.1</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
@@ -6258,6 +6298,43 @@ body.legal-open{overflow:hidden}
   window.LFWEnterAuthorizedWA=enterApp;
 
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot,{once:true}); else boot();
+})();
+</script>
+
+
+<script id="lfw151StartLinkFallback">
+(function(){
+  function bind(){
+    const admin=document.getElementById("openAdminLogin");
+    if(admin && !admin.dataset.bound151){
+      admin.dataset.bound151="1";
+      admin.addEventListener("click",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        if(window.LFWAuth && typeof window.LFWAuth.openAdmin==="function"){
+          window.LFWAuth.openAdmin();
+        }
+      });
+    }
+
+    document.querySelectorAll("#waGate [data-legal-open]").forEach(function(btn){
+      if(btn.dataset.bound151) return;
+      btn.dataset.bound151="1";
+      btn.addEventListener("click",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        if(window.LFWAuth && typeof window.LFWAuth.openLegal==="function"){
+          window.LFWAuth.openLegal(btn.dataset.legalOpen);
+        }
+      });
+    });
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",bind,{once:true});
+  }else{
+    bind();
+  }
 })();
 </script>
 
