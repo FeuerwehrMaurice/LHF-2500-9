@@ -3043,6 +3043,380 @@ body[data-workflow-step="5"] #unsavedBar.show{display:flex!important;}
 }
 </style>
 
+
+<style id="lfwProfessionalProductPolish">
+:root{
+  --product-max:1180px;
+  --product-border:#2c3137;
+  --product-panel:#111417;
+  --product-panel-2:#15191d;
+  --product-muted:#8d949c;
+}
+html{background:#090b0d!important}
+body{
+  background:#090b0d!important;
+  padding-bottom:104px!important;
+}
+.app{
+  width:min(var(--product-max),calc(100% - 32px))!important;
+  max-width:var(--product-max)!important;
+  margin-inline:auto!important;
+}
+.hero{
+  padding-top:20px!important;
+  padding-bottom:8px!important;
+}
+.hero h1{
+  letter-spacing:-.035em!important;
+  font-weight:800!important;
+}
+.hero-pill{
+  border:1px solid var(--product-border)!important;
+  background:#111417!important;
+  border-radius:6px!important;
+}
+.section,
+.availability-box,
+.fixed-cover-box,
+.manual-box,
+.workflow-shell,
+.product-status-card{
+  border:1px solid var(--product-border)!important;
+  background:var(--product-panel)!important;
+}
+.section-title{
+  font-size:1rem!important;
+  letter-spacing:.01em!important;
+  margin-bottom:13px!important;
+}
+.workflow-shell{
+  margin-top:12px!important;
+  padding:12px!important;
+}
+.workflow-progress-item{
+  background:#0d1012!important;
+  border-color:#292e34!important;
+}
+.workflow-progress-item.active{
+  background:#14171a!important;
+}
+.btn,.generate,.logout-btn,.history-delete-btn{
+  min-height:42px!important;
+  font-weight:750!important;
+  letter-spacing:0!important;
+}
+.generate{
+  min-height:50px!important;
+}
+.product-status-card{
+  margin:26px 0 12px!important;
+  padding:16px!important;
+  border-radius:7px!important;
+}
+.product-status-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.product-status-main h3{
+  margin:2px 0 0!important;
+  font-size:1.05rem!important;
+}
+.product-version{
+  padding:5px 8px;
+  border:1px solid #343a41;
+  border-radius:5px;
+  color:#b8bec5;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  font-size:.68rem;
+}
+.product-status-meta{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:12px;
+  padding-top:11px;
+  border-top:1px solid #252a30;
+  color:var(--product-muted);
+  font-size:.72rem;
+}
+.product-status-meta span{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.product-status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#4ca66a;
+}
+.legal-footer{
+  width:min(var(--product-max),calc(100% - 32px));
+  margin:0 auto 18px!important;
+  padding:14px 0 8px!important;
+  display:flex!important;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  border-top:1px solid #24292f!important;
+  color:#747b83!important;
+  font-size:.69rem!important;
+}
+.legal-footer-links{
+  display:flex;
+  gap:6px;
+}
+.legal-footer button{
+  appearance:none;
+  border:0!important;
+  background:transparent!important;
+  color:#9ca3ab!important;
+  padding:5px 7px!important;
+  font:inherit;
+  cursor:pointer;
+  text-decoration:none!important;
+}
+.legal-footer button:hover{color:#f1f3f5!important}
+
+/* Proper legal modal instead of long inline pages */
+.legal-modal-backdrop{
+  position:fixed!important;
+  inset:0!important;
+  z-index:5000!important;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(5,7,9,.78)!important;
+}
+.legal-modal-backdrop.open{display:flex!important}
+.legal-modal-shell{
+  width:min(760px,100%);
+  max-height:min(82vh,900px);
+  overflow:auto;
+  border:1px solid #343a41;
+  border-radius:9px;
+  background:#101316;
+}
+.legal-modal-shell .legal-panel{
+  display:none!important;
+  margin:0!important;
+  padding:24px!important;
+  border:0!important;
+  background:transparent!important;
+}
+.legal-modal-shell .legal-panel.open{display:block!important}
+.legal-panel h2{margin-top:0!important}
+.legal-panel .legal-close{
+  position:sticky;
+  top:0;
+  float:right;
+  z-index:2;
+}
+
+/* Bottom nav behaves like a real app navigation bar */
+.bottom-nav{
+  position:fixed!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:max(12px,env(safe-area-inset-bottom))!important;
+  transform:translateX(-50%)!important;
+  width:min(760px,calc(100% - 28px))!important;
+  min-height:64px!important;
+  padding:7px!important;
+  border:1px solid #30363d!important;
+  border-radius:10px!important;
+  background:#0d1012!important;
+  z-index:1000!important;
+}
+.bottom-nav button{
+  min-height:48px!important;
+  border-radius:6px!important;
+}
+.bottom-nav button.active{
+  background:#171b1f!important;
+}
+.bottom-nav-number{
+  font-size:.58rem!important;
+}
+.bottom-nav-label{
+  font-size:.68rem!important;
+}
+
+/* Don't show legacy legal content in document flow */
+body > .legal-panel,
+.app > .legal-panel{display:none!important}
+
+@media(max-width:700px){
+  .app{width:min(100% - 20px,var(--product-max))!important}
+  .legal-footer{
+    width:calc(100% - 20px);
+    justify-content:center;
+    text-align:center;
+  }
+  .product-status-meta{gap:9px 14px}
+  .legal-modal-backdrop{padding:10px}
+  .legal-modal-shell .legal-panel{padding:18px!important}
+}
+</style>
+
+
+<style id="lfwLegalModalFix">
+#legalImpressum,#legalDatenschutz{
+  display:none!important;
+  position:fixed!important;
+  z-index:5001!important;
+  left:50%!important;
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+  width:min(760px,calc(100% - 28px))!important;
+  max-height:82vh!important;
+  overflow:auto!important;
+  margin:0!important;
+  padding:24px!important;
+  border:1px solid #343a41!important;
+  border-radius:9px!important;
+  background:#101316!important;
+  box-shadow:0 0 0 100vmax rgba(5,7,9,.80)!important;
+}
+#legalImpressum.open,#legalDatenschutz.open{display:block!important}
+body.legal-open{overflow:hidden!important}
+</style>
+
+
+<style id="lfwSeparateAdminLoginStyles">
+.start-login-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid #292e34;
+  color:#737a82;
+  font-size:.68rem;
+}
+.start-login-links button{
+  appearance:none;
+  border:0!important;
+  background:transparent!important;
+  color:#8f969e!important;
+  padding:4px 3px!important;
+  font:inherit;
+  cursor:pointer;
+}
+.start-login-links button:hover,
+.start-login-links button:focus-visible{
+  color:#f1f3f5!important;
+  outline:none;
+}
+.admin-login-modal{
+  position:fixed;
+  inset:0;
+  z-index:7000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(5,7,9,.82);
+}
+.admin-login-modal.open{display:flex}
+.admin-login-card{
+  width:min(430px,100%);
+  padding:20px;
+  border:1px solid #343a41;
+  border-radius:9px;
+  background:#101316;
+  color:#f2f3f5;
+  box-shadow:none;
+}
+.admin-login-kicker{
+  color:#8f969e;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  font-size:.66rem;
+  font-weight:800;
+  letter-spacing:.12em;
+}
+.admin-login-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:5px 0 12px;
+}
+.admin-login-head h2{
+  margin:0;
+  font-size:1.1rem;
+}
+.admin-login-close{
+  width:34px;
+  height:34px;
+  border:1px solid #343a41!important;
+  border-radius:6px!important;
+  background:#171a1e!important;
+  color:#b6bcc3!important;
+  font-size:1.25rem;
+  cursor:pointer;
+}
+.admin-login-card p{
+  margin:0 0 11px;
+  color:#9aa1a8;
+  font-size:.78rem;
+}
+#adminLoginPassword{
+  width:100%;
+  min-height:48px;
+  box-sizing:border-box;
+  border:1px solid #343a41;
+  border-radius:7px;
+  background:#0c0f11;
+  color:#fff;
+  padding:12px;
+  text-align:center;
+  font-size:1.2rem;
+  letter-spacing:.25em;
+  outline:none;
+}
+#adminLoginPassword:focus{
+  border-color:#f2cc2f;
+}
+.admin-login-primary{
+  width:100%;
+  margin-top:10px;
+  border-color:#f2cc2f!important;
+  color:#f2cc2f!important;
+}
+.admin-login-error{
+  min-height:19px;
+  margin-top:8px;
+  color:#e06c70;
+  font-size:.75rem;
+  font-weight:700;
+}
+.admin-wa-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.admin-wa-grid button{
+  min-height:52px;
+  border:1px solid #343a41;
+  border-radius:7px;
+  background:#171a1e;
+  color:#f2f3f5;
+  font-weight:800;
+  cursor:pointer;
+}
+.admin-wa-grid button:hover{
+  border-color:#f2cc2f;
+  color:#f2cc2f;
+}
+body.admin-login-open{overflow:hidden}
+</style>
+
 </head>
 <body>
 <div class="live-change-banner" id="liveChangeBanner">Besetzung wurde geändert</div>
@@ -3069,14 +3443,48 @@ body[data-workflow-step="5"] #unsavedBar.show{display:flex!important;}
       <button type="button" id="waEnterBtn">Anmelden</button>
       <div class="wa-error" id="waError"></div>
     </div>
+    <div class="start-login-links">
+      <button type="button" data-legal-open="impressum">Impressum</button>
+      <span>·</span>
+      <button type="button" data-legal-open="datenschutz">Datenschutz</button>
+      <span>·</span>
+      <button type="button" id="openAdminLogin">Admin</button>
+    </div>
   
 </div>
+</div>
+
+<div class="admin-login-modal" id="adminLoginModal" aria-hidden="true">
+  <div class="admin-login-card" role="dialog" aria-modal="true" aria-labelledby="adminLoginTitle">
+    <div class="admin-login-kicker">VERWALTUNG</div>
+    <div class="admin-login-head">
+      <h2 id="adminLoginTitle">Admin-Anmeldung</h2>
+      <button type="button" class="admin-login-close" id="closeAdminLogin" aria-label="Schließen">×</button>
+    </div>
+
+    <div id="adminPasswordStep">
+      <p>Admin-Passwort eingeben.</p>
+      <input id="adminLoginPassword" type="password" inputmode="numeric" pattern="[0-9]*"
+             maxlength="6" autocomplete="off" placeholder="6-stelliges Admin-Passwort">
+      <button type="button" class="btn admin-login-primary" id="adminLoginSubmit">Admin freischalten</button>
+      <div class="admin-login-error" id="adminLoginError"></div>
+    </div>
+
+    <div id="adminWAChoice" hidden>
+      <p>Admin bestätigt. Wachabteilung auswählen:</p>
+      <div class="admin-wa-grid">
+        <button type="button" data-admin-wa="1">WA 1</button>
+        <button type="button" data-admin-wa="2">WA 2</button>
+        <button type="button" data-admin-wa="3">WA 3</button>
+        <button type="button" data-admin-wa="4">WA 4</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
 (function(){
   const WA_PW={"1":"111111","2":"222222","3":"333333","4":"444444"};
-  const ADMIN_PW="121212";
   let chosenWA=null;
 
   window.LFWSelectWA=function(wa,btn){
@@ -3103,6 +3511,33 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
     }
   };
 
+  window.LFWEnterAuthorizedWA=function(wa,role){
+    wa=String(wa);
+    role=role==="admin" ? "admin" : "user";
+
+    sessionStorage.setItem("lf2500_wa",wa);
+    sessionStorage.setItem("lf2500_role_v1",role);
+    window.selectedWA=wa;
+
+    document.body.dataset.wa=wa;
+    document.body.classList.remove("role-user","role-admin");
+    document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
+
+    const gate=document.getElementById("waGate");
+    if(gate){
+      gate.classList.add("hidden");
+      gate.style.setProperty("display","none","important");
+    }
+
+    setTimeout(()=>{
+      try{
+        if(typeof window.loadWAData==="function") window.loadWAData(wa);
+      }catch(e){
+        console.error("LFW App-Initialisierung:",e);
+      }
+    },0);
+  };
+
   window.LFWDoLogin=function(){
     const input=document.getElementById("waPassword");
     const err=document.getElementById("waError");
@@ -3118,8 +3553,7 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
     if(pw.length<6) return;
 
     let role=null;
-    if(pw===ADMIN_PW) role="admin";
-    else if(pw===WA_PW[String(wa)]) role="user";
+    if(pw===WA_PW[String(wa)]) role="user";
 
     if(!role){
       if(err) err.textContent="Passwort nicht korrekt.";
@@ -3127,27 +3561,7 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
       return;
     }
 
-    sessionStorage.setItem("lf2500_wa",String(wa));
-    sessionStorage.setItem("lf2500_role_v1",role);
-    window.selectedWA=String(wa);
-
-    document.body.dataset.wa=String(wa);
-    document.body.classList.remove("role-user","role-admin");
-    document.body.classList.add(role==="admin" ? "role-admin" : "role-user");
-
-    const gate=document.getElementById("waGate");
-    if(gate){
-      gate.classList.add("hidden");
-      gate.style.setProperty("display","none","important");
-    }
-
-    setTimeout(()=>{
-      try{
-        if(typeof window.loadWAData==="function") window.loadWAData(String(wa));
-      }catch(e){
-        console.error("LFW App-Initialisierung:",e);
-      }
-    },0);
+    window.LFWEnterAuthorizedWA(String(wa),role);
   };
 
   document.addEventListener("DOMContentLoaded",function(){
@@ -3171,11 +3585,12 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
 
     const rememberedWA=sessionStorage.getItem("lf2500_wa");
     const rememberedRole=sessionStorage.getItem("lf2500_role_v1");
-    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) &&
-       (rememberedRole==="user" || rememberedRole==="admin")){
+    if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) && rememberedRole==="admin"){
+      window.LFWEnterAuthorizedWA(rememberedWA,"admin");
+    }else if(rememberedWA && ["1","2","3","4"].includes(rememberedWA) && rememberedRole==="user"){
       chosenWA=rememberedWA;
       window.selectedWA=rememberedWA;
-      if(input) input.value=rememberedRole==="admin" ? ADMIN_PW : WA_PW[rememberedWA];
+      if(input) input.value=WA_PW[rememberedWA];
       window.LFWDoLogin();
     }else if(rememberedWA && !["1","2","3","4"].includes(rememberedWA)){
       sessionStorage.removeItem("lf2500_wa");
@@ -3449,8 +3864,6 @@ if(label) label.textContent="WA "+chosenWA+" · Passwort";
 
   <div class="footer">
     Cloud · <span id="cloudStatus">wird verbunden …</span><small id="cloudDebugHint">Synchronisierungsfehler – Details siehe Meldung oben.</small>
-  </div>
-</div>
 
 
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -5265,19 +5678,14 @@ demoMode=false;
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App mit geführtem Ablauf für Dienstwahl, Personalabfrage, Stammpersonal, Auslosung und Statistik der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.3</span></div>
+    <div class="mini"><strong>Version</strong><span>1.4.1</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
   </div>
 </section>
 
-<div class="love-footer" id="loveFooter">
-  <div class="love-footer-line"></div>
-  <div class="love-footer-main"><span>♥</span> Mit Liebe <strong>1. WA</strong> <span>♥</span></div>
-  <div class="love-footer-sub">LEHRFEUERWEHR 2500</div>
-  <div class="love-footer-line"></div>
-</div>
+
 
 <style>
 .legal-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px auto 34px;color:#8d8d8d;font-size:13px;letter-spacing:.04em}
@@ -5740,6 +6148,125 @@ body.legal-open{overflow:hidden}
 })();
 </script>
 
+
+
+<div class="legal-footer" id="legalFooter">
+  <span>© 2026 LHF 2500/9 Dienstplaner</span>
+  <div class="legal-footer-links">
+    <button type="button" data-legal-open="impressum">Impressum</button>
+    <button type="button" data-legal-open="datenschutz">Datenschutz</button>
+  </div>
+</div>
+
+<script id="lfwProfessionalLegalModal">
+(function(){
+  function closeLegal(){
+    document.querySelectorAll("#legalImpressum,#legalDatenschutz").forEach(p=>p.classList.remove("open"));
+    document.body.classList.remove("legal-open");
+  }
+  function openLegal(kind){
+    closeLegal();
+    const id=kind==="datenschutz" ? "legalDatenschutz" : "legalImpressum";
+    const panel=document.getElementById(id);
+    if(!panel) return;
+    panel.classList.add("open");
+    document.body.classList.add("legal-open");
+  }
+  document.addEventListener("click",function(e){
+    const opener=e.target.closest && e.target.closest("[data-legal-open]");
+    if(opener){ e.preventDefault(); openLegal(opener.dataset.legalOpen); return; }
+    const closer=e.target.closest && e.target.closest(".legal-close");
+    if(closer){ e.preventDefault(); closeLegal(); }
+  });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeLegal(); });
+  window.LFWOpenLegal=openLegal;
+  window.LFWCloseLegal=closeLegal;
+})();
+</script>
+
+
+<script id="lfwSeparateAdminLogin">
+(function(){
+  const ADMIN_PW="121212";
+
+  function resetAdminModal(){
+    const pw=document.getElementById("adminLoginPassword");
+    const err=document.getElementById("adminLoginError");
+    const step=document.getElementById("adminPasswordStep");
+    const wa=document.getElementById("adminWAChoice");
+    if(pw) pw.value="";
+    if(err) err.textContent="";
+    if(step) step.hidden=false;
+    if(wa) wa.hidden=true;
+  }
+
+  function openAdmin(){
+    resetAdminModal();
+    const modal=document.getElementById("adminLoginModal");
+    if(!modal) return;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.classList.add("admin-login-open");
+    setTimeout(()=>document.getElementById("adminLoginPassword")?.focus(),30);
+  }
+
+  function closeAdmin(){
+    const modal=document.getElementById("adminLoginModal");
+    if(!modal) return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.classList.remove("admin-login-open");
+    resetAdminModal();
+  }
+
+  function verifyAdmin(){
+    const pw=String(document.getElementById("adminLoginPassword")?.value||"").replace(/\D/g,"").slice(0,6);
+    const err=document.getElementById("adminLoginError");
+    if(pw!==ADMIN_PW){
+      if(err) err.textContent="Admin-Passwort nicht korrekt.";
+      const input=document.getElementById("adminLoginPassword");
+      if(input){ input.value=""; input.focus(); }
+      return;
+    }
+    if(err) err.textContent="";
+    document.getElementById("adminPasswordStep").hidden=true;
+    document.getElementById("adminWAChoice").hidden=false;
+  }
+
+  document.getElementById("openAdminLogin")?.addEventListener("click",openAdmin);
+  document.getElementById("closeAdminLogin")?.addEventListener("click",closeAdmin);
+  document.getElementById("adminLoginSubmit")?.addEventListener("click",verifyAdmin);
+
+  document.getElementById("adminLoginPassword")?.addEventListener("input",function(){
+    this.value=this.value.replace(/\D/g,"").slice(0,6);
+  });
+  document.getElementById("adminLoginPassword")?.addEventListener("keydown",function(e){
+    if(e.key==="Enter"){
+      e.preventDefault();
+      verifyAdmin();
+    }
+  });
+
+  document.querySelectorAll("[data-admin-wa]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const wa=btn.dataset.adminWa;
+      closeAdmin();
+      if(typeof window.LFWEnterAuthorizedWA==="function"){
+        window.LFWEnterAuthorizedWA(wa,"admin");
+      }
+    });
+  });
+
+  document.getElementById("adminLoginModal")?.addEventListener("click",e=>{
+    if(e.target.id==="adminLoginModal") closeAdmin();
+  });
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape" && document.getElementById("adminLoginModal")?.classList.contains("open")){
+      closeAdmin();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
