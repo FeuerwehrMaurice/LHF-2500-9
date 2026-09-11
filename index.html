@@ -3608,6 +3608,76 @@ body.auth-busy button{pointer-events:none}
 body.contact-open{overflow:hidden}
 </style>
 
+
+<style id="lfw154ShiftPickerAndGateStatus">
+.mobile-shift-picker{display:none}
+.wa-duty-summary{
+  margin:0 0 12px;
+  padding:10px 11px;
+  border:1px solid #2f353b;
+  border-radius:6px;
+  background:#0d1013;
+  color:#cbd0d5;
+  text-align:left;
+  font-size:.72rem;
+  line-height:1.45;
+}
+.wa-duty-summary strong{color:#fff}
+.wa-duty-summary .duty-line{display:flex;gap:7px;flex-wrap:wrap}
+.wa-duty-summary .duty-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border:1px solid #30363c;
+  border-radius:5px;
+  padding:4px 7px;
+  background:#12161a;
+}
+#waGate .wa-buttons button[data-wa] small{
+  white-space:normal!important;
+  line-height:1.25!important;
+}
+@media(max-width:760px){
+  #planDay{display:none!important}
+  .mobile-shift-picker{
+    display:block;
+    width:100%;
+    max-height:290px;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    border:1px solid #343a41;
+    border-radius:7px;
+    background:#0b0e10;
+    padding:5px;
+    touch-action:pan-y;
+  }
+  .mobile-shift-option{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    min-height:52px;
+    margin:0 0 5px;
+    padding:10px 11px;
+    border:1px solid #2c3238;
+    border-radius:6px;
+    background:#111418;
+    color:#f3f4f5;
+    text-align:left;
+    touch-action:manipulation;
+  }
+  .mobile-shift-option:last-child{margin-bottom:0}
+  .mobile-shift-option span{font-weight:850}
+  .mobile-shift-option small{color:#8f969e;font-size:.7rem;text-align:right}
+  .mobile-shift-option.selected{
+    border-color:var(--wa-accent,#f2cc2f);
+    border-left:4px solid var(--wa-accent,#f2cc2f);
+  }
+}
+</style>
+
 </head>
 <body class="auth-logged-out">
 <div id="authGlobalLoader" aria-hidden="true"><div class="auth-loader-card"><div class="auth-loader-mark"></div><strong id="authLoaderTitle">Dienstplan wird geladen</strong><span id="authLoaderText">Daten werden vorbereitet…</span></div></div>
@@ -3622,6 +3692,7 @@ body.contact-open{overflow:hidden}
     <div class="wa-login-line"></div>
     <div class="wa-login-prompt">Wachabteilung auswählen</div>
 
+    <div class="wa-duty-summary" id="waDutySummary" aria-live="polite"></div>
     <div class="wa-buttons" id="waButtons">
       <button type="button" data-wa="1" onclick="window.LFWSelectWA('1', this)"><strong>WA 1</strong><small>Dienstplan öffnen</small></button>
       <button type="button" data-wa="2" onclick="window.LFWSelectWA('2', this)"><strong>WA 2</strong><small>Dienstplan öffnen</small></button>
@@ -3828,6 +3899,8 @@ body.contact-open{overflow:hidden}
       <select id="planDay" aria-label="Dienst auswählen">
         <option value="">Dienst auswählen</option>
       </select>
+
+      <div class="mobile-shift-picker" id="mobileShiftPicker" aria-label="Dienst auswählen"></div>
 
       <button class="btn workflow-primary" id="planSelectedBtn">Weiter zur Personalabfrage →</button>
       <button class="btn admin-only" id="overwritePlanBtn">Planung ändern / überschreiben</button>
@@ -4904,6 +4977,7 @@ demoMode=false;
 
   // Dienstpläne WA 1–4 aus den übermittelten Kalendern (Sep–Dez 2026).
   const WA_SHIFT_SCHEDULES = {"1":[{"date":"2026-09-01","type":"day"},{"date":"2026-09-02","type":"night"},{"date":"2026-09-04","type":"day"},{"date":"2026-09-05","type":"night"},{"date":"2026-09-09","type":"day"},{"date":"2026-09-10","type":"night"},{"date":"2026-09-12","type":"day"},{"date":"2026-09-13","type":"night"},{"date":"2026-09-17","type":"day"},{"date":"2026-09-18","type":"night"},{"date":"2026-09-20","type":"day"},{"date":"2026-09-21","type":"night"},{"date":"2026-09-25","type":"day"},{"date":"2026-09-26","type":"night"},{"date":"2026-09-28","type":"day"},{"date":"2026-09-29","type":"night"},{"date":"2026-10-03","type":"day"},{"date":"2026-10-04","type":"night"},{"date":"2026-10-06","type":"day"},{"date":"2026-10-07","type":"night"},{"date":"2026-10-11","type":"day"},{"date":"2026-10-12","type":"night"},{"date":"2026-10-14","type":"day"},{"date":"2026-10-15","type":"night"},{"date":"2026-10-19","type":"day"},{"date":"2026-10-20","type":"night"},{"date":"2026-10-22","type":"day"},{"date":"2026-10-23","type":"night"},{"date":"2026-10-27","type":"day"},{"date":"2026-10-28","type":"night"},{"date":"2026-10-30","type":"day"},{"date":"2026-10-31","type":"night"},{"date":"2026-11-04","type":"day"},{"date":"2026-11-05","type":"night"},{"date":"2026-11-07","type":"day"},{"date":"2026-11-08","type":"night"},{"date":"2026-11-12","type":"day"},{"date":"2026-11-13","type":"night"},{"date":"2026-11-15","type":"day"},{"date":"2026-11-16","type":"night"},{"date":"2026-11-20","type":"day"},{"date":"2026-11-21","type":"night"},{"date":"2026-11-23","type":"day"},{"date":"2026-11-24","type":"night"},{"date":"2026-11-28","type":"day"},{"date":"2026-11-29","type":"night"},{"date":"2026-12-01","type":"day"},{"date":"2026-12-02","type":"night"},{"date":"2026-12-06","type":"day"},{"date":"2026-12-07","type":"night"},{"date":"2026-12-09","type":"day"},{"date":"2026-12-10","type":"night"},{"date":"2026-12-14","type":"day"},{"date":"2026-12-15","type":"night"},{"date":"2026-12-17","type":"day"},{"date":"2026-12-18","type":"night"},{"date":"2026-12-22","type":"day"},{"date":"2026-12-23","type":"night"},{"date":"2026-12-25","type":"day"},{"date":"2026-12-26","type":"night"},{"date":"2026-12-30","type":"day"},{"date":"2026-12-31","type":"night"}],"2":[{"date":"2026-09-03","type":"day"},{"date":"2026-09-04","type":"night"},{"date":"2026-09-06","type":"day"},{"date":"2026-09-07","type":"night"},{"date":"2026-09-11","type":"day"},{"date":"2026-09-12","type":"night"},{"date":"2026-09-14","type":"day"},{"date":"2026-09-15","type":"night"},{"date":"2026-09-19","type":"day"},{"date":"2026-09-20","type":"night"},{"date":"2026-09-22","type":"day"},{"date":"2026-09-23","type":"night"},{"date":"2026-09-27","type":"day"},{"date":"2026-09-28","type":"night"},{"date":"2026-09-30","type":"day"},{"date":"2026-10-01","type":"night"},{"date":"2026-10-05","type":"day"},{"date":"2026-10-06","type":"night"},{"date":"2026-10-08","type":"day"},{"date":"2026-10-09","type":"night"},{"date":"2026-10-13","type":"day"},{"date":"2026-10-14","type":"night"},{"date":"2026-10-16","type":"day"},{"date":"2026-10-17","type":"night"},{"date":"2026-10-21","type":"day"},{"date":"2026-10-22","type":"night"},{"date":"2026-10-24","type":"day"},{"date":"2026-10-25","type":"night"},{"date":"2026-10-29","type":"day"},{"date":"2026-10-30","type":"night"},{"date":"2026-11-01","type":"day"},{"date":"2026-11-02","type":"night"},{"date":"2026-11-06","type":"day"},{"date":"2026-11-07","type":"night"},{"date":"2026-11-09","type":"day"},{"date":"2026-11-10","type":"night"},{"date":"2026-11-14","type":"day"},{"date":"2026-11-15","type":"night"},{"date":"2026-11-17","type":"day"},{"date":"2026-11-18","type":"night"},{"date":"2026-11-22","type":"day"},{"date":"2026-11-23","type":"night"},{"date":"2026-11-25","type":"day"},{"date":"2026-11-26","type":"night"},{"date":"2026-11-30","type":"day"},{"date":"2026-12-01","type":"night"},{"date":"2026-12-03","type":"day"},{"date":"2026-12-04","type":"night"},{"date":"2026-12-08","type":"day"},{"date":"2026-12-09","type":"night"},{"date":"2026-12-11","type":"day"},{"date":"2026-12-12","type":"night"},{"date":"2026-12-16","type":"day"},{"date":"2026-12-17","type":"night"},{"date":"2026-12-19","type":"day"},{"date":"2026-12-20","type":"night"},{"date":"2026-12-24","type":"day"},{"date":"2026-12-25","type":"night"},{"date":"2026-12-27","type":"day"},{"date":"2026-12-28","type":"night"}],"3":[{"date":"2026-09-01","type":"night"},{"date":"2026-09-05","type":"day"},{"date":"2026-09-06","type":"night"},{"date":"2026-09-08","type":"day"},{"date":"2026-09-09","type":"night"},{"date":"2026-09-13","type":"day"},{"date":"2026-09-14","type":"night"},{"date":"2026-09-16","type":"day"},{"date":"2026-09-17","type":"night"},{"date":"2026-09-21","type":"day"},{"date":"2026-09-22","type":"night"},{"date":"2026-09-24","type":"day"},{"date":"2026-09-25","type":"night"},{"date":"2026-09-29","type":"day"},{"date":"2026-09-30","type":"night"},{"date":"2026-10-02","type":"day"},{"date":"2026-10-03","type":"night"},{"date":"2026-10-07","type":"day"},{"date":"2026-10-08","type":"night"},{"date":"2026-10-10","type":"day"},{"date":"2026-10-11","type":"night"},{"date":"2026-10-15","type":"day"},{"date":"2026-10-16","type":"night"},{"date":"2026-10-18","type":"day"},{"date":"2026-10-19","type":"night"},{"date":"2026-10-23","type":"day"},{"date":"2026-10-24","type":"night"},{"date":"2026-10-26","type":"day"},{"date":"2026-10-27","type":"night"},{"date":"2026-10-31","type":"day"},{"date":"2026-11-01","type":"night"},{"date":"2026-11-03","type":"day"},{"date":"2026-11-04","type":"night"},{"date":"2026-11-08","type":"day"},{"date":"2026-11-09","type":"night"},{"date":"2026-11-11","type":"day"},{"date":"2026-11-12","type":"night"},{"date":"2026-11-16","type":"day"},{"date":"2026-11-17","type":"night"},{"date":"2026-11-19","type":"day"},{"date":"2026-11-20","type":"night"},{"date":"2026-11-24","type":"day"},{"date":"2026-11-25","type":"night"},{"date":"2026-11-27","type":"day"},{"date":"2026-11-28","type":"night"},{"date":"2026-12-02","type":"day"},{"date":"2026-12-03","type":"night"},{"date":"2026-12-05","type":"day"},{"date":"2026-12-06","type":"night"},{"date":"2026-12-10","type":"day"},{"date":"2026-12-11","type":"night"},{"date":"2026-12-13","type":"day"},{"date":"2026-12-14","type":"night"},{"date":"2026-12-18","type":"day"},{"date":"2026-12-19","type":"night"},{"date":"2026-12-21","type":"day"},{"date":"2026-12-22","type":"night"},{"date":"2026-12-26","type":"day"},{"date":"2026-12-27","type":"night"},{"date":"2026-12-29","type":"day"},{"date":"2026-12-30","type":"night"}],"4":[{"date":"2026-09-02","type":"day"},{"date":"2026-09-03","type":"night"},{"date":"2026-09-07","type":"day"},{"date":"2026-09-08","type":"night"},{"date":"2026-09-10","type":"day"},{"date":"2026-09-11","type":"night"},{"date":"2026-09-15","type":"day"},{"date":"2026-09-16","type":"night"},{"date":"2026-09-18","type":"day"},{"date":"2026-09-19","type":"night"},{"date":"2026-09-23","type":"day"},{"date":"2026-09-24","type":"night"},{"date":"2026-09-26","type":"day"},{"date":"2026-09-27","type":"night"},{"date":"2026-10-01","type":"day"},{"date":"2026-10-02","type":"night"},{"date":"2026-10-04","type":"day"},{"date":"2026-10-05","type":"night"},{"date":"2026-10-09","type":"day"},{"date":"2026-10-10","type":"night"},{"date":"2026-10-12","type":"day"},{"date":"2026-10-13","type":"night"},{"date":"2026-10-17","type":"day"},{"date":"2026-10-18","type":"night"},{"date":"2026-10-20","type":"day"},{"date":"2026-10-21","type":"night"},{"date":"2026-10-25","type":"day"},{"date":"2026-10-26","type":"night"},{"date":"2026-10-28","type":"day"},{"date":"2026-10-29","type":"night"},{"date":"2026-11-02","type":"day"},{"date":"2026-11-03","type":"night"},{"date":"2026-11-05","type":"day"},{"date":"2026-11-06","type":"night"},{"date":"2026-11-10","type":"day"},{"date":"2026-11-11","type":"night"},{"date":"2026-11-13","type":"day"},{"date":"2026-11-14","type":"night"},{"date":"2026-11-18","type":"day"},{"date":"2026-11-19","type":"night"},{"date":"2026-11-21","type":"day"},{"date":"2026-11-22","type":"night"},{"date":"2026-11-26","type":"day"},{"date":"2026-11-27","type":"night"},{"date":"2026-11-29","type":"day"},{"date":"2026-11-30","type":"night"},{"date":"2026-12-04","type":"day"},{"date":"2026-12-05","type":"night"},{"date":"2026-12-07","type":"day"},{"date":"2026-12-08","type":"night"},{"date":"2026-12-12","type":"day"},{"date":"2026-12-13","type":"night"},{"date":"2026-12-15","type":"day"},{"date":"2026-12-16","type":"night"},{"date":"2026-12-20","type":"day"},{"date":"2026-12-21","type":"night"},{"date":"2026-12-23","type":"day"},{"date":"2026-12-24","type":"night"},{"date":"2026-12-28","type":"day"},{"date":"2026-12-29","type":"night"},{"date":"2026-12-31","type":"day"}]};
+  window.LFW_SHIFT_SCHEDULES = WA_SHIFT_SCHEDULES;
   let shifts = (WA_SHIFT_SCHEDULES[currentWA()] || []).map(x=>({...x}));
 
   function loadPlans(){
@@ -5139,6 +5213,20 @@ demoMode=false;
     });
 
     daySelect.value=oldValue;
+
+    const mobilePicker=document.getElementById("mobileShiftPicker");
+    if(mobilePicker){
+      mobilePicker.innerHTML="";
+      monthShifts.forEach(shift=>{
+        const saved=plans[shift.date];
+        const btn=document.createElement("button");
+        btn.type="button";
+        btn.className="mobile-shift-option"+(shift.date===oldValue?" selected":"");
+        btn.dataset.shiftDate=shift.date;
+        btn.innerHTML=`<span>${shift.type==="day"?"☀️":"🌙"} ${formatShiftDate(shift.date)}</span><small>${shift.type==="day"?"Tagdienst":"Nachtdienst"}${saved && saved.assignment ? " · geplant" : ""}</small>`;
+        mobilePicker.appendChild(btn);
+      });
+    }
 
     if(selectedShift && selectedShift.startsWith(month)){
       const shift=shifts.find(x=>x.date===selectedShift);
@@ -5726,6 +5814,18 @@ demoMode=false;
     renderPlanner();
   });
 
+  document.addEventListener("click",(e)=>{
+    const btn=e.target.closest && e.target.closest("#mobileShiftPicker .mobile-shift-option");
+    if(!btn) return;
+    const daySelect=document.getElementById("planDay");
+    if(!daySelect) return;
+    daySelect.value=btn.dataset.shiftDate || "";
+    daySelect.dispatchEvent(new Event("change",{bubbles:true}));
+    document.querySelectorAll("#mobileShiftPicker .mobile-shift-option").forEach(x=>{
+      x.classList.toggle("selected",x===btn);
+    });
+  });
+
   document.getElementById("planDay").addEventListener("change",(e)=>{
     selectedShift=e.target.value || null;
     setUnsavedSwap(false);
@@ -5864,7 +5964,7 @@ demoMode=false;
   <h3 class="lfw-v1-title">LHF 2500/9 Dienstplaner</h3>
   <p class="lfw-v1-text">Interne Web-App mit geführtem Ablauf für Dienstwahl, Personalabfrage, Stammpersonal, Auslosung und Statistik der Lehrfeuerwehr 2500.</p>
   <div id="appInfoGrid">
-    <div class="mini"><strong>Version</strong><span>1.5.3</span></div>
+    <div class="mini"><strong>Version</strong><span>1.5.4</span></div>
     <div class="mini"><strong>Status</strong><span id="infoCloudState">Cloud-Synchronisierung</span></div>
     <div class="mini"><strong>Design</strong><span>Terminal UI · ohne Glow</span></div>
     <div class="mini"><strong>Speicherung</strong><span>Firebase + Browser-Speicher</span></div>
@@ -6613,6 +6713,87 @@ body.legal-open{overflow:hidden}
   });
 
   window.LFWContact={open:openContact,close:closeContact};
+})();
+</script>
+
+
+<script id="lfw154GateDutyStatus">
+(function(){
+  "use strict";
+
+  function isoLocal(d){
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function deDate(iso){
+    const p=String(iso).split("-");
+    return p.length===3 ? p[2]+"."+p[1]+"." : iso;
+  }
+  function findWA(date,type){
+    const schedules=window.LFW_SHIFT_SCHEDULES||{};
+    for(const [wa,list] of Object.entries(schedules)){
+      if(Array.isArray(list) && list.some(x=>x.date===date && x.type===type)) return wa;
+    }
+    return null;
+  }
+  function nextShiftAfter(date){
+    const schedules=window.LFW_SHIFT_SCHEDULES||{};
+    const all=[];
+    for(const [wa,list] of Object.entries(schedules)){
+      (list||[]).forEach(x=>all.push({wa,date:x.date,type:x.type}));
+    }
+    all.sort((a,b)=>{
+      if(a.date!==b.date) return a.date.localeCompare(b.date);
+      return (a.type==="day"?0:1)-(b.type==="day"?0:1);
+    });
+    const todayNight=all.findIndex(x=>x.date===date && x.type==="night");
+    return todayNight>=0 ? all[todayNight+1] || null : all.find(x=>x.date>date) || null;
+  }
+
+  function render(){
+    const schedules=window.LFW_SHIFT_SCHEDULES;
+    if(!schedules) return;
+
+    const today=isoLocal(new Date());
+    const dayWA=findWA(today,"day");
+    const nightWA=findWA(today,"night");
+    const next=nextShiftAfter(today);
+
+    const summary=document.getElementById("waDutySummary");
+    if(summary){
+      summary.innerHTML=
+        `<div><strong>HEUTE ${deDate(today)}</strong></div>`+
+        `<div class="duty-line">`+
+          `<span class="duty-tag">☀️ Tag: <strong>WA ${dayWA||"–"}</strong></span>`+
+          `<span class="duty-tag">🌙 Nacht: <strong>WA ${nightWA||"–"}</strong></span>`+
+          (next?`<span class="duty-tag">↪ Ablösung danach: <strong>WA ${next.wa}</strong> · ${deDate(next.date)} ${next.type==="day"?"Tag":"Nacht"}</span>`:"")+
+        `</div>`;
+    }
+
+    document.querySelectorAll("#waButtons button[data-wa]").forEach(btn=>{
+      const wa=btn.dataset.wa;
+      const small=btn.querySelector("small");
+      if(!small) return;
+      if(wa===dayWA && wa===nightWA){
+        small.textContent="Heute Tag- und Nachtdienst";
+      }else if(wa===dayWA){
+        small.textContent="Heute · Tagdienst";
+      }else if(wa===nightWA){
+        small.textContent="Heute · Nachtdienst";
+      }else if(next && wa===next.wa){
+        small.textContent=`Löst danach ab · ${deDate(next.date)} ${next.type==="day"?"Tagdienst":"Nachtdienst"}`;
+      }else{
+        const own=(schedules[wa]||[]).find(x=>x.date>today);
+        small.textContent=own ? `Nächster Dienst · ${deDate(own.date)} ${own.type==="day"?"Tag":"Nacht"}` : "Kein weiterer Dienst";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    render();
+    setTimeout(render,150);
+  });
+  window.addEventListener("pageshow",render);
+  window.LFWRenderGateDutyStatus=render;
 })();
 </script>
 
